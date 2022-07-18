@@ -2,7 +2,7 @@
 using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Operations.Interfaces;
 
-namespace NExpression.Core.Expressions.Operations.Bitwises
+namespace NExpression.Core.Expressions.Operations.Assignments
 {
     internal class AssignEqual : IOperation
     {
