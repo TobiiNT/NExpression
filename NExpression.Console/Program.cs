@@ -90,8 +90,6 @@ while (true)
 
 static void PrintTraverse(SingleCommand Command)
 {
-    Dictionary<string, int> LineNumbers = new Dictionary<string, int>();
-
     var Stacks = Command.Traverse();
 
     int LineNumber = 1;
@@ -99,17 +97,9 @@ static void PrintTraverse(SingleCommand Command)
     {
         string? Identity = Node.Identity();
 
-        //foreach (var Saved in LineNumbers)
-        //{
-        //    Identity = Identity.Replace(Saved.Key, $"[{Saved.Value}]");
-        //}
-        //
-        //if (!LineNumbers.ContainsKey(Identity))
-        //{
-        //    LineNumbers.Add(Identity, LineNumber);
-        //}
-       
-        Console.WriteLine($"[{LineNumber++}] {Identity}");
+            Consoler.WriteLine($"Step {LineNumber} => {Identity}", ConsoleColor.Cyan);
+
+        LineNumber++;
     }
 }
 

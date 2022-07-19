@@ -28,6 +28,10 @@ namespace NExpression.Core.Extensions
                 return $"\"{String}\"";
             else if (Node is NodeChar Char)
                 return $"'{Char}'";
+            else if (Node is NodeVariable Variable)
+            {
+                return $"(var {Variable.VariableName})";
+            }
             else if (Node is NodeFunctionCall Function)
             {
                 StringBuilder ArgsString = new StringBuilder();
@@ -37,31 +41,31 @@ namespace NExpression.Core.Extensions
                 }
                 ArgsString.Remove(ArgsString.Length - 2, 2);
 
-                return $"Function [{Function.FunctionName}({ArgsString})]";
+                return $"({Function.FunctionName}({ArgsString}))";
             }
             else if (Node is NodePostfix Postfix)
             {
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Postfix.Operation);
-                return $"Postfix [{Postfix.LeftNode.Identity()} {Operation?.Symbol()}]";
+                return $"({Postfix.LeftNode.Identity()} {Operation?.Symbol()})";
             }
             else if (Node is NodeUnary Unary)
             {
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Unary.Operation);
-                return $"Unary [{Operation?.Symbol()} {Unary.RightNode.Identity()}]";
+                return $"({Operation?.Symbol()} {Unary.RightNode.Identity()})";
             }
             else if (Node is NodeTenary Tenary)
             {
-                return $"Tenary [{Tenary.ConditionNode?.Identity()} ? {Tenary.LeftNode.Identity()} : {Tenary.RightNode.Identity()}]";
+                return $"({Tenary.ConditionNode?.Identity()} ? {Tenary.LeftNode.Identity()} : {Tenary.RightNode.Identity()})";
             }
             else if (Node is NodeBinary Binary)
             {
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Binary.Operation);
-                return $"Binary [{Binary.LeftNode.Identity()} {Operation?.Symbol()} {Binary.RightNode.Identity()}]";
+                return $"({Binary.LeftNode.Identity()} {Operation?.Symbol()} {Binary.RightNode.Identity()})";
             }
             else if (Node is NodeAssignment Assign)
             {
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Assign.Operation);
-                return $"Assign [{Assign.Variable.Identity()} {Operation?.Symbol()} {Assign.Value.Identity()}]";
+                return $"({Assign.Variable.Identity()} {Operation?.Symbol()} {Assign.Value.Identity()})";
             }
             else return Node.ToString();
         }
