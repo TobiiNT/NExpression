@@ -6,14 +6,14 @@ namespace NExpression.Core.Tokens
     public class Tokenizer
     {
         private Token CurrentToken { get; set; }
-        public object Value { get; private set; }
-        public Type Type { get; private set; }
-        public string Identifier { get; private set; }
+        public object? Value { get; private set; } 
+        public string? Identifier { get; private set; }
         public bool OpeningDoubleQuote { get; private set; }
         public bool OpeningSingleQuote { get; private set; }
 
         public char[] CharArrays { get; }
         private int Index { set; get; }
+
         private char CurrentChar => Index < CharArrays.Length ? CharArrays[Index] : '\0';
         private char NextChar => Index + 1 < CharArrays.Length ? CharArrays[Index + 1] : '\0';
         public Token Token => CurrentToken;
@@ -39,6 +39,7 @@ namespace NExpression.Core.Tokens
 
         public void NextToken()
         {
+            // Skip whitespace
             while (char.IsWhiteSpace(CurrentChar))
             {
                 GoNextChar();
@@ -333,7 +334,9 @@ namespace NExpression.Core.Tokens
                         // Identifier - starts with letter or underscore
                         else if (char.IsLetter(CurrentChar) || CurrentChar == '_')
                         {
-                            this.ReadIdentifier();
+                            this.Identifier = this.ReadIdentifier();
+
+                            this.CurrentToken = this.ReadKeyword(Identifier);
                         }
                         else
                         {
@@ -408,7 +411,7 @@ namespace NExpression.Core.Tokens
                 }
                 else if (this.CurrentToken == Token.Hexadecimal)
                 {
-                    if (char.IsDigit(CurrentChar) || 
+                    if (char.IsDigit(CurrentChar) ||
                         (CurrentChar >= 'a' && CurrentChar <= 'f') ||
                         (CurrentChar >= 'A' && CurrentChar <= 'F'))
                     {
@@ -434,7 +437,7 @@ namespace NExpression.Core.Tokens
             this.Value = NumberString;
         }
 
-        private void ReadIdentifier()
+        private string ReadIdentifier()
         {
             StringBuilder StringBuilder = new StringBuilder();
 
@@ -445,53 +448,19 @@ namespace NExpression.Core.Tokens
                 GoNextChar();
             }
 
-            this.Identifier = StringBuilder.ToString();
-
-            this.ReadKeyword(Identifier);
+            return StringBuilder.ToString();
         }
 
-        private void ReadKeyword(string Identifier)
+        private Token ReadKeyword(string Identifier)
         {
             switch (Identifier.ToLower())
             {
-                case "true":
-                    {
-                        Value = true;
-                        CurrentToken = Token.KeywordTrue;
-                    }
-                    return;
-
-                case "false":
-                    {
-                        Value = false;
-                        CurrentToken = Token.KeywordFalse;
-                    }
-                    return;
-
-                case "var":
-                    {
-                        Type = typeof(object);
-                        CurrentToken = Token.KeywordVar;
-                    }
-                    return;
-
-                case "null":
-                    {
-                        CurrentToken = Token.KeywordNull;
-                    }
-                    return;
-
-                case "if":
-                    {
-                        CurrentToken = Token.KeywordIf;
-                    }
-                    return;
-
-                default:
-                    {
-                        CurrentToken = Token.Identifier;
-                    }
-                    return;
+                case "true": return Token.KeywordTrue;
+                case "false": return Token.KeywordFalse;
+                case "var": return Token.KeywordVar;
+                case "null": return Token.KeywordNull;
+                case "if": return Token.KeywordIf;
+                default: return Token.Identifier;
             }
         }
     }

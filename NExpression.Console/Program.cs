@@ -54,8 +54,6 @@ while (true)
     }
     else
     {
-        Consoler.WriteLine();
-
         int CommandIndex = 1;
         SingleCommand? CurrentCommand = null;
         try
@@ -90,6 +88,7 @@ while (true)
 
 static void PrintTraverse(SingleCommand Command)
 {
+    Consoler.WriteLine();
     Consoler.Write($"Traverse : ", ConsoleColor.Blue);
     Consoler.WriteLine(Command.RawExpression);
 
@@ -104,12 +103,11 @@ static void PrintTraverse(SingleCommand Command)
 
         LineNumber++;
     }
-
-    Consoler.WriteLine();
 }
 
 static void PrintTokens(string Expression)
 {
+    Consoler.WriteLine();
     Consoler.Write($"Print tokens : ", ConsoleColor.Blue);
     Consoler.WriteLine(Expression);
 
@@ -122,7 +120,5 @@ static void PrintTokens(string Expression)
         Tokens.NextToken();
     }
     while (Tokens.Token != Token.EOF);
-
-    Consoler.WriteLine();
 }
 

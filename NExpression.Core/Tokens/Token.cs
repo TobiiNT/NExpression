@@ -1,5 +1,6 @@
 ﻿namespace NExpression.Core.Tokens
 {
+    [Flags]
     public enum Token
     {
         EOF,
@@ -74,6 +75,8 @@
 
         Keyword0b, // 0b
         Keyword0x, //0x
+
+        KeywordString,
         KeywordBoolean,
         KeywordByte,
         KeywordSByte,
