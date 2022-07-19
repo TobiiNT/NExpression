@@ -7,6 +7,7 @@ namespace NExpression.Core.Tokens
     {
         private Token CurrentToken { get; set; }
         public object Value { get; private set; }
+        public Type Type { get; private set; }
         public string Identifier { get; private set; }
         public bool OpeningDoubleQuote { get; private set; }
         public bool OpeningSingleQuote { get; private set; }
@@ -424,7 +425,7 @@ namespace NExpression.Core.Tokens
 
                 case "var":
                     {
-                        Value = typeof(object);
+                        Type = typeof(object);
                         CurrentToken = Token.KeywordVar;
                     }
                     return;

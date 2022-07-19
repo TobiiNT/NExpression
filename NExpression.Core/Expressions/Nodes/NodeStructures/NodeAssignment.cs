@@ -11,13 +11,18 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         private INode Value { set; get; }
         private IOperation? Operation { set; get; }
         private bool IsDeclare { set; get; }
+        private Type DeclareType { set; get; }
         public NodeAssignment(NodeVariable Variable, INode Value, IOperation Operation)
         {
             this.Variable = Variable;
             this.Value = Value;
             this.Operation = Operation;
         }
-        public void SetDeclare(bool IsDeclare) => this.IsDeclare = IsDeclare;
+        public void SetDeclare<T>(bool IsDeclare)
+        {
+            this.IsDeclare = IsDeclare;
+            this.DeclareType = typeof(T);
+        }
 
         public object? Evaluate() => Evaluate(null);
         public object? Evaluate(IContext? ReadContext = null)
@@ -38,7 +43,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             }
             var FinalValue = Value.Evaluate(ReadContext);
 
-            var Result = Operation?.Execute(Variable.VariableName, FinalValue, null);
+            var Result = Operation?.Execute(Variable.VariableName, FinalValue, DeclareType);
 
             return Result;
         }

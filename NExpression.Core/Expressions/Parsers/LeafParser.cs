@@ -130,7 +130,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                 if (LeftSide is NodeAssignment Assignment)
                 {
-                    Assignment.SetDeclare(true);
+                    Assignment.SetDeclare<object>(true);
                     return Assignment;
                 }
                 throw new ExpressionSyntaxException("Implicitly typed variables must be initialized");

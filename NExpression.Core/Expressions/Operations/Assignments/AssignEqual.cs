@@ -38,7 +38,7 @@ namespace NExpression.Core.Expressions.Operations.Assignments
             {
                 throw new InvalidOperationContextException(Context, "WRITE", new ExpressionEvaluationException(Operation, Variable, SecondArg));
             }
-
+            
             WriteContext.AssignVariable(VariableName, SecondArg);
             return SecondArg;
         }

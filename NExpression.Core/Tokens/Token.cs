@@ -66,6 +66,19 @@
         KeywordTrue,
         KeywordFalse,
 
+        KeywordBoolean,
+        KeywordByte,
+        KeywordSByte,
+        KeywordShort,
+        KeywordUShort,
+        KeywordInt,
+        KeywordUInt,
+        KeywordLong,
+        KeywordULong,
+        KeywordDouble,
+        KeywordFloat,
+        KeywordDecimal,
+
         KeywordIf,
         KeywordElse,
     }
