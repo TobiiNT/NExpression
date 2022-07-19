@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Text;
 
 namespace NExpression.Winforms.Components
 {
@@ -17,51 +9,52 @@ namespace NExpression.Winforms.Components
             InitializeComponent();
         }
 
-        public int getWidth()
+        public int GetWidth()
         {
-            int w = 25;
-            // get total lines of richTextBox1    
-            int line = TextBoxText.Lines.Length;
+            int Width;
 
-            if (line <= 99)
+            int TotalLines = TextBoxText.Lines.Length;
+
+            if (TotalLines <= 99)
             {
-                w = 20 + (int)TextBoxText.Font.Size;
+                Width = 20 + (int)TextBoxText.Font.Size;
             }
-            else if (line <= 999)
+            else if (TotalLines <= 999)
             {
-                w = 30 + (int)TextBoxText.Font.Size;
+                Width = 30 + (int)TextBoxText.Font.Size;
             }
             else
             {
-                w = 50 + (int)TextBoxText.Font.Size;
+                Width = 50 + (int)TextBoxText.Font.Size;
             }
 
-            return w;
+            return Width;
         }
 
         public void AddLineNumbers()
         {
-            // create & set Point pt to (0,0)    
-            Point pt = new Point(0, 0);
+            Point BasePoint = new Point(0, 0);
             // get First Index & First Line from richTextBox1    
-            int First_Index = TextBoxText.GetCharIndexFromPosition(pt);
-            int First_Line = TextBoxText.GetLineFromCharIndex(First_Index);
+            int FirstIndex = TextBoxText.GetCharIndexFromPosition(BasePoint);
+            int FirstLine = TextBoxText.GetLineFromCharIndex(FirstIndex);
             // set X & Y coordinates of Point pt to ClientRectangle Width & Height respectively    
-            pt.X = ClientRectangle.Width;
-            pt.Y = ClientRectangle.Height;
+            BasePoint.X = ClientRectangle.Width;
+            BasePoint.Y = ClientRectangle.Height;
             // get Last Index & Last Line from richTextBox1    
-            int Last_Index = TextBoxText.GetCharIndexFromPosition(pt);
-            int Last_Line = TextBoxText.GetLineFromCharIndex(Last_Index);
+            int LastIndex = TextBoxText.GetCharIndexFromPosition(BasePoint);
+            int LastLine = TextBoxText.GetLineFromCharIndex(LastIndex);
             // set Center alignment to LineNumberTextBox    
             TextBoxLineNumber.SelectionAlignment = HorizontalAlignment.Center;
             // set LineNumberTextBox text to null & width to getWidth() function value    
             TextBoxLineNumber.Text = "";
-            TextBoxLineNumber.Width = getWidth();
+            TextBoxLineNumber.Width = GetWidth();
             // now add each line number to LineNumberTextBox upto last line    
-            for (int i = First_Line; i <= Last_Line + 1; i++)
+            StringBuilder StringBuilder = new StringBuilder();
+            for (int i = FirstLine; i <= LastLine + 1; i++)
             {
-                TextBoxLineNumber.Text += i + 1 + "\n";
+                StringBuilder.Append(i + 1 + "\n");
             }
+            TextBoxLineNumber.Text = StringBuilder.ToString();
         }
 
         private void LineNumberRichTextBox_Load(object sender, EventArgs e)
