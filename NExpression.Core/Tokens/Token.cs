@@ -76,6 +76,7 @@
         Keyword0b, // 0b
         Keyword0x, //0x
 
+        KeywordChar,
         KeywordString,
         KeywordBoolean,
         KeywordByte,
