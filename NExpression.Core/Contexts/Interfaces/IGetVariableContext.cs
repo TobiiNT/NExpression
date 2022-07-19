@@ -2,7 +2,7 @@
 {
     public interface IGetVariableContext : IContext
     {
-        bool ResolveVariable(string? Name, out object? Value);
-        bool ResolveVariable<T>(string? PropertyName, out T? Value);
+        bool ContainVariable(string PropertyName);
+        bool ResolveVariable(string? PropertyName, out object? Value);
     }
 }

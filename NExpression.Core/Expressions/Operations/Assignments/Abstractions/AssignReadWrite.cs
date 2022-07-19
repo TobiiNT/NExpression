@@ -28,7 +28,7 @@ namespace NExpression.Core.Expressions.Operations.Assignments.Abstractions
             string? VariableName = Variable?.ToString();
             if (VariableName == null)
             {
-                throw new NullVariableException(VariableName, new ExpressionEvaluationException(MathOperation, Variable, AssignValue));
+                throw new NullVariableException(Context, VariableName, new ExpressionEvaluationException(MathOperation, Variable, AssignValue));
             }
             if (Context is not ISetVariableContext WriteContext)
             {
@@ -47,7 +47,7 @@ namespace NExpression.Core.Expressions.Operations.Assignments.Abstractions
 
                 return NewValue;
             }
-            throw new NullVariableException(VariableName, new ExpressionEvaluationException(MathOperation, Variable, AssignValue));
+            throw new NullVariableException(Context, VariableName, new ExpressionEvaluationException(MathOperation, Variable, AssignValue));
         }
     }
 }

@@ -28,6 +28,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             this.Variable = Variable;
             this.Value = Value;
+            this.MathOperation = MathOperation;
             this.Operation = Operation;
         }
         public void AssignContext(IContext? Context)
@@ -58,7 +59,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             }
             var FinalValue = Value.Evaluate(ReadContext);
 
-            var Result = Operation?.Evaluate(Variable.VariableName, FinalValue, DeclareType);
+            var Result = Operation?.Evaluate(Variable.VariableName, FinalValue, IsDeclare, DeclareType);
 
             return Result;
         }

@@ -5,12 +5,13 @@ using System.Reflection;
 
 namespace NExpression.Core.Contexts
 {
-    public class DynamicContext<T> : List<T>, IOperationContext, IFunctionContext, IGetVariableContext, ISetVariableContext
+    public class DynamicContext : IOperationContext, IFunctionContext, IGetVariableContext, ISetVariableContext
     {
         public string Name { get; }
         private Dictionary<string, object?> Variables { set; get; }
         private Dictionary<string, IOperation?> Operations { set; get; }
-        public DynamicContext(DynamicContext<T> ReadWriteContext)
+
+        public DynamicContext(DynamicContext ReadWriteContext)
         {
             Name = ReadWriteContext.Name;
             Variables = ReadWriteContext.Variables;
@@ -53,6 +54,7 @@ namespace NExpression.Core.Contexts
             return Operation?.Evaluate(FirstArg, SecondArg, ThirdArg);
         }
 
+        public bool ContainVariable(string? PropertyName) => Variables.ContainsKey(PropertyName ?? "");
         public bool ResolveVariable(string? PropertyName, out object? Value)
         {
             if (PropertyName != null && Variables.TryGetValue(PropertyName, out Value))
@@ -65,37 +67,34 @@ namespace NExpression.Core.Contexts
                 return false;
             }
         }
-        public bool ResolveVariable<V>(string? PropertyName, out V? Value)
+        public void DeclareVariable(string? PropertyName, Type? Type)
         {
-            if (ResolveVariable(PropertyName, out object? CurrentValue))
+            if (PropertyName != null)
             {
-                Value = (V?)Convert.ChangeType(CurrentValue, typeof(V?));
-                return true;
-            }
-            else
-            {
-                Value = default;
-                return false;
+                if (!Variables.ContainsKey(PropertyName))
+                {
+                    Variables.Add(PropertyName, new Tuple<Type?, object?>(Type, null));
+                }
+                else throw new DuplicatedNameException(this, PropertyName);
             }
         }
-
         public void AssignVariable(string? PropertyName, object? Value)
         {
             if (PropertyName != null)
             {
-                if (Variables.ContainsKey(PropertyName))
+                if (Variables.TryGetValue(PropertyName, out var ExistVariable))
                 {
                     Variables[PropertyName] = Value;
                 }
-                else Variables.Add(PropertyName, Value);
+                else throw new NullVariableException(this, PropertyName);
             }
         }
 
-        public T? this[string? PropertyName]
+        public object? this[string? PropertyName]
         {
             get
             {
-                if (ResolveVariable(PropertyName, out T? Value))
+                if (ResolveVariable(PropertyName, out object? Value))
                 {
                     return Value;
                 }
@@ -103,22 +102,13 @@ namespace NExpression.Core.Contexts
             }
             set
             {
+                if (!ContainVariable(PropertyName))
+                    DeclareVariable(PropertyName, typeof(object));
+
                 AssignVariable(PropertyName, value);
             }
         }
 
         public Dictionary<string, object?> GetAllVariables() => this.Variables.ToDictionary(i => i.Key, j => j.Value);
-    }
-
-    public class DynamicContext : DynamicContext<object>
-    {
-        public DynamicContext() : base("")
-        {
-
-        }
-        public DynamicContext(string Name) : base(Name)
-        {
-
-        }
     }
 }
