@@ -63,7 +63,8 @@ namespace NExpression.Core.Extensions
                 case Token.Character: return "character";
                 case Token.Number: return "number";
                 case Token.KeywordVar: return "var";
-                case Token.KeywordBoolean: return "bool";
+                case Token.KeywordTrue: return "true";
+                case Token.KeywordFalse: return "false";
                 case Token.KeywordNull: return "null";
                 default: return "";
             }

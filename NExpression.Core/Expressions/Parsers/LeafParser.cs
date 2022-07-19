@@ -22,7 +22,9 @@ namespace NExpression.Core.Expressions.Parsers
 
         public INode Parse<T>()
         {
-            if (Tokenizer.Token == Token.DoubleQuote)
+            Token CurrentToken = Tokenizer.Token;
+
+            if (CurrentToken == Token.DoubleQuote)
             {
                 StringBuilder StringValue = new StringBuilder();
                 while (true)
@@ -42,7 +44,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return new NodeString(StringValue.ToString());
             }
-            else if (Tokenizer.Token == Token.SingleQuote)
+            else if (CurrentToken == Token.SingleQuote)
             {
                 char Value = '\u0000';
                 while (true)
@@ -63,7 +65,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return new NodeChar(Value);
             }
-            else if (Tokenizer.Token == Token.Number)
+            else if (CurrentToken == Token.Number)
             {
                 object Number = Tokenizer.Value;
 
@@ -71,21 +73,25 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return new NodeNumber(Number);
             }
-            else if (Tokenizer.Token == Token.KeywordBoolean)
+            else if (CurrentToken == Token.KeywordTrue)
             {
-                object Boolean = Tokenizer.Value;
-
                 Tokenizer.NextToken();
 
-                return new NodeBoolean((bool)Boolean);
+                return new NodeBoolean(true);
             }
-            else if (Tokenizer.Token == Token.KeywordNull)
+            else if (CurrentToken == Token.KeywordFalse)
+            {
+                Tokenizer.NextToken();
+
+                return new NodeBoolean(false);
+            }
+            else if (CurrentToken == Token.KeywordNull)
             {
                 Tokenizer.NextToken();
 
                 return new NodeNull();
             }
-            else if (Tokenizer.Token == Token.OpenParenthesis)
+            else if (CurrentToken == Token.OpenParenthesis)
             {
                 Tokenizer.NextToken();
 
@@ -102,7 +108,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return Node;
             }
-            else if (Tokenizer.Token == Token.SingleQuestion)
+            else if (CurrentToken == Token.SingleQuestion)
             {
                 Tokenizer.NextToken(); // Skip TenaryOpen, goto LeftNode
 
@@ -116,7 +122,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return new NodeTenary(LeftNode, RightNode);
             }
-            else if (Tokenizer.Token == Token.KeywordVar)
+            else if (CurrentToken == Token.KeywordVar)
             {
                 Tokenizer.NextToken();
 
@@ -129,7 +135,7 @@ namespace NExpression.Core.Expressions.Parsers
                 }
                 throw new ExpressionSyntaxException("Implicitly typed variables must be initialized");
             }
-            else if (Tokenizer.Token == Token.Identifier) // Variable
+            else if (CurrentToken == Token.Identifier) // Variable
             {
                 var Name = Tokenizer.Identifier;
 

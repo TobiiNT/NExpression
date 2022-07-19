@@ -211,10 +211,15 @@ namespace NExpression.Test.TokenTest
                     Assert.IsNotNull(ExpectedValue);
                     Assert.AreEqual(Tokenizer.Value, ExpectedValue);
                 }
-                else if (ExpectedToken == Token.KeywordBoolean)
+                else if (ExpectedToken == Token.KeywordTrue)
                 {
                     Assert.IsNotNull(ExpectedValue);
-                    Assert.AreEqual(Tokenizer.Value, Convert.ToBoolean(ExpectedValue));
+                    Assert.AreEqual(Tokenizer.Value, true);
+                }
+                else if (ExpectedToken == Token.KeywordFalse)
+                {
+                    Assert.IsNotNull(ExpectedValue);
+                    Assert.AreEqual(Tokenizer.Value, false);
                 }
                 else if (ExpectedToken == Token.Identifier)
                 {

@@ -409,10 +409,16 @@ namespace NExpression.Core.Tokens
             switch (Identifier.ToLower())
             {
                 case "true":
+                    {
+                        Value = true;
+                        CurrentToken = Token.KeywordTrue;
+                    }
+                    return;
+
                 case "false":
                     {
-                        Value = bool.Parse(Identifier);
-                        CurrentToken = Token.KeywordBoolean;
+                        Value = false;
+                        CurrentToken = Token.KeywordFalse;
                     }
                     return;
 
@@ -426,6 +432,12 @@ namespace NExpression.Core.Tokens
                 case "null":
                     {
                         CurrentToken = Token.KeywordNull;
+                    }
+                    return;
+
+                case "if":
+                    {
+                        CurrentToken = Token.KeywordIf;
                     }
                     return;
 

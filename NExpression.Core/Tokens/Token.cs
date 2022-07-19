@@ -61,7 +61,12 @@
 
         // Keyword
         KeywordVar,
-        KeywordBoolean,
+
         KeywordNull,
+        KeywordTrue,
+        KeywordFalse,
+
+        KeywordIf,
+        KeywordElse,
     }
 }
