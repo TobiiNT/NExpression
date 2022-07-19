@@ -4,6 +4,7 @@ using NExpression.Core.Contexts;
 using NExpression.Core.Expressions.Nodes.NodeDatas;
 using NExpression.Core.Extensions;
 using NExpression.Core.Helpers;
+using NExpression.Core.Tokens;
 using NExpression.Maths;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -62,6 +63,8 @@ while (true)
             List<SingleCommand> Commands = CommandHelpers.ParseMultiple(InputExpression, MathContext);
             foreach (var SingleCommand in Commands)
             {
+                PrintTokens(SingleCommand.RawExpression);
+
                 CurrentCommand = SingleCommand;
 
                 CurrentCommand.Parse();
@@ -97,17 +100,21 @@ static void PrintTraverse(SingleCommand Command)
     {
         string? Identity = Node.Identity();
 
-            Consoler.WriteLine($"Step {LineNumber} => {Identity}", ConsoleColor.Cyan);
+        Consoler.WriteLine($"Step {LineNumber} => {Identity}", ConsoleColor.Cyan);
 
         LineNumber++;
     }
 }
 
-//var Tokens = TokenHelpers.Parse(Expression);
-//Consoler.Write($"Tokens      = ", ConsoleColor.Cyan);
-//do
-//{
-//    Consoler.Write($"{Tokens.Token.Symbol()} ", ConsoleColor.Cyan);
-//    Tokens.NextToken();
-//}
-//while (Tokens.Token != Token.EOF);
+static void PrintTokens(string Expression)
+{
+    var Tokens = TokenHelpers.Parse(Expression);
+    Consoler.Write($"Tokens      = ", ConsoleColor.Cyan);
+    do
+    {
+        Consoler.Write($"{Tokens.Token.Symbol()} ", ConsoleColor.Cyan);
+        Tokens.NextToken();
+    }
+    while (Tokens.Token != Token.EOF);
+}
+
