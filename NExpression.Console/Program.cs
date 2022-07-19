@@ -62,7 +62,7 @@ while (true)
 
                 CurrentCommand.Parse();
 
-                var NodeValue = CurrentCommand.Evaluate();
+                var NodeValue = CurrentCommand.Traverse();
 
                 Consoler.WriteLine($"[{CommandIndex}] Expression  = {CurrentCommand.RawExpression}", ConsoleColor.Blue);
                 Consoler.WriteLine($"[{CommandIndex}] Result      = {NodeValue}", ConsoleColor.Green);

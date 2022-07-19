@@ -26,5 +26,6 @@ namespace NExpression.Core.Commands
         }
 
         public object? Evaluate() => this.ParsedNode?.Evaluate(Context);
+        public object? Traverse() => this.ParsedNode?.Traverse();
     }
 }

@@ -52,5 +52,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
+        public string Traverse()
+        {
+            return $"({Variable.Traverse()}) {Operation} ({Variable.Traverse()})";
+        }
     }
 }

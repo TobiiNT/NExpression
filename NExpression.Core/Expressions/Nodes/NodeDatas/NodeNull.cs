@@ -12,5 +12,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas
         {
             return default;
         }
+        public string Traverse()
+        {
+            return $"null";
+        }
     }
 }

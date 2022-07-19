@@ -33,5 +33,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
+        public string Traverse()
+        {
+            return $"var ({VariableName})";
+        }
     }
 }
