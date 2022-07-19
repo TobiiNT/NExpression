@@ -349,18 +349,48 @@ namespace NExpression.Core.Tokens
             StringBuilder StringBuilder = new StringBuilder();
 
             bool HaveDecimalPoint = false;
-            while (char.IsDigit(CurrentChar) || (!HaveDecimalPoint && CurrentChar == '.'))
+            bool HaveHeximalSign = false;
+            bool HaveBinarySign = false;
+            while (true)
             {
-                StringBuilder.Append(CurrentChar);
-                if (!HaveDecimalPoint)
-                    HaveDecimalPoint = CurrentChar == '.';
+                char CurrentChar = this.CurrentChar;
+
                 NextChar();
+
+                if (char.IsDigit(CurrentChar))
+                {
+                    StringBuilder.Append(CurrentChar);
+                }
+                else if (CurrentChar == '.' && !HaveDecimalPoint)
+                {
+                    HaveDecimalPoint = true;
+                    StringBuilder.Append(CurrentChar);
+                }
+                else if ((CurrentChar == 'x' || CurrentChar == 'X') && !HaveHeximalSign)
+                {
+                    HaveHeximalSign = true;
+                    continue;
+                }
+                else if ((CurrentChar == 'b' || CurrentChar == 'B') && !HaveBinarySign)
+                {
+                    HaveBinarySign = true;
+                    continue;
+                }
+                else break;
             }
 
             string NumberString = StringBuilder.ToString();
 
             // Parse it
-            if (HaveDecimalPoint)
+            if (HaveBinarySign)
+            {
+                CurrentToken = Token.Keyword0b;
+            }
+            else if (HaveHeximalSign)
+            {
+                CurrentToken = Token.Keyword0x;
+            }
+            else if (HaveDecimalPoint)
             {
                 if (double.TryParse(NumberString, NumberStyles.AllowDecimalPoint, CultureInfo, out double DoubleValue))
                 {

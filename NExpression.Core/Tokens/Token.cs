@@ -54,11 +54,11 @@
         TripleEqual, // ===
         SingleExclamationAndSingleEqual, // !=
         SingleExclamationAndDoubleEqual, // !==
-        
+
         Identifier,
         Character,
         Number,
-
+        
         // Keyword
         KeywordVar,
 
@@ -66,6 +66,8 @@
         KeywordTrue,
         KeywordFalse,
 
+        Keyword0b, // 0b
+        Keyword0x, //0x
         KeywordBoolean,
         KeywordByte,
         KeywordSByte,
