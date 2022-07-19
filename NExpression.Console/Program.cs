@@ -105,7 +105,7 @@ static void PrintTraverse(SingleCommand Command)
     }
 }
 
-static void PrintTokens(string Expression)
+static void PrintTokens(string? Expression)
 {
     Consoler.WriteLine();
     Consoler.Write($"Print tokens : ", ConsoleColor.Blue);

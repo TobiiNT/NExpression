@@ -19,9 +19,9 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("true && true && true").Evaluate(), true && true && true);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("2 && 3").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("2 && 3").Evaluate(null));
             
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("1 && 0").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("1 && 0").Evaluate(null));
         }
 
         [TestMethod]
@@ -37,9 +37,9 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("true || true || true").Evaluate(), true || true || true);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("2 || 3").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("2 || 3").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("1 || 0").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("1 || 0").Evaluate(null));
         }
 
         [TestMethod]
@@ -53,9 +53,9 @@ namespace NExpression.Test.ExpressionTest
                             
             Assert.AreEqual(ExpressionHelpers.Parse("!!false").Evaluate(), !!false);
                             
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("!3").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("!3").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("!1").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("!1").Evaluate(null));
         }
     }
 }

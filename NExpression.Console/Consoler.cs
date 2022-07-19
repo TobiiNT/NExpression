@@ -2,7 +2,7 @@
 {
     internal class Consoler
     {
-        public static void WriteLine(string Value = "", ConsoleColor Color = ConsoleColor.White)
+        public static void WriteLine(string? Value = "", ConsoleColor Color = ConsoleColor.White)
         {
             if (Value == string.Empty)
             {

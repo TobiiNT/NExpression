@@ -19,13 +19,13 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("31 >= 30").Evaluate(), 31 >= 30);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("true > false").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("true > false").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("false >= false").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("false >= false").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("1 >= false").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("1 >= false").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("\"10\" >= \"5\"").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"10\" >= \"5\"").Evaluate(null));
         }
 
         [TestMethod]
@@ -41,13 +41,13 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("31 <= 30").Evaluate(), 31 <= 30);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("true < false").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("true < false").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("false <= false").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("false <= false").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("1 <= false").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("1 <= false").Evaluate(null));
 
-            Assert.ThrowsException<InvalidMathOperatorException>(ExpressionHelpers.Parse("\"10\" <= \"5\"").Evaluate);
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"10\" <= \"5\"").Evaluate(null));
         }
 
         [TestMethod]

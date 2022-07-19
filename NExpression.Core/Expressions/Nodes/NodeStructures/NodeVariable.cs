@@ -11,7 +11,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             this.VariableName = VariableName;
         }
-        public object? Evaluate() => Evaluate(null);
         public object? Evaluate(IContext? ReadContext = null)
         {
             if (ReadContext != null)
@@ -27,11 +26,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
                 throw new InvalidOperationContextException(ReadContext, "READ");
             }
             throw new NullContextException();
-        }
-        public T? Evaluate<T>() => Evaluate<T>(null);
-        public T? Evaluate<T>(IContext? ReadContext = null)
-        {
-            return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
         public void Traverse(ref Stack<INode> Nodes)
         {

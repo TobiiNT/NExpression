@@ -5,7 +5,7 @@ namespace NExpression.Core.Helpers
 {
     public static class CommandHelpers
     {
-        public static List<SingleCommand> ParseMultiple(string LongExpressionString, IContext? ReadContext = null)
+        public static List<SingleCommand> ParseMultiple(string? LongExpressionString, IContext? ReadContext = null)
         {
             List<SingleCommand> Results = new List<SingleCommand>();
 

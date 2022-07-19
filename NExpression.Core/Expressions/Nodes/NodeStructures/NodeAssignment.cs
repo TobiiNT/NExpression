@@ -41,7 +41,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.DeclareType = typeof(T);
         }
 
-        public object? Evaluate() => Evaluate(null);
         public object? Evaluate(IContext? ReadContext = null)
         {
             object? FirstValue = null;
@@ -63,11 +62,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             var Result = Operation?.Execute(Variable.VariableName, FinalValue, DeclareType);
 
             return Result;
-        }
-        public T? Evaluate<T>() => Evaluate<T>(null);
-        public T? Evaluate<T>(IContext? ReadContext = null)
-        {
-            return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
         public void Traverse(ref Stack<INode> Nodes)
         {

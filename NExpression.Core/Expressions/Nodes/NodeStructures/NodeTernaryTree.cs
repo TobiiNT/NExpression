@@ -29,7 +29,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         }
         public void SetCondition(INode ConditionNode) => this.ConditionNode = ConditionNode;
 
-        public object? Evaluate() => Evaluate(null);
         public object? Evaluate(IContext? ReadContext = null)
         {
             var ConditionValue = ConditionNode?.Evaluate(ReadContext);
@@ -38,11 +37,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             var Result = TernaryOperation?.Execute(ConditionValue, LeftValue, RightValue);
 
             return Result;
-        }
-        public T? Evaluate<T>() => Evaluate<T>(null);
-        public T? Evaluate<T>(IContext? ReadContext = null)
-        {
-            return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
         public void Traverse(ref Stack<INode> Nodes)
         {

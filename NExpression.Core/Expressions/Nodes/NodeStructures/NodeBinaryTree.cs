@@ -19,7 +19,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.Operation = Operation;
         }
 
-        public object? Evaluate() => Evaluate(null);
         public object? Evaluate(IContext? ReadContext = null)
         {
             var FirstArg = LeftNode.Evaluate(ReadContext);
@@ -27,11 +26,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             var Result = Operation?.Execute(FirstArg, SecondArg, null);
 
             return Result;
-        }
-        public T? Evaluate<T>() => Evaluate<T>(null);
-        public T? Evaluate<T>(IContext? ReadContext = null)
-        {
-            return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
         public void Traverse(ref Stack<INode> Nodes)
         {

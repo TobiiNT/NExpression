@@ -16,18 +16,13 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas.Numbers
             this.Value = Value;
             this.BinaryString = Value.ToString();
         }
-        public object? Evaluate() => Evaluate(null);
+
         public object? Evaluate(IContext? ReadContext = null)
         {
             if (Value == null)
                 Value = Convert.ToInt32(BinaryString, 2);
 
             return Value;
-        }
-        public T? Evaluate<T>() => Evaluate<T>(null);
-        public T? Evaluate<T>(IContext? ReadContext = null)
-        {
-            return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
         public void Traverse(ref Stack<INode> Nodes)
         {
