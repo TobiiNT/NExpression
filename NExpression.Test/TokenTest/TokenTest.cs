@@ -209,27 +209,27 @@ namespace NExpression.Test.TokenTest
                 if (ExpectedToken == Token.FloatingDecimal || ExpectedToken == Token.NonFloatingDecimal)
                 {
                     Assert.IsNotNull(ExpectedValue);
-                    Assert.AreEqual(Tokenizer.Value, ExpectedValue.ToString());
+                    Assert.AreEqual(Tokenizer.TokenString, ExpectedValue.ToString());
                 }
                 else if (ExpectedToken == Token.KeywordTrue)
                 {
                     Assert.IsNotNull(ExpectedValue);
-                    Assert.AreEqual(Tokenizer.Value, true);
+                    Assert.AreEqual(Tokenizer.TokenString, true);
                 }
                 else if (ExpectedToken == Token.KeywordFalse)
                 {
                     Assert.IsNotNull(ExpectedValue);
-                    Assert.AreEqual(Tokenizer.Value, false);
+                    Assert.AreEqual(Tokenizer.TokenString, false);
                 }
                 else if (ExpectedToken == Token.Identifier)
                 {
                     Assert.IsNotNull(ExpectedValue);
-                    Assert.AreEqual(Tokenizer.Identifier, (string)ExpectedValue);
+                    Assert.AreEqual(Tokenizer.TokenString, (string)ExpectedValue);
                 }
                 else if (ExpectedToken == Token.Character)
                 {
                     Assert.IsNotNull(ExpectedValue);
-                    Assert.AreEqual(Tokenizer.Value.ToString(), ExpectedValue.ToString());
+                    Assert.AreEqual(Tokenizer.TokenString, ExpectedValue.ToString());
                 }
                 Tokenizer.NextToken();
             }

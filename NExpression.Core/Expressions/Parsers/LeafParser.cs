@@ -38,7 +38,7 @@ namespace NExpression.Core.Expressions.Parsers
                     if (Tokenizer.Token == Token.DoubleQuote)
                         break;
 
-                    StringValue.Append(Tokenizer.Value);
+                    StringValue.Append(Tokenizer.TokenString);
                 }
 
                 Tokenizer.NextToken();
@@ -56,11 +56,18 @@ namespace NExpression.Core.Expressions.Parsers
                         throw new ExpressionSyntaxException("Missing close parenthesis");
 
                     if (Tokenizer.Token == Token.SingleQuote)
+                    {
                         break;
+                    }
                     else if (Value != '\u0000')
+                    {
                         throw new InvalidCastException("Cannot cast value to char");
+                    }
 
-                    Value = (char)Tokenizer.Value;
+                    if (!char.TryParse(Tokenizer.TokenString, out Value))
+                    {
+                        throw new InvalidCastException("Cannot cast value to char");
+                    }
                 }
                 Tokenizer.NextToken();
 
@@ -112,7 +119,7 @@ namespace NExpression.Core.Expressions.Parsers
             }
             else if (CurrentToken == Token.Identifier) // Variable
             {
-                var Name = Tokenizer.Identifier;
+                var Name = Tokenizer.TokenString;
 
                 Tokenizer.NextToken();
 
@@ -148,23 +155,23 @@ namespace NExpression.Core.Expressions.Parsers
             }
             else
             {
-                object Value = Tokenizer.Value;
+                string TokenString = Tokenizer.TokenString;
                 Tokenizer.NextToken();
 
                 switch (CurrentToken)
                 {
-                    case Token.Binary: return new NodeBinary((string)Value);
-                    case Token.FloatingDecimal: return new NodeFloatingDecimal((string)Value);
-                    case Token.NonFloatingDecimal: return new NodeNonFloatingDecimal((string)Value);
-                    case Token.Octal: return new NodeOctal((string)Value);
-                    case Token.Hexadecimal: return new NodeHexadecimal((string)Value);
+                    case Token.Binary: return new NodeBinary(TokenString);
+                    case Token.FloatingDecimal: return new NodeFloatingDecimal(TokenString);
+                    case Token.NonFloatingDecimal: return new NodeNonFloatingDecimal(TokenString);
+                    case Token.Octal: return new NodeOctal(TokenString);
+                    case Token.Hexadecimal: return new NodeHexadecimal(TokenString);
                     case Token.KeywordTrue: return new NodeBoolean(true);
                     case Token.KeywordFalse: return new NodeBoolean(false);
                     case Token.KeywordNull: return new NodeNull();
                 }
             }
-           
-            
+
+
             throw new ExpressionSyntaxException($"Unexpected token: {Tokenizer.Token}");
         }
     }

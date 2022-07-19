@@ -6,8 +6,7 @@ namespace NExpression.Core.Tokens
     public class Tokenizer
     {
         private Token CurrentToken { get; set; }
-        public object? Value { get; private set; } 
-        public string? Identifier { get; private set; }
+        public string? TokenString { get; private set; }
         public bool OpeningDoubleQuote { get; private set; }
         public bool OpeningSingleQuote { get; private set; }
 
@@ -59,7 +58,7 @@ namespace NExpression.Core.Tokens
                 }
                 else
                 {
-                    this.Value = CurrentChar;
+                    this.TokenString = CurrentChar.ToString();
                     CurrentToken = Token.Character;
                 }
                 GoNextChar();
@@ -74,7 +73,7 @@ namespace NExpression.Core.Tokens
                 }
                 else
                 {
-                    this.Value = CurrentChar;
+                    this.TokenString = CurrentChar.ToString();
                     CurrentToken = Token.Character;
                 }
                 GoNextChar();
@@ -334,9 +333,9 @@ namespace NExpression.Core.Tokens
                         // Identifier - starts with letter or underscore
                         else if (char.IsLetter(CurrentChar) || CurrentChar == '_')
                         {
-                            this.Identifier = this.ReadIdentifier();
+                            this.TokenString = this.ReadIdentifier();
 
-                            this.CurrentToken = this.ReadKeyword(Identifier);
+                            this.CurrentToken = this.ReadKeyword(TokenString);
                         }
                         else
                         {
@@ -433,7 +432,7 @@ namespace NExpression.Core.Tokens
             string NumberString = StringBuilder.ToString();
 
             // Parse it
-            this.Value = NumberString;
+            this.TokenString = NumberString;
         }
 
         private string ReadIdentifier()

@@ -43,7 +43,7 @@ namespace NExpression.Core.Expressions.Parsers
                             if (Tokenizer.Token == Token.DoubleQuote)
                                 break;
 
-                            StringValue.Append(Tokenizer.Value);
+                            StringValue.Append(Tokenizer.TokenString);
                         }
                         Tokenizer.NextToken();
 
@@ -60,11 +60,18 @@ namespace NExpression.Core.Expressions.Parsers
                                 throw new ExpressionSyntaxException("Missing close parenthesis");
 
                             if (Tokenizer.Token == Token.SingleQuote)
+                            {
                                 break;
+                            }
                             else if (Value != '\u0000')
+                            {
                                 throw new InvalidCastException("Cannot cast value to char");
+                            }
 
-                            Value = (char)Tokenizer.Value;
+                            if (!char.TryParse(Tokenizer.TokenString, out Value))
+                            {
+                                throw new InvalidCastException("Cannot cast value to char");
+                            }
                         }
                         Tokenizer.NextToken();
 
