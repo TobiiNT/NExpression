@@ -1,24 +1,24 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 
-namespace NExpression.Core.Expressions.Nodes.NodeDatas
+namespace NExpression.Core.Expressions.Nodes.NodeDatas.Booleans
 {
-    public class NodeChar : INode
+    public class NodeBoolean : INode
     {
-        private char Char { get; set; }
-        public NodeChar(char Char)
+        private bool Boolean { get; set; }
+        public NodeBoolean(bool Boolean)
         {
-            this.Char = Char;
+            this.Boolean = Boolean;
         }
 
         public object? Evaluate(IContext? ReadContext = null)
         {
-            return Char;
+            return Boolean;
         }
         public void Traverse(ref Stack<INode> Nodes)
         {
             Nodes.Push(this);
         }
-        public override string ToString() => this.Char.ToString();
+        public override string ToString() => Boolean.ToString();
     }
 }

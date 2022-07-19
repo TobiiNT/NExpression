@@ -1,7 +1,7 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 
-namespace NExpression.Core.Expressions.Nodes.NodeDatas
+namespace NExpression.Core.Expressions.Nodes.NodeDatas.Strings
 {
     public class NodeString : INode
     {
@@ -18,6 +18,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas
         {
             Nodes.Push(this);
         }
-        public override string ToString() => this.String;
+        public override string ToString() => String;
     }
 }

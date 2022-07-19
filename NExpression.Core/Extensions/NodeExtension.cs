@@ -5,6 +5,8 @@ using NExpression.Core.Helpers;
 using System.Text;
 using NExpression.Core.Expressions.Operations;
 using NExpression.Core.Expressions.Nodes.NodeDatas.Numbers;
+using NExpression.Core.Expressions.Nodes.NodeDatas.Strings;
+using NExpression.Core.Expressions.Nodes.NodeDatas.Booleans;
 
 namespace NExpression.Core.Extensions
 {
