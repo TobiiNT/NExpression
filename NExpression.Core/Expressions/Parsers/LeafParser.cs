@@ -154,7 +154,8 @@ namespace NExpression.Core.Expressions.Parsers
                 switch (CurrentToken)
                 {
                     case Token.Binary: return new NodeBinary((string)Value);
-                    case Token.Decimal: return new NodeDecimal((string)Value);
+                    case Token.FloatingDecimal: return new NodeFloatingDecimal((string)Value);
+                    case Token.NonFloatingDecimal: return new NodeNonFloatingDecimal((string)Value);
                     case Token.Octal: return new NodeOctal((string)Value);
                     case Token.Hexadecimal: return new NodeHexadecimal((string)Value);
                     case Token.KeywordTrue: return new NodeBoolean(true);

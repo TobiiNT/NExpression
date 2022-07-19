@@ -367,12 +367,12 @@ namespace NExpression.Core.Tokens
                 }
                 else
                 {
-                    this.CurrentToken = Token.Decimal;
+                    this.CurrentToken = Token.NonFloatingDecimal;
                 }
             }
             else
             {
-                this.CurrentToken = Token.Decimal;
+                this.CurrentToken = Token.NonFloatingDecimal;
             }
 
             // Capture digits/decimal point
@@ -383,9 +383,7 @@ namespace NExpression.Core.Tokens
             {
                 char CurrentChar = this.CurrentChar;
 
-
-
-                if (this.CurrentToken == Token.Decimal)
+                if (this.CurrentToken == Token.NonFloatingDecimal || this.CurrentToken == Token.FloatingDecimal)
                 {
                     if (char.IsDigit(CurrentChar))
                     {
@@ -394,6 +392,7 @@ namespace NExpression.Core.Tokens
                     }
                     else if (CurrentChar == '.' && !HaveDecimalPoint)
                     {
+                        this.CurrentToken = Token.FloatingDecimal;
                         HaveDecimalPoint = true;
                         StringBuilder.Append(CurrentChar);
                         GoNextChar();

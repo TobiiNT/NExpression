@@ -23,7 +23,7 @@ namespace NExpression.Core.Extensions
                 return "null";
             else if (Node is NodeBoolean Bool)
                 return $"{Bool}";
-            else if (Node is NodeDecimal Number)
+            else if (Node is NodeNonFloatingDecimal Number)
                 return $"{Number}";
             else if (Node is NodeString String)
                 return $"\"{String}\"";

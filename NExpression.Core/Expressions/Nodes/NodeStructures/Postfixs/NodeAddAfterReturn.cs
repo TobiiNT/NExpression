@@ -8,7 +8,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures.Postfixs
 {
     internal class NodeAddAfterReturn : NodeAssignment
     {
-        public NodeAddAfterReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeDecimal(1), MathOperation.AssignAddAfterReturn)
+        public NodeAddAfterReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeNonFloatingDecimal(1), MathOperation.AssignAddAfterReturn)
         {
             this.AssignContext(Context);
         }

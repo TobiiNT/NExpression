@@ -58,14 +58,14 @@
 
         Identifier,
         Character,
-        
+
         Binary,
         Decimal,
         Octal,
         Hexadecimal,
+        NonFloatingDecimal,
+        FloatingDecimal,
 
-        Number,
-        
         // Keyword
         KeywordVar,
 
