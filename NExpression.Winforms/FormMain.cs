@@ -1,6 +1,5 @@
 using NExpression.Core.Commands;
 using NExpression.Core.Contexts;
-using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Helpers;
 using NExpression.Winforms.Components;
 

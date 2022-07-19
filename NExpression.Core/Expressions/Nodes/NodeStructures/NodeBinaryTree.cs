@@ -1,8 +1,6 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Operations.Interfaces;
-using NExpression.Core.Helpers;
-using NExpression.Core.Extensions;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {

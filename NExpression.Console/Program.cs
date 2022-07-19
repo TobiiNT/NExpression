@@ -1,15 +1,12 @@
 ﻿using NExpression.Console;
 using NExpression.Core.Commands;
 using NExpression.Core.Contexts;
-using NExpression.Core.Expressions.Nodes.NodeDatas;
 using NExpression.Core.Extensions;
 using NExpression.Core.Helpers;
 using NExpression.Core.Tokens;
 using NExpression.Maths;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.Json;
 
 [DllImport("kernel32.dll")]
 static extern bool SetConsoleOutputCP(uint wCodePageID);

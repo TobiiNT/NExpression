@@ -4,12 +4,12 @@ using NExpression.Core.Expressions.Operations.Assignments.Abstractions;
 
 namespace NExpression.Core.Expressions.Operations.Assignments
 {
-    internal class AssignDivide : AssignReadWrite
+    internal class AssignSubtractAfterReturn : AssignReadWrite
     {
-        public AssignDivide(IContext? Context)
+        public AssignSubtractAfterReturn(IContext? Context)
             : base(Context,
-                  new CalculationDivide(),
-                  MathOperation.AssignDivide)
+                  new CalculationSubtract(),
+                  MathOperation.AssignSubtractAfterReturn)
         {
 
         }
