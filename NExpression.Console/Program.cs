@@ -60,11 +60,11 @@ while (true)
         SingleCommand? CurrentCommand = null;
         try
         {
+            PrintTokens(InputExpression);
+
             List<SingleCommand> Commands = CommandHelpers.ParseMultiple(InputExpression, MathContext);
             foreach (var SingleCommand in Commands)
             {
-                PrintTokens(SingleCommand.RawExpression);
-
                 CurrentCommand = SingleCommand;
 
                 CurrentCommand.Parse();

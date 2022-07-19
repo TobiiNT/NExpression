@@ -349,32 +349,32 @@ namespace NExpression.Core.Tokens
             StringBuilder StringBuilder = new StringBuilder();
 
             bool HaveDecimalPoint = false;
-            bool HaveHeximalSign = false;
-            bool HaveBinarySign = false;
             while (true)
             {
                 char CurrentChar = this.CurrentChar;
 
-                NextChar();
-
                 if (char.IsDigit(CurrentChar))
                 {
                     StringBuilder.Append(CurrentChar);
+                    NextChar();
                 }
                 else if (CurrentChar == '.' && !HaveDecimalPoint)
                 {
                     HaveDecimalPoint = true;
                     StringBuilder.Append(CurrentChar);
+                    NextChar();
                 }
-                else if ((CurrentChar == 'x' || CurrentChar == 'X') && !HaveHeximalSign)
+                else if (CurrentChar == 'x' || CurrentChar == 'X')
                 {
-                    HaveHeximalSign = true;
-                    continue;
+                    if (StringBuilder.ToString() == "0")
+                        CurrentToken = Token.Keyword0x;
+                    return;
                 }
-                else if ((CurrentChar == 'b' || CurrentChar == 'B') && !HaveBinarySign)
+                else if (CurrentChar == 'b' || CurrentChar == 'B')
                 {
-                    HaveBinarySign = true;
-                    continue;
+                    if (StringBuilder.ToString() == "0")
+                        CurrentToken = Token.Keyword0b;
+                    return;
                 }
                 else break;
             }
@@ -382,15 +382,7 @@ namespace NExpression.Core.Tokens
             string NumberString = StringBuilder.ToString();
 
             // Parse it
-            if (HaveBinarySign)
-            {
-                CurrentToken = Token.Keyword0b;
-            }
-            else if (HaveHeximalSign)
-            {
-                CurrentToken = Token.Keyword0x;
-            }
-            else if (HaveDecimalPoint)
+            if (HaveDecimalPoint)
             {
                 if (double.TryParse(NumberString, NumberStyles.AllowDecimalPoint, CultureInfo, out double DoubleValue))
                 {

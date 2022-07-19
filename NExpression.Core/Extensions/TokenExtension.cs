@@ -66,7 +66,7 @@ namespace NExpression.Core.Extensions
                 case Token.KeywordTrue: return "true";
                 case Token.KeywordFalse: return "false";
                 case Token.KeywordNull: return "null";
-                default: return "";
+                default: return Token.ToString();
             }
         }
     }
