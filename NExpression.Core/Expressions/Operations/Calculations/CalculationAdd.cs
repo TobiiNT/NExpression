@@ -34,20 +34,10 @@ namespace NExpression.Core.Expressions.Operations.Calculations
             switch (TypeCodeA)
             {
                 case TypeCode.Char:
-                    switch (TypeCodeB)
-                    {
-                        case TypeCode.Char:
-                        case TypeCode.String: return FirstArg.ToString() + SecondArg.ToString();
-                    }
-                    break;
+                    return FirstArg.ToString() + SecondArg.ToString();
 
                 case TypeCode.String:
-                    switch (TypeCodeB)
-                    {
-                        case TypeCode.Char:
-                        case TypeCode.String: return (string)FirstArg + SecondArg.ToString();
-                    }
-                    break;
+                    return (string)FirstArg + SecondArg.ToString();
 
                 case TypeCode.Byte:
                     switch (TypeCodeB)
