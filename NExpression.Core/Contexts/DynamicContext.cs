@@ -11,6 +11,10 @@ namespace NExpression.Core.Contexts
         private Dictionary<string, object?> Variables { set; get; }
         private Dictionary<string, IOperation?> Operations { set; get; }
 
+        public DynamicContext() : this("")
+        {
+
+        }
         public DynamicContext(DynamicContext ReadWriteContext)
         {
             Name = ReadWriteContext.Name;
