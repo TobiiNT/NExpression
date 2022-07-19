@@ -59,7 +59,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             }
             var FinalValue = Value.Evaluate(ReadContext);
 
-            var Result = Operation?.Execute(Variable.VariableName, FinalValue, DeclareType);
+            var Result = Operation?.Evaluate(Variable.VariableName, FinalValue, DeclareType);
 
             return Result;
         }

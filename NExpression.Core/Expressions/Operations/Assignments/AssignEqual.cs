@@ -12,35 +12,29 @@ namespace NExpression.Core.Expressions.Operations.Assignments
             this.Context = Context;
         }
 
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get
-            {
-                return (FirstArg, SecondArg, ThirdArg) =>
-                {
-                    return LogicExecute(MathOperation.AssignEqual, FirstArg, SecondArg);
-                };
-            }
-        }
+            MathOperation Operation = MathOperation.AssignEqual;
+            object? Variable = Params[0];
+            object? AssignValue = Params[1];
 
-        public object LogicExecute(MathOperation Operation, object? Variable = null, object? SecondArg = null, object? ThirdArg = null)
-        {
             if (Context == null)
             {
-                throw new NullContextException(new ExpressionEvaluationException(Operation, Variable, SecondArg));
+                throw new NullContextException(new ExpressionEvaluationException(Operation, Variable, AssignValue));
             }
             string? VariableName = Variable?.ToString();
             if (VariableName == null)
             {
-                throw new NullVariableException(VariableName, new ExpressionEvaluationException(Operation, Variable, SecondArg));
+                throw new NullVariableException(VariableName, new ExpressionEvaluationException(Operation, Variable, AssignValue));
             }
             if (Context is not ISetVariableContext WriteContext)
             {
-                throw new InvalidOperationContextException(Context, "WRITE", new ExpressionEvaluationException(Operation, Variable, SecondArg));
+                throw new InvalidOperationContextException(Context, "WRITE", new ExpressionEvaluationException(Operation, Variable, AssignValue));
             }
-            
-            WriteContext.AssignVariable(VariableName, SecondArg);
-            return SecondArg;
+
+            WriteContext.AssignVariable(VariableName, AssignValue);
+
+            return AssignValue;
         }
     }
 }

@@ -6,19 +6,11 @@ namespace NExpression.Maths
 {
     public class MathAbs : IOperation
     {
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get
-            {
-                return (FirstArg, SecondArg, ThirdArg) =>
-                {
-                    return LogicExecute(MathOperation.FunctionCall, FirstArg);
-                };
-            }
-        }
+            MathOperation Operation = MathOperation.FunctionCall;
+            object? FirstArg = Params[0];
 
-        public object LogicExecute(MathOperation Operation, object? FirstArg = null, object? SecondArg = null, object? ThirdArg = null)
-        {
             if (FirstArg == null)
             {
                 throw new ArgumentNullException("Cannot calculate null value", new ExpressionEvaluationException(Operation));

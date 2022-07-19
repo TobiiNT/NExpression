@@ -5,19 +5,12 @@ namespace NExpression.Core.Expressions.Operations.Logicals
 {
     internal class LogicalAND : IOperation
     {
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get 
-            { 
-                return (FirstArg, SecondArg, ThirdArg) =>
-                {
-                    return LogicExecute(MathOperation.LogicalAND, FirstArg, SecondArg);
-                };
-            }
-        }
-        
-        public object LogicExecute(MathOperation Operation, object? FirstArg = null, object? SecondArg = null, object? ThirdArg = null)
-        {
+            MathOperation Operation = MathOperation.LogicalAND;
+            object? FirstArg = Params[0];
+            object? SecondArg = Params[1];
+
             if (FirstArg == null || SecondArg == null)
             {
                 throw new ArgumentNullException("Cannot logical null value", new ExpressionEvaluationException(Operation, FirstArg, SecondArg));

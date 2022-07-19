@@ -5,19 +5,12 @@ namespace NExpression.Core.Expressions.Operations.Logicals
 {
     internal class LogicalIFNULL : IOperation
     {
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get
-            {
-                return (FirstArg, SecondArg, ThirdArg) =>
-                {
-                    return LogicExecute(MathOperation.LogicalIFNULL, FirstArg, SecondArg);
-                };
-            }
-        }
+            MathOperation Operation = MathOperation.LogicalIFNULL;
+            object? FirstArg = Params[0];
+            object? SecondArg = Params[1];
 
-        public object LogicExecute(MathOperation Operation, object? FirstArg = null, object? SecondArg = null, object? ThirdArg = null)
-        {
             if (FirstArg == null)
             {
                 if (SecondArg == null)

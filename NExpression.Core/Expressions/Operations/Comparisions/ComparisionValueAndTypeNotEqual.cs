@@ -4,19 +4,12 @@ namespace NExpression.Core.Expressions.Operations.Comparisions
 {
     internal class ComparisionValueAndTypeNotEqual : IOperation
     {
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get
-            {
-                return (FirstArg, SecondArg, ThirdArg) =>
-                {
-                    return LogicExecute(MathOperation.CompareValueAndTypeNotEqual, FirstArg, SecondArg);
-                };
-            }
-        }
+            MathOperation Operation = MathOperation.CompareValueAndTypeNotEqual;
+            object? FirstArg = Params[0];
+            object? SecondArg = Params[1];
 
-        public object LogicExecute(MathOperation Operation, object? FirstArg = null, object? SecondArg = null, object? ThirdArg = null)
-        {
             if (FirstArg == null && SecondArg == null)
             {
                 return false;

@@ -5,19 +5,11 @@ namespace NExpression.Core.Expressions.Operations.Calculations
 {
     internal class CalculationNegative : IOperation
     {
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get
-            {
-                return (FirstArg, SecondArg, ThirdArg) =>
-                {
-                    return LogicExecute(MathOperation.Negative, FirstArg);
-                };
-            }
-        }
+            MathOperation Operation = MathOperation.Negative;
+            object? FirstArg = Params[0];
 
-        public object LogicExecute(MathOperation Operation, object? FirstArg = null, object? SecondArg = null, object? ThirdArg = null)
-        {
             if (FirstArg == null)
             {
                 throw new ArgumentNullException("Cannot calculate null value", new ExpressionEvaluationException(Operation));

@@ -4,19 +4,11 @@ namespace NExpression.Core.Expressions.Operations.Conversions
 {
     internal class ConvertToString : IOperation
     {
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get
-            {
-                return (FirstArg, SecondArg, ThirdArg) =>
-                {
-                    return LogicExecute(MathOperation.StringValue, FirstArg, SecondArg);
-                };
-            }
-        }
+            MathOperation Operation = MathOperation.StringValue;
+            object? FirstArg = Params[0];
 
-        public object LogicExecute(MathOperation Operation, object? FirstArg = null, object? SecondArg = null, object? ThirdArg = null)
-        {
             return FirstArg?.ToString() ?? "";
         }
     }

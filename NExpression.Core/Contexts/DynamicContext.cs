@@ -50,7 +50,7 @@ namespace NExpression.Core.Contexts
             object? SecondArg = Arguments.Length >= 2 ? Arguments[1] : null;
             object? ThirdArg = Arguments.Length >= 3 ? Arguments[2] : null;
 
-            return Operation?.Execute(FirstArg, SecondArg, ThirdArg);
+            return Operation?.Evaluate(FirstArg, SecondArg, ThirdArg);
         }
 
         public bool ResolveVariable(string? PropertyName, out object? Value)

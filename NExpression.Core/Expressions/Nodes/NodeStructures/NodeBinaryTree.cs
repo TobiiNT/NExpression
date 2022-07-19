@@ -23,7 +23,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             var FirstArg = LeftNode.Evaluate(ReadContext);
             var SecondArg = RightNode.Evaluate(ReadContext);
-            var Result = Operation?.Execute(FirstArg, SecondArg, null);
+            var Result = Operation?.Evaluate(FirstArg, SecondArg, null);
 
             return Result;
         }

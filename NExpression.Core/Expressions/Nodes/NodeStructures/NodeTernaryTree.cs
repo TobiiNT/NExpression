@@ -34,7 +34,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             var ConditionValue = ConditionNode?.Evaluate(ReadContext);
             var LeftValue = LeftNode.Evaluate(ReadContext);
             var RightValue = RightNode.Evaluate(ReadContext);
-            var Result = TernaryOperation?.Execute(ConditionValue, LeftValue, RightValue);
+            var Result = TernaryOperation?.Evaluate(ConditionValue, LeftValue, RightValue);
 
             return Result;
         }

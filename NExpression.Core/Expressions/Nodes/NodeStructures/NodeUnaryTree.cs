@@ -20,7 +20,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         public object? Evaluate(IContext? ReadContext = null)
         {
             var RightValue = RightNode.Evaluate(ReadContext);
-            var Result = Operation?.Execute(RightValue, null, null);
+            var Result = Operation?.Evaluate(RightValue);
 
             return Result;
         }

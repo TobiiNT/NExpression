@@ -5,18 +5,13 @@ namespace NExpression.Core.Expressions.Operations.Conditions
 {
     internal class ConditionTernary : IOperation
     {
-        public Func<object?, object?, object?, object> Execute
+        public object? Evaluate(params object?[] Params)
         {
-            get
-            {
-                return (Condition, Left, Right) =>
-                {
-                    return LogicExecute(MathOperation.ConditionTernary, Condition, Left, Right);
-                };
-            }
-        }
-        public object LogicExecute(MathOperation Operation, object? FirstArg = null, object? SecondArg = null, object? ThirdArg = null)
-        {
+            MathOperation Operation = MathOperation.ConditionTernary;
+            object? FirstArg = Params[0];
+            object? SecondArg = Params[1];
+            object? ThirdArg = Params[2];
+
             if (FirstArg == null)
             {
                 throw new ArgumentNullException("Condition cannot be null", new ExpressionEvaluationException(Operation));
