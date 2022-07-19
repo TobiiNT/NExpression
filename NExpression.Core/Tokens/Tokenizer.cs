@@ -15,6 +15,7 @@ namespace NExpression.Core.Tokens
         public char[] CharArrays { get; }
         private int Index { set; get; }
         private char CurrentChar => Index < CharArrays.Length ? CharArrays[Index] : '\0';
+        private char NextChar => Index + 1 < CharArrays.Length ? CharArrays[Index + 1] : '\0';
         public Token Token => CurrentToken;
 
         public Tokenizer(string Expression)
@@ -33,13 +34,14 @@ namespace NExpression.Core.Tokens
             this.NextToken();
         }
 
-        private void NextChar() => Index++;
+        private void GoNextChar() => Index++;
+        private void SkipChar(int SkipCount) => Index += SkipCount;
 
         public void NextToken()
         {
             while (char.IsWhiteSpace(CurrentChar))
             {
-                NextChar();
+                GoNextChar();
             }
 
             ReadCurrentToken();
@@ -59,7 +61,7 @@ namespace NExpression.Core.Tokens
                     this.Value = CurrentChar;
                     CurrentToken = Token.Character;
                 }
-                NextChar();
+                GoNextChar();
                 return;
             }
             else if (this.OpeningSingleQuote)
@@ -74,7 +76,7 @@ namespace NExpression.Core.Tokens
                     this.Value = CurrentChar;
                     CurrentToken = Token.Character;
                 }
-                NextChar();
+                GoNextChar();
                 return;
             }
             else
@@ -85,96 +87,96 @@ namespace NExpression.Core.Tokens
                         CurrentToken = Token.EOF;
                         return;
                     case '(':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.OpenParenthesis;
                         return;
                     case ')':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.CloseParenthesis;
                         return;
                     case ',':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.Comma;
                         return;
                     case ';':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SemiColon;
                         return;
                     case '"':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.DoubleQuote;
                         this.OpeningDoubleQuote = true;
                         return;
                     case '\'':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleQuote;
                         this.OpeningSingleQuote = true;
                         return;
                     case '+':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleCross;
                         if (CurrentChar == '+')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.DoubleCross;
                         }
                         else if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleCrossAndEqual;
                         }
                         return;
                     case '-':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleDash;
                         if (CurrentChar == '-')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.DoubleDash;
                         }
                         else if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleDashAndEqual;
                         }
                         return;
                     case '*':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleAsterisk;
                         if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleAsteriskAndEqual;
                         }
                         return;
                     case '/':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleSlash;
                         if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleSlashAndEqual;
                         }
                         return;
                     case '%':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SinglePercent;
                         if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SinglePercentAndEqual;
                         }
                         return;
                     case '&':
-                        NextChar();
+                        GoNextChar();
                         if (CurrentChar == '&')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.DoubleAmpersand;
                         }
                         else if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleAmpersandAndEqual;
                         }
                         else
@@ -183,14 +185,14 @@ namespace NExpression.Core.Tokens
                         }
                         return;
                     case '?':
-                        NextChar();
+                        GoNextChar();
                         if (CurrentChar == '?')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.DoubleQuestion;
                             if (CurrentChar == '=')
                             {
-                                NextChar();
+                                GoNextChar();
                                 CurrentToken = Token.DoubleQuestionAndEqual;
                             }
                         }
@@ -200,19 +202,19 @@ namespace NExpression.Core.Tokens
                         }
                         return;
                     case ':':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleColon;
                         return;
                     case '|':
-                        NextChar();
+                        GoNextChar();
                         if (CurrentChar == '|')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.DoublePipe;
                         }
                         else if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SinglePipeAndEqual;
                         }
                         else
@@ -221,27 +223,27 @@ namespace NExpression.Core.Tokens
                         }
                         return;
                     case '^':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleCaret;
                         if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleCaretAndEqual;
                         }
                         return;
                     case '~':
-                        NextChar();
+                        GoNextChar();
                         CurrentToken = Token.SingleTilde;
                         return;
 
                     case '!':
-                        NextChar();
+                        GoNextChar();
                         if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             if (CurrentChar == '=')
                             {
-                                NextChar();
+                                GoNextChar();
                                 CurrentToken = Token.SingleExclamationAndDoubleEqual;
                             }
                             else
@@ -256,13 +258,13 @@ namespace NExpression.Core.Tokens
                         return;
 
                     case '=':
-                        NextChar();
+                        GoNextChar();
                         if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             if (CurrentChar == '=')
                             {
-                                NextChar();
+                                GoNextChar();
                                 CurrentToken = Token.TripleEqual;
                             }
                             else
@@ -277,20 +279,20 @@ namespace NExpression.Core.Tokens
                         return;
 
                     case '>':
-                        NextChar();
+                        GoNextChar();
                         if (CurrentChar == '>')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.DoubleGreaterThan;
                             if (CurrentChar == '=')
                             {
-                                NextChar();
+                                GoNextChar();
                                 CurrentToken = Token.DoubleGreaterThanAndEqual;
                             }
                         }
                         else if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleGreaterThanAndEqual;
                         }
                         else
@@ -300,20 +302,20 @@ namespace NExpression.Core.Tokens
                         return;
 
                     case '<':
-                        NextChar();
+                        GoNextChar();
                         if (CurrentChar == '<')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.DoubleLessThan;
                             if (CurrentChar == '=')
                             {
-                                NextChar();
+                                GoNextChar();
                                 CurrentToken = Token.DoubleLessThanAndEqual;
                             }
                         }
                         else if (CurrentChar == '=')
                         {
-                            NextChar();
+                            GoNextChar();
                             CurrentToken = Token.SingleLessThanAndEqual;
                         }
                         else
@@ -335,7 +337,7 @@ namespace NExpression.Core.Tokens
                         }
                         else
                         {
-                            NextChar();
+                            GoNextChar();
                         }
                         return;
                 }
@@ -344,8 +346,33 @@ namespace NExpression.Core.Tokens
 
         private void ReadNumber()
         {
+            if (this.CurrentChar == '0')
+            {
+                if (this.NextChar == 'x' || this.NextChar == 'X')
+                {
+                    this.CurrentToken = Token.Hexadecimal;
+                    this.SkipChar(2);
+                }
+                else if (this.NextChar == 'b' || this.NextChar == 'b')
+                {
+                    this.CurrentToken = Token.Binary;
+                    this.SkipChar(2);
+                }
+                else if (char.IsDigit(this.NextChar))
+                {
+                    this.CurrentToken = Token.Octal;
+                }
+                else
+                {
+                    this.CurrentToken = Token.Decimal;
+                }
+            }
+            else
+            {
+                this.CurrentToken = Token.Decimal;
+            }
+
             // Capture digits/decimal point
-            CultureInfo CultureInfo = CultureInfo.InvariantCulture;
             StringBuilder StringBuilder = new StringBuilder();
 
             bool HaveDecimalPoint = false;
@@ -353,62 +380,58 @@ namespace NExpression.Core.Tokens
             {
                 char CurrentChar = this.CurrentChar;
 
-                if (char.IsDigit(CurrentChar))
+
+
+                if (this.CurrentToken == Token.Decimal)
                 {
-                    StringBuilder.Append(CurrentChar);
-                    NextChar();
+                    if (char.IsDigit(CurrentChar))
+                    {
+                        StringBuilder.Append(CurrentChar);
+                        GoNextChar();
+                    }
+                    else if (CurrentChar == '.' && !HaveDecimalPoint)
+                    {
+                        HaveDecimalPoint = true;
+                        StringBuilder.Append(CurrentChar);
+                        GoNextChar();
+                    }
+                    else break;
                 }
-                else if (CurrentChar == '.' && !HaveDecimalPoint)
+                else if (this.CurrentToken == Token.Binary)
                 {
-                    HaveDecimalPoint = true;
-                    StringBuilder.Append(CurrentChar);
-                    NextChar();
+                    if (CurrentChar == '0' || CurrentChar == '1')
+                    {
+                        StringBuilder.Append(CurrentChar);
+                        GoNextChar();
+                    }
+                    else break;
                 }
-                else if (CurrentChar == 'x' || CurrentChar == 'X')
+                else if (this.CurrentToken == Token.Hexadecimal)
                 {
-                    if (StringBuilder.ToString() == "0")
-                        CurrentToken = Token.Keyword0x;
-                    return;
+                    if (char.IsDigit(CurrentChar) || 
+                        (CurrentChar >= 'a' && CurrentChar <= 'f') ||
+                        (CurrentChar >= 'A' && CurrentChar <= 'F'))
+                    {
+                        StringBuilder.Append(CurrentChar);
+                        GoNextChar();
+                    }
+                    else break;
                 }
-                else if (CurrentChar == 'b' || CurrentChar == 'B')
+                else if (this.CurrentToken == Token.Octal)
                 {
-                    if (StringBuilder.ToString() == "0")
-                        CurrentToken = Token.Keyword0b;
-                    return;
+                    if (char.IsDigit(CurrentChar))
+                    {
+                        StringBuilder.Append(CurrentChar);
+                        GoNextChar();
+                    }
+                    else break;
                 }
-                else break;
             }
 
             string NumberString = StringBuilder.ToString();
 
             // Parse it
-            if (HaveDecimalPoint)
-            {
-                if (double.TryParse(NumberString, NumberStyles.AllowDecimalPoint, CultureInfo, out double DoubleValue))
-                {
-                    this.Value = DoubleValue;
-                    this.CurrentToken = Token.Number;
-                }
-                else if (decimal.TryParse(NumberString, NumberStyles.AllowDecimalPoint, CultureInfo, out decimal DecimalValue))
-                {
-                    this.Value = DecimalValue;
-                    this.CurrentToken = Token.Number;
-                }
-            }
-            else
-            {
-                if (int.TryParse(NumberString, NumberStyles.Integer, CultureInfo.InvariantCulture, out int IntValue))
-                {
-                    this.Value = IntValue;
-                    this.CurrentToken = Token.Number;
-                }
-                else if (long.TryParse(NumberString, NumberStyles.Integer, CultureInfo.InvariantCulture, out long LongValue))
-                {
-                    this.Value = LongValue;
-                    this.CurrentToken = Token.Number;
-                }
-            }
-
+            this.Value = NumberString;
         }
 
         private void ReadIdentifier()
@@ -419,7 +442,7 @@ namespace NExpression.Core.Tokens
             while (char.IsLetterOrDigit(CurrentChar) || CurrentChar == '_')
             {
                 StringBuilder.Append(CurrentChar);
-                NextChar();
+                GoNextChar();
             }
 
             this.Identifier = StringBuilder.ToString();

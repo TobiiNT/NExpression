@@ -38,7 +38,7 @@
         LogicalIFNULL, // '??'
 
         // Conditions
-        ConditionTenary, // '?'
+        ConditionTernary, // '?'
 
         // Assignments
         AssignEqual, // '='

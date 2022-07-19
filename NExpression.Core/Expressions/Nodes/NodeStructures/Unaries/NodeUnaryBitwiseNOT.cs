@@ -4,7 +4,7 @@ using NExpression.Core.Helpers;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures.Unaries
 {
-    internal class NodeUnaryBitwiseNOT : NodeUnary
+    internal class NodeUnaryBitwiseNOT : NodeUnaryTree
     {
         public NodeUnaryBitwiseNOT(INode RightNode) : base(RightNode, OperationHelpers.GetOperation(MathOperation.BitwiseNOT))
         {

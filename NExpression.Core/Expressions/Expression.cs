@@ -31,8 +31,8 @@ namespace NExpression.Core.Expressions
             IParser ParseLogicalOR = new ExpressionParser(Tokenizer, ParseLogicalAND, new List<Token> { Token.DoublePipe });
             IParser ParseLogicalIFNULL = new ExpressionParser(Tokenizer, ParseLogicalOR, new List<Token> { Token.DoubleQuestion });
             IParser ParseString = new CharacterParser(Tokenizer, ParseLogicalIFNULL, new List<Token> { Token.DoubleQuote, Token.SingleQuote });
-            IParser ParseThreeTenary = new TenaryParser(Tokenizer, ParseString, new List<Token> { Token.SingleQuestion, Token.SingleColon });
-            IParser ParseAssignValue = new AssignmentParser(Context, Tokenizer, ParseThreeTenary, new List<Token> { Token.KeywordVar, Token.SingleEqual, Token.SingleCrossAndEqual, Token.SingleDashAndEqual, Token.SingleAsteriskAndEqual, Token.SingleDashAndEqual, Token.SinglePercentAndEqual, Token.SingleAmpersandAndEqual, Token.SingleCaretAndEqual, Token.SinglePipeAndEqual, Token.DoubleLessThanAndEqual, Token.DoubleGreaterThanAndEqual, Token.DoubleQuestionAndEqual });
+            IParser ParseTernaryCondition = new TernaryParser(Tokenizer, ParseString, new List<Token> { Token.SingleQuestion, Token.SingleColon });
+            IParser ParseAssignValue = new AssignmentParser(Context, Tokenizer, ParseTernaryCondition, new List<Token> { Token.KeywordVar, Token.SingleEqual, Token.SingleCrossAndEqual, Token.SingleDashAndEqual, Token.SingleAsteriskAndEqual, Token.SingleDashAndEqual, Token.SinglePercentAndEqual, Token.SingleAmpersandAndEqual, Token.SingleCaretAndEqual, Token.SinglePipeAndEqual, Token.DoubleLessThanAndEqual, Token.DoubleGreaterThanAndEqual, Token.DoubleQuestionAndEqual });
             IParser ParseEmpty = new EmptyParser(ParseAssignValue);
 
             this.Parser = ParseEmpty;

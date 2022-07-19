@@ -65,26 +65,23 @@ while (true)
             List<SingleCommand> Commands = CommandHelpers.ParseMultiple(InputExpression, MathContext);
             foreach (var SingleCommand in Commands)
             {
-                CurrentCommand = SingleCommand;
-
-                CurrentCommand.Parse();
+                SingleCommand.Parse();
 
                 PrintTraverse(SingleCommand);
 
-                var NodeValue = CurrentCommand.Evaluate();
-
-                Consoler.WriteLine($"[{CommandIndex}] Expression  = {CurrentCommand.RawExpression}", ConsoleColor.Blue);
-                Consoler.WriteLine($"[{CommandIndex}] Result      = {NodeValue}", ConsoleColor.Green);
+                var NodeValue = SingleCommand.Evaluate();
+                Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {SingleCommand.RawExpression}", ConsoleColor.Blue);
+                Consoler.WriteLine($"[Command {CommandIndex}] Result      = {NodeValue}", ConsoleColor.Green);
                 CommandIndex++;
             }
         }
         catch (Exception Exception)
         {
-            Consoler.WriteLine($"[{CommandIndex}] Expression  = {CurrentCommand?.RawExpression}", ConsoleColor.Red);
-            Consoler.WriteLine($"[{CommandIndex}] Error       = {Exception.Message}", ConsoleColor.Red);
+            Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {CurrentCommand?.RawExpression}", ConsoleColor.Red);
+            Consoler.WriteLine($"[Command {CommandIndex}] Error       = {Exception.Message}", ConsoleColor.Red);
             if (Exception.InnerException != null)
             {
-                Consoler.WriteLine($"[{CommandIndex}] Inner Error  = [{Exception.InnerException?.Message}]", ConsoleColor.Red);
+                Consoler.WriteLine($"[Command {CommandIndex}] Inner Error = [{Exception.InnerException?.Message}]", ConsoleColor.Red);
             }
         }
         Consoler.WriteLine();
@@ -93,6 +90,9 @@ while (true)
 
 static void PrintTraverse(SingleCommand Command)
 {
+    Consoler.Write($"Traverse : ", ConsoleColor.Blue);
+    Consoler.WriteLine(Command.RawExpression);
+
     var Stacks = Command.Traverse();
 
     int LineNumber = 1;
@@ -100,21 +100,29 @@ static void PrintTraverse(SingleCommand Command)
     {
         string? Identity = Node.Identity();
 
-        Consoler.WriteLine($"Step {LineNumber} => {Identity}", ConsoleColor.Cyan);
+        Consoler.WriteLine($"[Step {LineNumber}] => {Identity}", ConsoleColor.Cyan);
 
         LineNumber++;
     }
+
+    Consoler.WriteLine();
 }
 
 static void PrintTokens(string Expression)
 {
+    Consoler.Write($"Print tokens : ", ConsoleColor.Blue);
+    Consoler.WriteLine(Expression);
+
     var Tokens = TokenHelpers.Parse(Expression);
-    Consoler.Write($"Tokens      = ", ConsoleColor.Cyan);
+
+    int LineNumber = 1;
     do
     {
-        Consoler.Write($"{Tokens.Token.Symbol()} ", ConsoleColor.Cyan);
+        Consoler.WriteLine($"[Token {LineNumber++}] {Tokens.Token.Symbol()} ", ConsoleColor.Cyan);
         Tokens.NextToken();
     }
     while (Tokens.Token != Token.EOF);
+
+    Consoler.WriteLine();
 }
 

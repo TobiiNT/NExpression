@@ -5,7 +5,7 @@ using NExpression.Core.Helpers;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures.Unaries
 {
-    internal class NodeUnaryNegative : NodeUnary
+    internal class NodeUnaryNegative : NodeUnaryTree
     {
         public NodeUnaryNegative(INode RightNode) : base(RightNode, OperationHelpers.GetOperation(MathOperation.Negative))
         {

@@ -42,7 +42,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                     var RightSide = NextParser.Parse<T>();
 
-                    LeftNode = new NodeBinary(LeftNode, RightSide, Operation);
+                    LeftNode = new NodeBinaryTree(LeftNode, RightSide, Operation);
                 }
                 else return LeftNode;
             }

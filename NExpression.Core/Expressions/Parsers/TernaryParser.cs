@@ -7,14 +7,14 @@ using NExpression.Core.Tokens;
 
 namespace NExpression.Core.Expressions.Parsers
 {
-    internal class TenaryParser : IParser
+    internal class TernaryParser : IParser
     {
         public Tokenizer Tokenizer { private set; get; }
         public IParser NextParser { private set; get; }
         public List<Token> MaskToken { private set; get; }
         public IContext Context => throw new NotImplementedException();
 
-        public TenaryParser(Tokenizer Tokenizer, IParser NextParser, List<Token> MaskToken)
+        public TernaryParser(Tokenizer Tokenizer, IParser NextParser, List<Token> MaskToken)
         {
             this.Tokenizer = Tokenizer;
             this.NextParser = NextParser;
@@ -45,12 +45,12 @@ namespace NExpression.Core.Expressions.Parsers
 
                         Tokenizer.NextToken();
 
-                        return new NodeTenary(Condition, LeftSide, RightSide);
+                        return new NodeTernaryTree(Condition, LeftSide, RightSide);
                     }
                     else if (CurrentToken == Token.SingleQuestion) // Nested tenary
                     {
                         INode MissingNode = Parse<T>();
-                        if (MissingNode is NodeTenary TenaryNode)
+                        if (MissingNode is NodeTernaryTree TenaryNode)
                         {
                             TenaryNode.SetCondition(LeftSide);
 

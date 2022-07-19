@@ -33,7 +33,7 @@ namespace NExpression.Core.Extensions
                 case MathOperation.LogicalOR: return "||";
                 case MathOperation.LogicalNOT: return "!";
                 case MathOperation.LogicalIFNULL: return "??=";
-                case MathOperation.ConditionTenary: return "? :";
+                case MathOperation.ConditionTernary: return "? :";
                 case MathOperation.AssignEqual: return "=";
                 case MathOperation.AssignAddAfterReturn: return "++";
                 case MathOperation.AssignAddBeforeReturn: return "++";

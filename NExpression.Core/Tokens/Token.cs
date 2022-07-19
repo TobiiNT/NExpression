@@ -57,6 +57,12 @@
 
         Identifier,
         Character,
+        
+        Binary,
+        Decimal,
+        Octal,
+        Hexadecimal,
+
         Number,
         
         // Keyword

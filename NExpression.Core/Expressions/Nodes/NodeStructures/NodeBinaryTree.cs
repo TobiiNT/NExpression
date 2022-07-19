@@ -6,13 +6,13 @@ using NExpression.Core.Extensions;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
-    public class NodeBinary : INode
+    public class NodeBinaryTree : INode
     {
         public INode LeftNode { private set; get; }
         public INode RightNode { private set; get; }
         public IOperation? Operation { private set; get; }
 
-        public NodeBinary(INode LeftNode, INode RightNode, IOperation Operation)
+        public NodeBinaryTree(INode LeftNode, INode RightNode, IOperation Operation)
         {
             this.LeftNode = LeftNode;
             this.RightNode = RightNode;

@@ -6,12 +6,12 @@ using NExpression.Core.Extensions;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
-    public class NodeUnary : INode
+    public class NodeUnaryTree : INode
     {
         public INode RightNode { set; get; }
         public IOperation? Operation { set; get; }
 
-        public NodeUnary(INode RightNode, IOperation? Operation)
+        public NodeUnaryTree(INode RightNode, IOperation? Operation)
         {
             this.RightNode = RightNode;
             this.Operation = Operation;

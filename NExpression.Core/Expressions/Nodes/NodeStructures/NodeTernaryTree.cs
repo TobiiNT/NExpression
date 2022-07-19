@@ -6,26 +6,26 @@ using NExpression.Core.Helpers;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
-    public class NodeTenary : INode
+    public class NodeTernaryTree : INode
     {
         public INode? ConditionNode { set; get; }
         public INode LeftNode { set; get; }
         public INode RightNode { set; get; }
-        public IOperation? TenaryOperation { set; get; }
+        public IOperation? TernaryOperation { set; get; }
        
-        public NodeTenary(INode LeftNode, INode RightNode)
+        public NodeTernaryTree(INode LeftNode, INode RightNode)
         {
             this.LeftNode = LeftNode;
             this.RightNode = RightNode;
-            this.TenaryOperation = OperationHelpers.GetOperation(MathOperation.ConditionTenary);
+            this.TernaryOperation = OperationHelpers.GetOperation(MathOperation.ConditionTernary);
         }
 
-        public NodeTenary(INode ConditionNode, INode LeftNode, INode RightNode)
+        public NodeTernaryTree(INode ConditionNode, INode LeftNode, INode RightNode)
         {
             this.ConditionNode = ConditionNode;
             this.LeftNode = LeftNode;
             this.RightNode = RightNode;
-            this.TenaryOperation = OperationHelpers.GetOperation(MathOperation.ConditionTenary);
+            this.TernaryOperation = OperationHelpers.GetOperation(MathOperation.ConditionTernary);
         }
         public void SetCondition(INode ConditionNode) => this.ConditionNode = ConditionNode;
 
@@ -35,7 +35,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             var ConditionValue = ConditionNode?.Evaluate(ReadContext);
             var LeftValue = LeftNode.Evaluate(ReadContext);
             var RightValue = RightNode.Evaluate(ReadContext);
-            var Result = TenaryOperation?.Execute(ConditionValue, LeftValue, RightValue);
+            var Result = TernaryOperation?.Execute(ConditionValue, LeftValue, RightValue);
 
             return Result;
         }

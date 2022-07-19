@@ -92,7 +92,7 @@ namespace NExpression.Core.Helpers
                 case MathOperation.LogicalIFNULL: return new LogicalIFNULL();
                 case MathOperation.CharValue: return new ConvertToString();
                 case MathOperation.StringValue: return new ConvertToString();
-                case MathOperation.ConditionTenary: return new ConditionTenary();
+                case MathOperation.ConditionTernary: return new ConditionTernary();
                 case MathOperation.AssignEqual: return new AssignEqual(WriteContext);
                 case MathOperation.AssignAddBeforeReturn: return new AssignAddBeforeReturn(WriteContext);
                 case MathOperation.AssignAddAfterReturn: return new AssignAddAfterReturn(WriteContext);
@@ -143,7 +143,7 @@ namespace NExpression.Core.Helpers
                 case LogicalNOT: return MathOperation.LogicalNOT;
                 case LogicalIFNULL: return MathOperation.LogicalIFNULL;
                 case ConvertToString: return MathOperation.StringValue;
-                case ConditionTenary: return MathOperation.ConditionTenary;
+                case ConditionTernary: return MathOperation.ConditionTernary;
                 case AssignEqual: return MathOperation.AssignEqual;
                 case AssignAddBeforeReturn: return MathOperation.AssignAddBeforeReturn;
                 case AssignAddAfterReturn: return MathOperation.AssignAddAfterReturn;

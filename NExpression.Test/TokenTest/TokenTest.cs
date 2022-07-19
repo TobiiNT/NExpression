@@ -13,15 +13,15 @@ namespace NExpression.Test.TokenTest
 
             var TestValues = new List<(Token, object?)>()
             {
-               (Token.Number, 1),
+               (Token.Decimal, 1),
                (Token.SingleCross, null),
-               (Token.Number, 2),
+               (Token.Decimal, 2),
                (Token.SingleDash, null),
-               (Token.Number, 3 ),
+               (Token.Decimal, 3 ),
                (Token.SingleCross, null),
-               (Token.Number, 4),
+               (Token.Decimal, 4),
                (Token.SingleDash, null),
-               (Token.Number, 5),
+               (Token.Decimal, 5),
             };
 
             TestTokenizer(Tokenizer, TestValues);
@@ -34,13 +34,13 @@ namespace NExpression.Test.TokenTest
 
             var TestValues = new List<(Token, object?)>()
             {
-               (Token.Number, 1),
+               (Token.Decimal, 1),
                (Token.SingleAsterisk, null),
-               (Token.Number, 2),
+               (Token.Decimal, 2),
                (Token.SingleSlash, null),
-               (Token.Number, 3 ),
+               (Token.Decimal, 3 ),
                (Token.SinglePercent, null),
-               (Token.Number, 4),
+               (Token.Decimal, 4),
             };
 
             TestTokenizer(Tokenizer, TestValues);
@@ -53,13 +53,13 @@ namespace NExpression.Test.TokenTest
 
             var TestValues = new List<(Token, object?)>()
             {
-               (Token.Number, 1),
+               (Token.Decimal, 1),
                (Token.DoubleLessThan, null),
-               (Token.Number, 2),
+               (Token.Decimal, 2),
                (Token.DoubleGreaterThan, null),
-               (Token.Number, 3 ),
+               (Token.Decimal, 3 ),
                (Token.DoubleLessThan, null),
-               (Token.Number, 4),
+               (Token.Decimal, 4),
             };
 
             TestTokenizer(Tokenizer, TestValues);
@@ -72,19 +72,19 @@ namespace NExpression.Test.TokenTest
 
             var TestValues = new List<(Token, object?)>()
             {
-               (Token.Number, 1),
+               (Token.Decimal, 1),
                (Token.SingleGreaterThan, null),
-               (Token.Number, 2),
+               (Token.Decimal, 2),
                (Token.SingleLessThan, null),
-               (Token.Number, 3 ),
+               (Token.Decimal, 3 ),
                (Token.SingleGreaterThanAndEqual, null),
-               (Token.Number, 4),
+               (Token.Decimal, 4),
                (Token.SingleLessThanAndEqual, null),
-               (Token.Number, 5),
+               (Token.Decimal, 5),
                (Token.DoupleEqual, null),
-               (Token.Number, 6),
+               (Token.Decimal, 6),
                (Token.SingleExclamationAndSingleEqual, null),
-               (Token.Number, 7),
+               (Token.Decimal, 7),
             };
 
             TestTokenizer(Tokenizer, TestValues);
@@ -97,13 +97,13 @@ namespace NExpression.Test.TokenTest
 
             var TestValues = new List<(Token, object?)>()
             {
-               (Token.Number, 1),
+               (Token.Decimal, 1),
                (Token.SinglePipe, null),
-               (Token.Number, 2),
+               (Token.Decimal, 2),
                (Token.SingleAmpersand, null),
-               (Token.Number, 3 ),
+               (Token.Decimal, 3 ),
                (Token.SingleCaret, null),
-               (Token.Number, 4),
+               (Token.Decimal, 4),
             };
 
             TestTokenizer(Tokenizer, TestValues);
@@ -116,11 +116,11 @@ namespace NExpression.Test.TokenTest
 
             var TestValues = new List<(Token, object?)>()
             {
-               (Token.Number, 1),
+               (Token.Decimal, 1),
                (Token.DoubleAmpersand, null),
-               (Token.Number, 2),
+               (Token.Decimal, 2),
                (Token.DoublePipe, null),
-               (Token.Number, 3 ),
+               (Token.Decimal, 3 ),
             };
 
             TestTokenizer(Tokenizer, TestValues);
@@ -151,15 +151,15 @@ namespace NExpression.Test.TokenTest
             var TestValues = new List<(Token, object?)>()
             {
                (Token.OpenParenthesis, null),
-               (Token.Number, 1),
+               (Token.Decimal, 1),
                (Token.SingleCross, null),
-               (Token.Number, 2),
+               (Token.Decimal, 2),
                (Token.CloseParenthesis, null),
                (Token.SingleSlash, null),
                (Token.OpenParenthesis, null),
-               (Token.Number, 3),
+               (Token.Decimal, 3),
                (Token.SingleDash, null),
-               (Token.Number, 4),
+               (Token.Decimal, 4),
                (Token.CloseParenthesis, null),
             };
 
@@ -206,10 +206,10 @@ namespace NExpression.Test.TokenTest
                 object? ExpectedValue = TestValue.Item2;
 
                 Assert.AreEqual(Tokenizer.Token, ExpectedToken);
-                if (ExpectedToken == Token.Number)
+                if (ExpectedToken == Token.Decimal)
                 {
                     Assert.IsNotNull(ExpectedValue);
-                    Assert.AreEqual(Tokenizer.Value, ExpectedValue);
+                    Assert.AreEqual(Tokenizer.Value, ExpectedValue.ToString());
                 }
                 else if (ExpectedToken == Token.KeywordTrue)
                 {

@@ -3,7 +3,6 @@ using NExpression.Core.Helpers;
 
 namespace NExpression.Test.ExpressionTest
 {
-    [TestCategory("Expression")]
     [TestClass]
     public class ComparisionTest
     {

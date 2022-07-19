@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NExpression.Core.Expressions.Operations;
+using NExpression.Core.Expressions.Nodes.NodeDatas.Numbers;
 
 namespace NExpression.Core.Extensions
 {
@@ -22,7 +23,7 @@ namespace NExpression.Core.Extensions
                 return "null";
             else if (Node is NodeBoolean Bool)
                 return $"{Bool}";
-            else if (Node is NodeNumber Number)
+            else if (Node is NodeDecimal Number)
                 return $"{Number}";
             else if (Node is NodeString String)
                 return $"\"{String}\"";
@@ -48,16 +49,16 @@ namespace NExpression.Core.Extensions
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Postfix.Operation);
                 return $"({Postfix.LeftNode.Identity()} {Operation?.Symbol()})";
             }
-            else if (Node is NodeUnary Unary)
+            else if (Node is NodeUnaryTree Unary)
             {
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Unary.Operation);
                 return $"({Operation?.Symbol()} {Unary.RightNode.Identity()})";
             }
-            else if (Node is NodeTenary Tenary)
+            else if (Node is NodeTernaryTree Ternary)
             {
-                return $"({Tenary.ConditionNode?.Identity()} ? {Tenary.LeftNode.Identity()} : {Tenary.RightNode.Identity()})";
+                return $"({Ternary.ConditionNode?.Identity()} ? {Ternary.LeftNode.Identity()} : {Ternary.RightNode.Identity()})";
             }
-            else if (Node is NodeBinary Binary)
+            else if (Node is NodeBinaryTree Binary)
             {
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Binary.Operation);
                 return $"({Binary.LeftNode.Identity()} {Operation?.Symbol()} {Binary.RightNode.Identity()})";

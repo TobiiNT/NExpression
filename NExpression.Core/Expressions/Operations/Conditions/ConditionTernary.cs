@@ -3,7 +3,7 @@ using NExpression.Core.Expressions.Operations.Interfaces;
 
 namespace NExpression.Core.Expressions.Operations.Conditions
 {
-    internal class ConditionTenary : IOperation
+    internal class ConditionTernary : IOperation
     {
         public Func<object?, object?, object?, object> Execute
         {
@@ -11,7 +11,7 @@ namespace NExpression.Core.Expressions.Operations.Conditions
             {
                 return (Condition, Left, Right) =>
                 {
-                    return LogicExecute(MathOperation.ConditionTenary, Condition, Left, Right);
+                    return LogicExecute(MathOperation.ConditionTernary, Condition, Left, Right);
                 };
             }
         }

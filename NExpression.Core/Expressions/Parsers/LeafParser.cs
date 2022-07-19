@@ -1,6 +1,7 @@
 ﻿using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Nodes.NodeDatas;
+using NExpression.Core.Expressions.Nodes.NodeDatas.Numbers;
 using NExpression.Core.Expressions.Nodes.NodeStructures;
 using NExpression.Core.Expressions.Parsers.Interfaces;
 using NExpression.Core.Tokens;
@@ -65,32 +66,6 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return new NodeChar(Value);
             }
-            else if (CurrentToken == Token.Number)
-            {
-                object Number = Tokenizer.Value;
-
-                Tokenizer.NextToken();
-
-                return new NodeNumber(Number);
-            }
-            else if (CurrentToken == Token.KeywordTrue)
-            {
-                Tokenizer.NextToken();
-
-                return new NodeBoolean(true);
-            }
-            else if (CurrentToken == Token.KeywordFalse)
-            {
-                Tokenizer.NextToken();
-
-                return new NodeBoolean(false);
-            }
-            else if (CurrentToken == Token.KeywordNull)
-            {
-                Tokenizer.NextToken();
-
-                return new NodeNull();
-            }
             else if (CurrentToken == Token.OpenParenthesis)
             {
                 Tokenizer.NextToken();
@@ -99,7 +74,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                 if (Tokenizer.Token != Token.CloseParenthesis)
                 {
-                    if (Node is NodeTenary)
+                    if (Node is NodeTernaryTree)
                         return Node;
                     else throw new ExpressionSyntaxException("Missing close parenthesis");
                 }
@@ -110,7 +85,7 @@ namespace NExpression.Core.Expressions.Parsers
             }
             else if (CurrentToken == Token.SingleQuestion)
             {
-                Tokenizer.NextToken(); // Skip TenaryOpen, goto LeftNode
+                Tokenizer.NextToken(); // Skip TernaryOpen, goto LeftNode
 
                 var LeftNode = Expression.Parser.Parse<T>();
 
@@ -120,7 +95,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                 Tokenizer.NextToken();
 
-                return new NodeTenary(LeftNode, RightNode);
+                return new NodeTernaryTree(LeftNode, RightNode);
             }
             else if (CurrentToken == Token.KeywordVar)
             {
@@ -171,6 +146,24 @@ namespace NExpression.Core.Expressions.Parsers
                     return new NodeFunctionCall(Name, Arguments.ToArray());
                 }
             }
+            else
+            {
+                object Value = Tokenizer.Value;
+                Tokenizer.NextToken();
+
+                switch (CurrentToken)
+                {
+                    case Token.Binary: return new NodeBinary((string)Value);
+                    case Token.Decimal: return new NodeDecimal((string)Value);
+                    case Token.Octal: return new NodeOctal((string)Value);
+                    case Token.Hexadecimal: return new NodeHexadecimal((string)Value);
+                    case Token.KeywordTrue: return new NodeBoolean(true);
+                    case Token.KeywordFalse: return new NodeBoolean(false);
+                    case Token.KeywordNull: return new NodeNull();
+                }
+            }
+           
+            
             throw new ExpressionSyntaxException($"Unexpected token: {Tokenizer.Token}");
         }
     }
