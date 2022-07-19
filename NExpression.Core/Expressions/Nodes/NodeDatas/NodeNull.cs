@@ -12,9 +12,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas
         {
             return default;
         }
-        public string Traverse()
+        public void Traverse(ref Stack<INode> Nodes)
         {
-            return $"null";
+            Nodes.Push(this);
         }
     }
 }

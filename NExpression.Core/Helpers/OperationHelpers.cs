@@ -112,5 +112,56 @@ namespace NExpression.Core.Helpers
                 default: return default;
             }
         }
+
+        public static MathOperation? GetMathOperation(IOperation? Operation)
+        {
+            switch (Operation)
+            {
+                case CalculationAdd: return MathOperation.Add;
+                case CalculationSubtract: return MathOperation.Subtract;
+                case CalculationNegative: return MathOperation.Negative;
+                case CalculationMultiply: return MathOperation.Multiply;
+                case CalculationDivide: return MathOperation.Divide;
+                case CalculationModulus: return MathOperation.Modulus;
+                case CalculationFactorial: return MathOperation.Factorial;
+                case ComparisionGreaterThan: return MathOperation.CompareGreaterThan;
+                case ComparisionGreaterThanOrEqual: return MathOperation.CompareGreaterThanOrEqual;
+                case ComparisionLessThan: return MathOperation.CompareLessThan;
+                case ComparisionLessThanOrEqual: return MathOperation.CompareLessThanOrEqual;
+                case ComparisionValueEqual: return MathOperation.CompareValueEqual;
+                case ComparisionValueNotEqual: return MathOperation.CompareValueNotEqual;
+                case ComparisionValueAndTypeEqual: return MathOperation.CompareValueAndTypeEqual;
+                case ComparisionValueAndTypeNotEqual: return MathOperation.CompareValueAndTypeNotEqual;
+                case BitwiseNOT: return MathOperation.BitwiseNOT;
+                case BitwiseAND: return MathOperation.BitwiseAND;
+                case BitwiseXOR: return MathOperation.BitwiseXOR;
+                case BitwiseOR: return MathOperation.BitwiseOR;
+                case BitwiseShiftLeft: return MathOperation.BitwiseShiftLeft;
+                case BitwiseShiftRight: return MathOperation.BitwiseShiftRight;
+                case LogicalAND: return MathOperation.LogicalAND;
+                case LogicalOR: return MathOperation.LogicalOR;
+                case LogicalNOT: return MathOperation.LogicalNOT;
+                case LogicalIFNULL: return MathOperation.LogicalIFNULL;
+                case ConvertToString: return MathOperation.StringValue;
+                case ConditionTenary: return MathOperation.ConditionTenary;
+                case AssignEqual: return MathOperation.AssignEqual;
+                case AssignAddBeforeReturn: return MathOperation.AssignAddBeforeReturn;
+                case AssignAddAfterReturn: return MathOperation.AssignAddAfterReturn;
+                case AssignAdd: return MathOperation.AssignAdd;
+                case AssignSubtractBeforeReturn: return MathOperation.AssignSubtractBeforeReturn;
+                case AssignSubtractAfterReturn: return MathOperation.AssignSubtractAfterReturn;
+                case AssignSubtract: return MathOperation.AssignSubtract;
+                case AssignMultiply: return MathOperation.AssignMultiply;
+                case AssignDivide: return MathOperation.AssignDivide;
+                case AssignModulus: return MathOperation.AssignModulus;
+                case AssignBitwiseAND: return MathOperation.AssignBitwiseAND;
+                case AssignBitwiseOR: return MathOperation.AssignBitwiseOR;
+                case AssignBitwiseXOR: return MathOperation.AssignBitwiseXOR;
+                case AssignBitwiseShiftLeft: return MathOperation.AssignBitwiseShiftLeft;
+                case AssignBitwiseShiftRight: return MathOperation.AssignBitwiseShiftRight;
+                case AssignIFNULL: return MathOperation.AssignIFNULL;
+                default: return default;
+            }
+        }
     }
 }

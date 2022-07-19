@@ -1,22 +1,39 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Nodes.Interfaces;
+using NExpression.Core.Expressions.Operations;
 using NExpression.Core.Expressions.Operations.Interfaces;
+using NExpression.Core.Helpers;
+using NExpression.Core.Extensions;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeAssignment : INode
     {
-        private NodeVariable Variable { set; get; }
-        private INode Value { set; get; }
-        private IOperation? Operation { set; get; }
+        public NodeVariable Variable { get; }
+        public INode Value { get; }
+        public MathOperation MathOperation { get; }
+
+        public IOperation? Operation { private set; get; }
+
         private bool IsDeclare { set; get; }
         private Type DeclareType { set; get; }
-        public NodeAssignment(NodeVariable Variable, INode Value, IOperation Operation)
+
+        public NodeAssignment(NodeVariable Variable, INode Value, MathOperation MathOperation)
+        {
+            this.Variable = Variable;
+            this.Value = Value;
+            this.MathOperation = MathOperation;
+        }
+        public NodeAssignment(NodeVariable Variable, INode Value, MathOperation MathOperation, IOperation Operation)
         {
             this.Variable = Variable;
             this.Value = Value;
             this.Operation = Operation;
+        }
+        public void AssignContext(IContext? Context)
+        {
+            this.Operation = OperationHelpers.GetOperation(MathOperation, Context); ;
         }
         public void SetDeclare<T>(bool IsDeclare)
         {
@@ -32,14 +49,14 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             {
                 FirstValue = Variable.Evaluate(ReadContext);
             }
-            catch 
+            catch
             {
                 if (!IsDeclare)
                     throw;
             }
             if (IsDeclare && FirstValue != null)
             {
-                throw new DuplicatedNameException(ReadContext, Variable.VariableName); 
+                throw new DuplicatedNameException(ReadContext, Variable.VariableName);
             }
             var FinalValue = Value.Evaluate(ReadContext);
 
@@ -52,9 +69,11 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
-        public string Traverse()
+        public void Traverse(ref Stack<INode> Nodes)
         {
-            return $"({Variable.Traverse()}) {Operation} ({Variable.Traverse()})";
+            Nodes.Push(this);
+            Variable.Traverse(ref Nodes);
+            Value.Traverse(ref Nodes);
         }
     }
 }

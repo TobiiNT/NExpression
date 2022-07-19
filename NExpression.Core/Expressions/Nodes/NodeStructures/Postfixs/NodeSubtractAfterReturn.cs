@@ -7,9 +7,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures.Postfixs
 {
     internal class NodeSubtractAfterReturn : NodeAssignment
     {
-        public NodeSubtractAfterReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeNumber(1), OperationHelpers.GetOperation(MathOperation.AssignSubtractAfterReturn, Context))
+        public NodeSubtractAfterReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeNumber(1), MathOperation.AssignSubtractAfterReturn)
         {
-
+            this.AssignContext(Context);
         }
     }
 }

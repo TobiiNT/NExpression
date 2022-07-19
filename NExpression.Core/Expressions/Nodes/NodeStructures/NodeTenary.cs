@@ -44,9 +44,12 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
-        public string Traverse()
+        public void Traverse(ref Stack<INode> Nodes)
         {
-            return $"({ConditionNode.Traverse()}) ? ({LeftNode.Traverse()}) : ({RightNode.Traverse()})";
+            Nodes.Push(this);
+            ConditionNode?.Traverse(ref Nodes);
+            LeftNode.Traverse(ref Nodes);
+            RightNode.Traverse(ref Nodes);
         }
     }
 }

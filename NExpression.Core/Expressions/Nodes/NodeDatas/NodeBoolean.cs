@@ -20,9 +20,10 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
-        public string Traverse()
+        public void Traverse(ref Stack<INode> Nodes)
         {
-            return $"bool ({Boolean})";
+            Nodes.Push(this);
         }
+        public override string ToString() => this.Boolean.ToString();
     }
 }

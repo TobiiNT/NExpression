@@ -1,10 +1,14 @@
 ﻿using NExpression.Console;
 using NExpression.Core.Commands;
 using NExpression.Core.Contexts;
+using NExpression.Core.Expressions.Nodes.NodeDatas;
+using NExpression.Core.Extensions;
 using NExpression.Core.Helpers;
 using NExpression.Maths;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
 
 [DllImport("kernel32.dll")]
 static extern bool SetConsoleOutputCP(uint wCodePageID);
@@ -62,7 +66,9 @@ while (true)
 
                 CurrentCommand.Parse();
 
-                var NodeValue = CurrentCommand.Traverse();
+                PrintTraverse(SingleCommand);
+
+                var NodeValue = CurrentCommand.Evaluate();
 
                 Consoler.WriteLine($"[{CommandIndex}] Expression  = {CurrentCommand.RawExpression}", ConsoleColor.Blue);
                 Consoler.WriteLine($"[{CommandIndex}] Result      = {NodeValue}", ConsoleColor.Green);
@@ -82,6 +88,30 @@ while (true)
     }
 }
 
+static void PrintTraverse(SingleCommand Command)
+{
+    Dictionary<string, int> LineNumbers = new Dictionary<string, int>();
+
+    var Stacks = Command.Traverse();
+
+    int LineNumber = 1;
+    foreach (var Node in Stacks)
+    {
+        string? Identity = Node.Identity();
+
+        //foreach (var Saved in LineNumbers)
+        //{
+        //    Identity = Identity.Replace(Saved.Key, $"[{Saved.Value}]");
+        //}
+        //
+        //if (!LineNumbers.ContainsKey(Identity))
+        //{
+        //    LineNumbers.Add(Identity, LineNumber);
+        //}
+       
+        Console.WriteLine($"[{LineNumber++}] {Identity}");
+    }
+}
 
 //var Tokens = TokenHelpers.Parse(Expression);
 //Consoler.Write($"Tokens      = ", ConsoleColor.Cyan);

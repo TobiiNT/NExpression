@@ -47,7 +47,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                     if (LeftNode is NodeVariable Variable)
                     {
-                        LeftNode = new NodeAssignment(Variable, RightSide, Operation);
+                        LeftNode = new NodeAssignment(Variable, RightSide, MathOperation, Operation);
                     }
                     else throw new InvalidOperationException("The left-hand side of an assignment must be a variable");
                 }

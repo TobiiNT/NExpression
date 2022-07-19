@@ -7,9 +7,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures.Unaries
 {
     internal class NodeUnaryAddBeforeReturn : NodeAssignment
     {
-        public NodeUnaryAddBeforeReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeNumber(1), OperationHelpers.GetOperation(MathOperation.AssignAddBeforeReturn, Context))
+        public NodeUnaryAddBeforeReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeNumber(1), MathOperation.AssignAddBeforeReturn)
         {
-
+            this.AssignContext(Context);
         }
     }
 }

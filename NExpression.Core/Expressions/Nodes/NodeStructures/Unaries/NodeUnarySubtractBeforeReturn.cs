@@ -7,9 +7,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures.Unaries
 {
     internal class NodeUnarySubtractBeforeReturn : NodeAssignment
     {
-        public NodeUnarySubtractBeforeReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeNumber(1), OperationHelpers.GetOperation(MathOperation.AssignSubtractBeforeReturn, Context))
+        public NodeUnarySubtractBeforeReturn(NodeVariable VariableNode, IContext? Context) : base(VariableNode, new NodeNumber(1), MathOperation.AssignSubtractBeforeReturn)
         {
-
+            this.AssignContext(Context);
         }
     }
 }

@@ -6,8 +6,8 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeFunctionCall : INode
     {
-        private string FunctionName { set; get; }
-        private INode[] Arguments { set; get; }
+        public string FunctionName { private set; get; }
+        public INode[] Arguments { private set; get; }
 
         public NodeFunctionCall(string FunctionName, INode[] Arguments)
         {
@@ -40,9 +40,13 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
-        public string Traverse()
+        public void Traverse(ref Stack<INode> Nodes)
         {
-            return $"({FunctionName})";
+            Nodes.Push(this);
+            foreach (var Arguement in Arguments)
+            {
+                Arguement.Traverse(ref Nodes);
+            }
         }
     }
 }

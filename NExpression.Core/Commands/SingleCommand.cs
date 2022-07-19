@@ -26,6 +26,13 @@ namespace NExpression.Core.Commands
         }
 
         public object? Evaluate() => this.ParsedNode?.Evaluate(Context);
-        public object? Traverse() => this.ParsedNode?.Traverse();
+        public Stack<INode> Traverse()
+        {
+            var NewStacks = new Stack<INode>();
+
+            this.ParsedNode?.Traverse(ref NewStacks);
+
+            return NewStacks;
+        }
     }
 }

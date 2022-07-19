@@ -1,14 +1,16 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Operations.Interfaces;
+using NExpression.Core.Helpers;
+using NExpression.Core.Extensions;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeBinary : INode
     {
-        private INode LeftNode { set; get; }
-        private INode RightNode { set; get; }
-        private IOperation? Operation { set; get; }
+        public INode LeftNode { private set; get; }
+        public INode RightNode { private set; get; }
+        public IOperation? Operation { private set; get; }
 
         public NodeBinary(INode LeftNode, INode RightNode, IOperation Operation)
         {
@@ -31,9 +33,11 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
-        public string Traverse()
+        public void Traverse(ref Stack<INode> Nodes)
         {
-            return $"({LeftNode.Traverse()}) {Operation} ({RightNode.Traverse()})";
+            Nodes.Push(this);
+            LeftNode.Traverse(ref Nodes);
+            RightNode.Traverse(ref Nodes);
         }
     }
 }

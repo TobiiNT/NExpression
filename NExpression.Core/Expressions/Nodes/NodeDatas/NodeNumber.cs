@@ -20,9 +20,10 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas
         {
             return (T?)Convert.ChangeType(Evaluate(), typeof(T?));
         }
-        public string Traverse()
+        public void Traverse(ref Stack<INode> Nodes)
         {
-            return $"Number ({Number})";
+            Nodes.Push(this);
         }
+        public override string ToString() => this.Number.ToString();
     }
 }
