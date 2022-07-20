@@ -75,21 +75,6 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return new NodeChar(Value);
             }
-            else if (CurrentToken == Token.OpenBlacket)
-            {
-                Tokenizer.NextToken();
-
-                var Node = Expression.Parser.Parse<T>();
-
-                if (Tokenizer.Token != Token.CloseBlacket)
-                {
-                    throw new ExpressionSyntaxException("Missing close blacket");
-                }
-
-                Tokenizer.NextToken();
-
-                return new NodeBlacket(Node);
-            }
             else if (CurrentToken == Token.OpenParenthesis)
             {
                 Tokenizer.NextToken();
