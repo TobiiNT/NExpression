@@ -10,26 +10,45 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeNested : INode
     {
-        public INode? ParentNode { private set; get; }
+        public INode? CurrentNode { private set; get; }
         public INode? InnerNode { private set; get; }
         public IContext? Context { set; get; }
 
-        public NodeNested(INode? ParentNode, INode? InnerNode)
+        public NodeNested(INode? CurrentNode)
         {
-            this.ParentNode = ParentNode;
-            this.InnerNode = InnerNode;
+            this.CurrentNode = CurrentNode;
+        }
+        public void AssignChildren(INode? ChildrenNode)
+        {
+            this.InnerNode = ChildrenNode;
         }
 
         public object? Evaluate()
         {
             if (InnerNode != null)
             {
-                var CurrentContext = (IContext?)ParentNode?.Evaluate();
-                InnerNode.Context = CurrentContext;
+                if (CurrentNode is not NodeNested)
+                {
+                   return CurrentNode?.Evaluate();
+                }
+                else
+                {
+                    INode? CurrentNode = this;
 
-                var Value = InnerNode?.Evaluate();
+                    while (CurrentNode is NodeNested NodeNested)
+                    {
+                        var CurrentContext = CurrentNode?.Evaluate();
 
-                return Value;
+                        if (CurrentContext is IContext Context && InnerNode is NodeNested NestedInner)
+                        {
+                            NestedInner.CurrentNode.Context = Context;
+
+                            CurrentNode = NestedInner.CurrentNode;
+                        }
+                        else throw new InvalidOperationException("This variable is not a context");
+                    }
+                }
+               
             }
             return null;
         }

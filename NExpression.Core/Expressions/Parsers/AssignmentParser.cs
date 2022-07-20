@@ -47,15 +47,35 @@ namespace NExpression.Core.Expressions.Parsers
 
                     if (LeftNode is NodeNested Nested)
                     {
-                        if (Nested.InnerNode is NodeVariable InnerVariable)
+                        //var InnerNode = Nested.Evaluate();
+                        LeftNode = Nested.InnerNode;
+                        if (LeftNode is NodeVariable InnerVariable)
                         {
-                            LeftNode = new NodeAssignment(InnerVariable, RightSide, MathOperation, Operation);
+                            LeftNode = new NodeAssignment(Context, InnerVariable, RightSide, MathOperation);
                         }
-                        else throw new InvalidOperationException("The left-hand side of an assignment must be a variable"); 
+                        else
+                        {
+                            while (LeftNode is NodeNested)
+                            {
+                                if (LeftNode is NodeVariable DeepInnerVariable)
+                                {
+                                    LeftNode = new NodeAssignment(Context, DeepInnerVariable, RightSide, MathOperation);
+
+                                    break;
+                                }
+                                LeftNode = LeftNode.InnerNode;
+                            }
+
+                            if (LeftNode is NodeVariable Variable)
+                            {
+                                LeftNode = new NodeAssignment(Context, Variable, RightSide, MathOperation);
+                            }
+                            else throw new InvalidOperationException("The left-hand side of an assignment must be a variable");
+                        }
                     }
                     else if (LeftNode is NodeVariable Variable)
                     {
-                        LeftNode = new NodeAssignment(Variable, RightSide, MathOperation, Operation);
+                        LeftNode = new NodeAssignment(Context, Variable, RightSide, MathOperation);
                     }
                     else throw new InvalidOperationException("The left-hand side of an assignment must be a variable");
                 }

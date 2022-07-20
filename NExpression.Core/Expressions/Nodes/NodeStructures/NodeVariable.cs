@@ -14,6 +14,11 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             this.VariableName = VariableName;
         }
+        public NodeVariable(string VariableName, IContext? Context)
+        {
+            this.VariableName = VariableName;
+            this.Context = Context;
+        }
         public void SetContext(IContext? Context) => this.Context = Context;
 
         public object? Evaluate()
@@ -30,7 +35,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
                 }
                 throw new InvalidOperationContextException(Context, "READ");
             }
-            throw new NullContextException();
+                throw new NullContextException();
         }
         public void Traverse(ref Stack<INode> Nodes)
         {

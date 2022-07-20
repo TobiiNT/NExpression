@@ -20,13 +20,22 @@ namespace NExpression.Core.Contexts
             Name = ContextName;
             Variables = new Dictionary<string, object?>();
             Operations = ReadWriteContext.Operations;
+
+            RegisterBuildInOperation();
         }
         public DynamicContext(string ContextName)
         {
             Name = ContextName;
             Variables = new Dictionary<string, object?>();
             Operations = new Dictionary<string, IOperation?>();
+
+            RegisterBuildInOperation();
         }
+        public void RegisterBuildInOperation()
+        {
+            RegisterOperation<CreateContext>("Context");
+        }
+
         public void RegisterOperation<U>(string Name)
         {
             if (typeof(IOperation).GetTypeInfo().IsAssignableFrom(typeof(U).Ge‌​tTypeInfo()))

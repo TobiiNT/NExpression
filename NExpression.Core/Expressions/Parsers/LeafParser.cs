@@ -133,19 +133,24 @@ namespace NExpression.Core.Expressions.Parsers
                     {
                         Tokenizer.NextToken();
 
-                        NodeVariable ParentNode = new NodeVariable(Name);
-                        ParentNode.SetContext(Context);
+                        NodeNested NestedNode = new NodeNested(new NodeVariable(Name, Context));
 
-                        INode NextNode = this.Parse<T>();
+                        while (Tokenizer.Token != Token.EOF)
+                        {
+                            INode NextNode = this.Parse<T>();
 
-                        return new NodeNested(ParentNode, NextNode);
+                            NestedNode.AssignChildren(NextNode);
+
+                            Tokenizer.NextToken();
+                        }
+
+                        //Console.WriteLine($"Top: {NestedNode} {NestedNode.Context}");
+
+                        return NestedNode;
                     }
                     else
                     {
-                        NodeVariable Variable = new NodeVariable(Name);
-                        Variable.SetContext(Context);
-
-                        return Variable;
+                        return new NodeVariable(Name, Context);
                     }
                 }
                 else

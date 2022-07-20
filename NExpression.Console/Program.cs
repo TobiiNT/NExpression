@@ -15,21 +15,16 @@ static extern bool SetConsoleOutputCP(uint wCodePageID);
 SetConsoleOutputCP(65001);
 Console.OutputEncoding = Encoding.UTF8;
 
-var MathContext = new DynamicContext("MathContext");
+var MathContext = CreateThreeLevelContext();
 ResetContext();
 
 void ResetContext()
 {
-    var InnerContext = new DynamicContext("InnerContext");
-    InnerContext["E"] = Math.E;
-
-    MathContext = new DynamicContext("MathContext");
-    MathContext.RegisterOperation<MathAbs>("Abs");
-    MathContext.RegisterOperation<CreateList>("List");
-    MathContext.RegisterOperation<CreateContext>("Context");
-    MathContext["PI"] = Math.PI;
-    MathContext["Inner"] = InnerContext;
+    MathContext = CreateThreeLevelContext();
 }
+
+bool IsPrintTokens = false;
+bool IsPrintTraverse = false;
 
 while (true)
 {
@@ -46,15 +41,7 @@ while (true)
     }
     else if (InputExpression == "!list")
     {
-        Consoler.WriteLine();
-
-        var AllVariables = MathContext.GetAllVariables();
-        Consoler.WriteLine($"Total variables = {AllVariables.Count}", ConsoleColor.Green);
-        foreach (var Variable in AllVariables)
-        {
-            Consoler.WriteLine($"- {Variable.Key} => {Variable.Value}", ConsoleColor.Blue);
-        }
-        Console.WriteLine();
+        WriteAllVariale(MathContext, "", 0);
     }
     else
     {
@@ -62,20 +49,24 @@ while (true)
         SingleCommand? CurrentCommand = null;
         try
         {
-            PrintTokens(InputExpression);
+            if (IsPrintTokens) { PrintTokens(InputExpression); }
 
             List<SingleCommand> Commands = CommandHelpers.ParseMultiple(InputExpression, MathContext);
             foreach (var SingleCommand in Commands)
             {
                 SingleCommand.Parse();
 
-                PrintTraverse(SingleCommand);
+                if (IsPrintTraverse) { PrintTraverse(SingleCommand); }
 
                 var NodeValue = SingleCommand.Evaluate();
-                Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {SingleCommand.RawExpression}", ConsoleColor.Blue);
-                Consoler.WriteLine($"[Command {CommandIndex}] Result      = {NodeValue}", ConsoleColor.Green);
+                var StringResult = NodeValue is DynamicContext Dynamic ? "Context " + Dynamic.Name : NodeValue;
+                
+                Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {SingleCommand.RawExpression ?? "null"}", ConsoleColor.Blue);
+                Consoler.WriteLine($"[Command {CommandIndex}] Result      = {StringResult ?? "null"}", ConsoleColor.Green);
                 CommandIndex++;
             }
+
+            //WriteAllVariale(MathContext, "", 0);
         }
         catch (Exception Exception)
         {
@@ -126,3 +117,74 @@ static void PrintTokens(string? Expression)
     while (Tokens.Token != Token.EOF);
 }
 
+static void WriteAllVariale(DynamicContext Context, string Parent, int Level)
+{
+    var AllVariables = Context.GetAllVariables();
+
+    for (int i = 0; i < Level; i++)
+    {
+        Console.Write("   ");
+    }
+    Consoler.WriteLine($"+ [{Context.Name}] Total variables = {AllVariables.Count}", ConsoleColor.Cyan);
+
+    int CurrentLevel = Level;
+    foreach (var Variable in AllVariables)
+    {
+        if (Variable.Value is DynamicContext InnerContext)
+        {
+            for (int i = 0; i < CurrentLevel; i++)
+            {
+                Console.Write("   ");
+            }
+            Consoler.WriteLine($"+ [{Variable.Key}] => Context", ConsoleColor.Green);
+            WriteAllVariale(InnerContext, Context.Name, CurrentLevel + 1);
+        }
+        else
+        {
+            for (int i = 0; i < CurrentLevel; i++)
+            {
+                Console.Write("   ");
+            }
+            Consoler.WriteLine($"+ [{Variable.Key}] => {Variable.Value}", ConsoleColor.Blue);
+        }
+    }
+}
+
+static DynamicContext CreateThreeLevelContext()
+{
+    var Number = new DynamicContext("Number");
+    Number["Name"] = "Number";
+
+    var Floating = new DynamicContext("Floating");
+    Floating["Name"] = "Floating";
+
+    var NonFloating = new DynamicContext("NonFloating");
+    NonFloating["Name"] = "NonFloating";
+
+    var Double = new DynamicContext("Double");
+    Double["Name"] = typeof(double);
+    Double["Value"] = double.MaxValue;
+
+    var Decimal = new DynamicContext("Decimal");
+    Decimal["Name"] = typeof(decimal);
+    Decimal["Value"] = decimal.MaxValue;
+
+    var Integer = new DynamicContext("Integer");
+    Integer["Name"] = typeof(int);
+    Integer["Value"] = int.MaxValue;
+
+    var Long = new DynamicContext("Long");
+    Long["Name"] = typeof(long);
+    Long["Value"] = long.MaxValue;
+
+    Floating["doubleNum"] = Double;
+    Floating["decimalNum"] = Decimal;
+
+    NonFloating["intNum"] = Integer;
+    NonFloating["longNum"] = Long;
+
+    Number["Floating"] = Floating;
+    Number["NonFloating"] = NonFloating;
+
+    return Number;
+}

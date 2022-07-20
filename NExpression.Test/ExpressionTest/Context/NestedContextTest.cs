@@ -86,7 +86,6 @@ namespace NExpression.Test.ExpressionTest.Context
         public void CommandTwoLevelContext()
         {
             var MainContext = new DynamicContext("Main");
-            MainContext.RegisterOperation<CreateContext>("Context");
 
             ExpressionHelpers.Parse("A = new Context()", MainContext).Evaluate();
 

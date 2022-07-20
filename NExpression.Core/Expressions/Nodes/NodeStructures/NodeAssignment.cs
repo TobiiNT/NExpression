@@ -16,53 +16,22 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         public INode Value { get; }
         public MathOperation MathOperation { get; }
 
-        public IOperation? Operation { private set; get; }
-
-        private bool IsDeclare { set; get; }
-        private Type DeclareType { set; get; }
-
-        public NodeAssignment(NodeVariable Variable, INode Value, MathOperation MathOperation)
+        public NodeAssignment(IContext? Context, NodeVariable Variable, INode Value, MathOperation MathOperation)
         {
+            this.Context = Context;
             this.Variable = Variable;
             this.Value = Value;
             this.MathOperation = MathOperation;
         }
-        public NodeAssignment(NodeVariable Variable, INode Value, MathOperation MathOperation, IOperation Operation)
-        {
-            this.Variable = Variable;
-            this.Value = Value;
-            this.MathOperation = MathOperation;
-            this.Operation = Operation;
-        }
-        public void AssignContext(IContext? Context)
-        {
-            this.Operation = OperationHelpers.GetOperation(MathOperation, Context); ;
-        }
-        public void SetDeclare<T>(bool IsDeclare)
-        {
-            this.IsDeclare = IsDeclare;
-            this.DeclareType = typeof(T);
-        }
+
 
         public object? Evaluate()
         {
-            object? FirstValue = null;
-            try
-            {
-                FirstValue = Variable.Evaluate();
-            }
-            catch
-            {
-                if (!IsDeclare)
-                    throw;
-            }
-            if (IsDeclare && FirstValue != null)
-            {
-                throw new DuplicatedNameException(Context, Variable.VariableName);
-            }
             var FinalValue = Value.Evaluate();
 
-            var Result = Operation?.Evaluate(Variable.VariableName, FinalValue, IsDeclare, DeclareType);
+            var Operation = OperationHelpers.GetOperation(MathOperation, Context);
+
+            var Result = Operation?.Evaluate(Variable.VariableName, FinalValue);
 
             return Result;
         }

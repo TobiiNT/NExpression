@@ -65,8 +65,7 @@ namespace NExpression.Core.Extensions
             }
             else if (Node is NodeAssignment Assign)
             {
-                MathOperation? Operation = OperationHelpers.GetMathOperation(Assign.Operation);
-                return $"({Assign.Variable.Identity()} {Operation?.Symbol()} {Assign.Value.Identity()})";
+                return $"({Assign.Variable.Identity()} {Assign.MathOperation.Symbol()} {Assign.Value.Identity()})";
             }
             else if (Node is NodeIndex Index)
             {
