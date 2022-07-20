@@ -10,6 +10,7 @@ namespace NExpression.Core.Contexts
         public string Name { get; }
         private Dictionary<string, object?> Variables { set; get; }
         private Dictionary<string, IOperation?> Operations { set; get; }
+        public IContext? InnerContext { set; get; }
 
         public DynamicContext() : this("")
         {
