@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NExpression.Test", "NExpres
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NExpression.Benchmark", "NExpression.Benchmark\NExpression.Benchmark.csproj", "{0D622490-286B-4691-AD49-2B11E2E48F64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NExpression.Maths", "NExpression.Maths\NExpression.Maths.csproj", "{58F2B47D-38A1-4E1D-93F2-4101357E8077}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NExpression.Dependencies", "NExpression.Dependencies\NExpression.Dependencies.csproj", "{58F2B47D-38A1-4E1D-93F2-4101357E8077}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NExpression.Winforms", "NExpression.Winforms\NExpression.Winforms.csproj", "{C889C458-9FAB-4FC1-992B-3040673B6480}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NExpression.Winforms", "NExpression.Winforms\NExpression.Winforms.csproj", "{C889C458-9FAB-4FC1-992B-3040673B6480}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

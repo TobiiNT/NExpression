@@ -68,6 +68,7 @@
 
         // Keyword
         KeywordVar,
+        KeywordNew,
 
         KeywordNull,
         KeywordTrue,

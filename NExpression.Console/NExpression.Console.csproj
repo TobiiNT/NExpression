@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NExpression.Core\NExpression.Core.csproj" />
-    <ProjectReference Include="..\NExpression.Maths\NExpression.Maths.csproj" />
+    <ProjectReference Include="..\NExpression.Dependencies\NExpression.Dependencies.csproj" />
   </ItemGroup>
 
 </Project>

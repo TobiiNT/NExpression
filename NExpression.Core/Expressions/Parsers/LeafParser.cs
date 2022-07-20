@@ -119,6 +119,18 @@ namespace NExpression.Core.Expressions.Parsers
                 }
                 throw new ExpressionSyntaxException("Implicitly typed variables must be initialized");
             }
+            else if (CurrentToken == Token.KeywordNew)
+            {
+                Tokenizer.NextToken();
+
+                var CreationFunction = this.Parse<T>();
+
+                if (CreationFunction is NodeFunctionCall Creation)
+                {
+                    return Creation;
+                }
+                throw new ExpressionSyntaxException("A new expression require creation function");
+            }
             else if (CurrentToken == Token.Identifier) // Variable
             {
                 var Name = Tokenizer.TokenString;
@@ -136,6 +148,9 @@ namespace NExpression.Core.Expressions.Parsers
                     var Arguments = new List<INode>();
                     while (true)
                     {
+                        if (Tokenizer.Token == Token.CloseParenthesis)
+                            break;
+
                         Arguments.Add(Expression.Parser.Parse<T>());
 
                         if (Tokenizer.Token == Token.Comma)
