@@ -68,6 +68,11 @@ namespace NExpression.Core.Extensions
                 MathOperation? Operation = OperationHelpers.GetMathOperation(Assign.Operation);
                 return $"({Assign.Variable.Identity()} {Operation?.Symbol()} {Assign.Value.Identity()})";
             }
+            else if (Node is NodeIndex Index)
+            {
+                return $"({Index.ArrayNode.Identity()} {Index.Operation} {Index.IndexNode.Identity()})";
+
+            }
             else return Node.ToString();
         }
     }

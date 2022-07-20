@@ -93,6 +93,22 @@ namespace NExpression.Core.Tokens
                         GoNextChar();
                         CurrentToken = Token.CloseParenthesis;
                         return;
+                    case '[':
+                        GoNextChar();
+                        CurrentToken = Token.OpenBlacket;
+                        return;
+                    case ']':
+                        GoNextChar();
+                        CurrentToken = Token.CloseBlacket;
+                        return;
+                    case '{':
+                        GoNextChar();
+                        CurrentToken = Token.OpenBrace;
+                        return;
+                    case '}':
+                        GoNextChar();
+                        CurrentToken = Token.CloseBrace;
+                        return;
                     case ',':
                         GoNextChar();
                         CurrentToken = Token.Comma;

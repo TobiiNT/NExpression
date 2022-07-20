@@ -1,4 +1,5 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
+using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Nodes.NodeDatas;
 using NExpression.Core.Expressions.Nodes.NodeStructures;
@@ -54,6 +55,19 @@ namespace NExpression.Core.Expressions.Parsers
                     else if (CurrentToken == Token.SingleExclamation) // 9!
                     {
                         LeftNode = new NodeFactorial(LeftNode, Context);
+                    }
+                    else if (CurrentToken == Token.OpenBlacket)
+                    {
+                        INode IndexNode = this.NextParser.Parse<T>();
+                    
+                        if (Tokenizer.Token != Token.CloseBlacket)
+                        {
+                            throw new ExpressionSyntaxException("Missing close blacket");
+                        }
+                    
+                        Tokenizer.NextToken();
+                    
+                        return new NodeGetArrayItemByIndex(LeftNode, IndexNode, Context);
                     }
                 }
                 else return LeftNode;

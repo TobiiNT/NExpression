@@ -6,6 +6,7 @@ using NExpression.Core.Expressions.Operations.Calculations;
 using NExpression.Core.Expressions.Operations.Comparisions;
 using NExpression.Core.Expressions.Operations.Conditions;
 using NExpression.Core.Expressions.Operations.Conversions;
+using NExpression.Core.Expressions.Operations.Indexs;
 using NExpression.Core.Expressions.Operations.Interfaces;
 using NExpression.Core.Expressions.Operations.Logicals;
 using NExpression.Core.Tokens;
@@ -61,7 +62,7 @@ namespace NExpression.Core.Helpers
             }
         }
 
-        public static IOperation? GetOperation(MathOperation Operation, IContext? WriteContext = null)
+        public static IOperation? GetOperation(MathOperation Operation, IContext? Context = null)
         {
             switch (Operation)
             {
@@ -93,22 +94,23 @@ namespace NExpression.Core.Helpers
                 case MathOperation.CharValue: return new ConvertToString();
                 case MathOperation.StringValue: return new ConvertToString();
                 case MathOperation.ConditionTernary: return new ConditionTernary();
-                case MathOperation.AssignEqual: return new AssignEqual(WriteContext);
-                case MathOperation.AssignAddBeforeReturn: return new AssignAddBeforeReturn(WriteContext);
-                case MathOperation.AssignAddAfterReturn: return new AssignAddAfterReturn(WriteContext);
-                case MathOperation.AssignAdd: return new AssignAdd(WriteContext);
-                case MathOperation.AssignSubtractBeforeReturn: return new AssignSubtractBeforeReturn(WriteContext);
-                case MathOperation.AssignSubtractAfterReturn: return new AssignSubtractAfterReturn(WriteContext);
-                case MathOperation.AssignSubtract: return new AssignSubtract(WriteContext);
-                case MathOperation.AssignMultiply: return new AssignMultiply(WriteContext);
-                case MathOperation.AssignDivide: return new AssignDivide(WriteContext);
-                case MathOperation.AssignModulus: return new AssignModulus(WriteContext);
-                case MathOperation.AssignBitwiseAND: return new AssignBitwiseAND(WriteContext);
-                case MathOperation.AssignBitwiseOR: return new AssignBitwiseOR(WriteContext);
-                case MathOperation.AssignBitwiseXOR: return new AssignBitwiseXOR(WriteContext);
-                case MathOperation.AssignBitwiseShiftLeft: return new AssignBitwiseShiftLeft(WriteContext);
-                case MathOperation.AssignBitwiseShiftRight: return new AssignBitwiseShiftRight(WriteContext);
-                case MathOperation.AssignIFNULL: return new AssignIFNULL(WriteContext);
+                case MathOperation.AssignEqual: return new AssignEqual(Context);
+                case MathOperation.AssignAddBeforeReturn: return new AssignAddBeforeReturn(Context);
+                case MathOperation.AssignAddAfterReturn: return new AssignAddAfterReturn(Context);
+                case MathOperation.AssignAdd: return new AssignAdd(Context);
+                case MathOperation.AssignSubtractBeforeReturn: return new AssignSubtractBeforeReturn(Context);
+                case MathOperation.AssignSubtractAfterReturn: return new AssignSubtractAfterReturn(Context);
+                case MathOperation.AssignSubtract: return new AssignSubtract(Context);
+                case MathOperation.AssignMultiply: return new AssignMultiply(Context);
+                case MathOperation.AssignDivide: return new AssignDivide(Context);
+                case MathOperation.AssignModulus: return new AssignModulus(Context);
+                case MathOperation.AssignBitwiseAND: return new AssignBitwiseAND(Context);
+                case MathOperation.AssignBitwiseOR: return new AssignBitwiseOR(Context);
+                case MathOperation.AssignBitwiseXOR: return new AssignBitwiseXOR(Context);
+                case MathOperation.AssignBitwiseShiftLeft: return new AssignBitwiseShiftLeft(Context);
+                case MathOperation.AssignBitwiseShiftRight: return new AssignBitwiseShiftRight(Context);
+                case MathOperation.AssignIFNULL: return new AssignIFNULL(Context);
+                case MathOperation.GetItemByIndex: return new GetItemByIndex();
                 default: return default;
             }
         }
@@ -160,6 +162,7 @@ namespace NExpression.Core.Helpers
                 case AssignBitwiseShiftLeft: return MathOperation.AssignBitwiseShiftLeft;
                 case AssignBitwiseShiftRight: return MathOperation.AssignBitwiseShiftRight;
                 case AssignIFNULL: return MathOperation.AssignIFNULL;
+                case GetItemByIndex: return MathOperation.GetItemByIndex;
                 default: return default;
             }
         }

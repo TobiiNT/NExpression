@@ -2,13 +2,13 @@
 using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Operations.Interfaces;
 
-namespace NExpression.Core.Expressions.Operations.Assignments.Abstractions
+namespace NExpression.Core.Expressions.Operations.Abstractions
 {
-    internal class AssignWrite : IOperation
+    internal class ContextWrite : IOperation
     {
         private IContext? Context { get; }
         private MathOperation MathOperation { get; }
-        public AssignWrite(IContext? Context, MathOperation MathOperation)
+        public ContextWrite(IContext? Context, MathOperation MathOperation)
         {
             this.Context = Context;
             this.MathOperation = MathOperation;

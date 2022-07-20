@@ -1,10 +1,10 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Expressions.Operations.Bitwises;
-using NExpression.Core.Expressions.Operations.Assignments.Abstractions;
+using NExpression.Core.Expressions.Operations.Abstractions;
 
 namespace NExpression.Core.Expressions.Operations.Assignments
 {
-    internal class AssignBitwiseOR : AssignReadWrite
+    internal class AssignBitwiseOR : ContextReadWrite
     {
         public AssignBitwiseOR(IContext? Context)
             : base(Context,

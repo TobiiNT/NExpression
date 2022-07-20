@@ -58,6 +58,8 @@
         AssignBitwiseShiftRight, // '>>='
         AssignIFNULL, // '??='
 
+        GetItemByIndex,
+
         StringValue,
         CharValue,
 

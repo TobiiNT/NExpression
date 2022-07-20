@@ -18,7 +18,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         public object? Evaluate(IContext? ReadContext = null)
         {
             var LeftValue = LeftNode.Evaluate(ReadContext);
-            var Result = Operation?.Evaluate(LeftValue, null, null);
+            var Result = Operation?.Evaluate(LeftValue);
 
             return Result;
         }

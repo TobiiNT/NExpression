@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Expressions\Operations\Arrays\" />
     <Folder Include="Expressions\Operations\TypeCasts\" />
   </ItemGroup>
 
