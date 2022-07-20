@@ -25,7 +25,7 @@ namespace NExpression.Core.Commands
             this.ParsedNode = CompleteExpression?.ParseExpression<object>();
         }
 
-        public object? Evaluate() => this.ParsedNode?.Evaluate(Context);
+        public object? Evaluate() => this.ParsedNode?.Evaluate();
         public Stack<INode> Traverse()
         {
             var NewStacks = new Stack<INode>();

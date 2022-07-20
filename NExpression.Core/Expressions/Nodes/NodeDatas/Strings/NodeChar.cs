@@ -5,13 +5,16 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas.Strings
 {
     public class NodeChar : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { get => null; set { } }
+
         private char Char { get; set; }
         public NodeChar(char Char)
         {
             this.Char = Char;
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
             return Char;
         }

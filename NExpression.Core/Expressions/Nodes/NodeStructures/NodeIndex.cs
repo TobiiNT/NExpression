@@ -11,6 +11,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeIndex : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { get => null; set { } }
+
         public INode ArrayNode { set; get; }
         public INode IndexNode { set; get; }
         public IOperation? Operation { set; get; }
@@ -22,10 +25,10 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.Operation = Operation;
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
-            var Array = ArrayNode.Evaluate(ReadContext);
-            var Index = IndexNode.Evaluate(ReadContext);
+            var Array = ArrayNode.Evaluate();
+            var Index = IndexNode.Evaluate();
             var Result = Operation?.Evaluate(Array, Index);
 
             return Result;

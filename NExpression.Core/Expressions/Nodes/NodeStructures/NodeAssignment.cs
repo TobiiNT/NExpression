@@ -9,6 +9,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeAssignment : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { set; get; }
+
         public NodeVariable Variable { get; }
         public INode Value { get; }
         public MathOperation MathOperation { get; }
@@ -41,12 +44,12 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.DeclareType = typeof(T);
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
             object? FirstValue = null;
             try
             {
-                FirstValue = Variable.Evaluate(ReadContext);
+                FirstValue = Variable.Evaluate();
             }
             catch
             {
@@ -55,9 +58,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             }
             if (IsDeclare && FirstValue != null)
             {
-                throw new DuplicatedNameException(ReadContext, Variable.VariableName);
+                throw new DuplicatedNameException(Context, Variable.VariableName);
             }
-            var FinalValue = Value.Evaluate(ReadContext);
+            var FinalValue = Value.Evaluate();
 
             var Result = Operation?.Evaluate(Variable.VariableName, FinalValue, IsDeclare, DeclareType);
 

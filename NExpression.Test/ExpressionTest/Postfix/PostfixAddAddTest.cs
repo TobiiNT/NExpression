@@ -15,17 +15,17 @@ namespace NExpression.Test.ExpressionTest.Postfix
         {
             CleanUp();
 
-            object? Value = ExpressionHelpers.Parse("var a = 0", Context).Evaluate(Context);
+            object? Value = ExpressionHelpers.Parse("var a = 0", Context).Evaluate();
 
             Assert.AreEqual(Value, 0);
 
-            Value = ExpressionHelpers.Parse("++a", Context).Evaluate(Context);
+            Value = ExpressionHelpers.Parse("++a", Context).Evaluate();
 
             Assert.AreEqual(Value, 1);
 
-            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(Context), 1);
+            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(), 1);
 
-            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(Context), Value);
+            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(), Value);
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace NExpression.Test.ExpressionTest.Postfix
         {
             CleanUp();
 
-            ExpressionHelpers.Parse("++1", Context).Evaluate(Context);
+            ExpressionHelpers.Parse("++1", Context).Evaluate();
         }
 
         [TestMethod]
@@ -43,7 +43,7 @@ namespace NExpression.Test.ExpressionTest.Postfix
         {
             CleanUp();
 
-            ExpressionHelpers.Parse("++b", Context).Evaluate(Context);
+            ExpressionHelpers.Parse("++b", Context).Evaluate();
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace NExpression.Test.ExpressionTest.Postfix
         {
             CleanUp();
 
-            ExpressionHelpers.Parse("++null", Context).Evaluate(Context);
+            ExpressionHelpers.Parse("++null", Context).Evaluate();
         }
 
         [TestMethod]
@@ -61,7 +61,7 @@ namespace NExpression.Test.ExpressionTest.Postfix
         {
             CleanUp();
 
-            ExpressionHelpers.Parse("++\"123\"", Context).Evaluate(Context);
+            ExpressionHelpers.Parse("++\"123\"", Context).Evaluate();
         }
     }
 }

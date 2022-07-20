@@ -6,6 +6,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeBinaryTree : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { get => null; set { } }
+
         public INode LeftNode { private set; get; }
         public INode RightNode { private set; get; }
         public IOperation? Operation { private set; get; }
@@ -17,10 +20,10 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.Operation = Operation;
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
-            var FirstArg = LeftNode.Evaluate(ReadContext);
-            var SecondArg = RightNode.Evaluate(ReadContext);
+            var FirstArg = LeftNode.Evaluate();
+            var SecondArg = RightNode.Evaluate();
             var Result = Operation?.Evaluate(FirstArg, SecondArg, null);
 
             return Result;

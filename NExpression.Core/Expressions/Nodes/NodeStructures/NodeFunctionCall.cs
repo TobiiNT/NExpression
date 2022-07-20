@@ -6,31 +6,35 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeFunctionCall : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { set; get; }
+
         public string FunctionName { private set; get; }
         public INode[] Arguments { private set; get; }
 
-        public NodeFunctionCall(string FunctionName, INode[] Arguments)
+        public NodeFunctionCall(IContext? Context, string FunctionName, INode[] Arguments)
         {
+            this.Context = Context;
             this.FunctionName = FunctionName;
             this.Arguments = Arguments;
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
-            if (ReadContext != null)
+            if (Context != null)
             {
-                if (ReadContext is IFunctionContext FunctionContext)
+                if (Context is IFunctionContext FunctionContext)
                 {
                     var ArguementValues = new object?[Arguments.Length];
                     for (int i = 0; i < Arguments.Length; i++)
                     {
-                        ArguementValues[i] = Arguments[i].Evaluate(ReadContext);
+                        ArguementValues[i] = Arguments[i].Evaluate();
                     }
                     var Result = FunctionContext.CallFunction(FunctionName, ArguementValues);
 
                     return Result;
                 }
-                throw new InvalidOperationContextException(ReadContext, "READ");
+                throw new InvalidOperationContextException(Context, "READ");
             }
             throw new NullReferenceException(FunctionName);
         }

@@ -117,6 +117,10 @@ namespace NExpression.Core.Tokens
                         GoNextChar();
                         CurrentToken = Token.SemiColon;
                         return;
+                    case '.':
+                        GoNextChar();
+                        CurrentToken = Token.Dot;
+                        return;
                     case '"':
                         GoNextChar();
                         CurrentToken = Token.DoubleQuote;

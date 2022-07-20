@@ -4,7 +4,10 @@ namespace NExpression.Core.Expressions.Nodes.Interfaces
 {
     public interface INode
     {
-        public object? Evaluate(IContext? ReadContext = null);
+        public INode? InnerNode { get; }
+        public IContext? Context { set; get; }
+
+        public object? Evaluate();
 
         public void Traverse(ref Stack<INode> Nodes);
     }

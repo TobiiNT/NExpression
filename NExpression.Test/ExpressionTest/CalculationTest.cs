@@ -49,7 +49,7 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("10 * 20 / 50").Evaluate(), 10 * 20 / 50);
             
-            Assert.ThrowsException<DivideByZeroException>(() => ExpressionHelpers.Parse("2 / 0").Evaluate(null));
+            Assert.ThrowsException<DivideByZeroException>(() => ExpressionHelpers.Parse("2 / 0").Evaluate());
         }
 
         [TestMethod]

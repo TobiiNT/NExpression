@@ -1,4 +1,5 @@
-﻿using NExpression.Core.Exceptions;
+﻿using NExpression.Core.Contexts.Interfaces;
+using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Nodes.NodeDatas;
 using NExpression.Core.Expressions.Nodes.NodeDatas.Booleans;
@@ -13,12 +14,14 @@ namespace NExpression.Core.Expressions.Parsers
 {
     internal class LeafParser : IParser
     {
+        public IContext? Context { private set; get; }
         public Tokenizer Tokenizer { private set; get; }
         public IParser NextParser => throw new NotImplementedException();
         public Expression Expression { private set; get; }
 
-        public LeafParser(Tokenizer Tokenizer, Expression Expression)
+        public LeafParser(IContext? Context, Tokenizer Tokenizer, Expression Expression)
         {
+            this.Context = Context;
             this.Tokenizer = Tokenizer;
             this.Expression = Expression;
         }
@@ -139,7 +142,24 @@ namespace NExpression.Core.Expressions.Parsers
 
                 if (Tokenizer.Token != Token.OpenParenthesis)
                 {
-                    return new NodeVariable(Name);
+                    if (Tokenizer.Token == Token.Dot)
+                    {
+                        Tokenizer.NextToken();
+
+                        NodeVariable ParentNode = new NodeVariable(Name);
+                        ParentNode.SetContext(Context);
+
+                        INode NextNode = this.Parse<T>();
+
+                        return new NodeNested(ParentNode, NextNode);
+                    }
+                    else
+                    {
+                        NodeVariable Variable = new NodeVariable(Name);
+                        Variable.SetContext(Context);
+
+                        return Variable;
+                    }
                 }
                 else
                 {
@@ -167,7 +187,7 @@ namespace NExpression.Core.Expressions.Parsers
 
                     Tokenizer.NextToken();
 
-                    return new NodeFunctionCall(Name, Arguments.ToArray());
+                    return new NodeFunctionCall(Context, Name, Arguments.ToArray());
                 }
             }
             else

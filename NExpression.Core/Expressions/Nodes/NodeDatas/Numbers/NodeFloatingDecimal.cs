@@ -6,6 +6,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas.Numbers
 {
     public class NodeFloatingDecimal : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { get => null; set { } }
+
         private string? NumberString { get; }
         private object? Value { get; set; }
         public NodeFloatingDecimal(string NumberString)
@@ -18,7 +21,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas.Numbers
             this.NumberString = Value.ToString();
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
             if (Value == null)
             {

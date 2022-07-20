@@ -2,7 +2,6 @@
 {
     public interface IContext
     {
-        public IContext? InnerContext { get; set; }
         public string Name { get; }
     }
 }

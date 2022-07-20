@@ -45,7 +45,15 @@ namespace NExpression.Core.Expressions.Parsers
 
                     var RightSide = NextParser.Parse<T>();
 
-                    if (LeftNode is NodeVariable Variable)
+                    if (LeftNode is NodeNested Nested)
+                    {
+                        if (Nested.InnerNode is NodeVariable InnerVariable)
+                        {
+                            LeftNode = new NodeAssignment(InnerVariable, RightSide, MathOperation, Operation);
+                        }
+                        else throw new InvalidOperationException("The left-hand side of an assignment must be a variable"); 
+                    }
+                    else if (LeftNode is NodeVariable Variable)
                     {
                         LeftNode = new NodeAssignment(Variable, RightSide, MathOperation, Operation);
                     }

@@ -15,45 +15,45 @@ namespace NExpression.Test.ExpressionTest.Assignment
         {
             CleanUp();
 
-            object? Value = ExpressionHelpers.Parse("var a = 3", Context).Evaluate(Context);
+            object? Value = ExpressionHelpers.Parse("var a = 3", Context).Evaluate();
 
             Assert.AreEqual(Value, 3);
 
-            Value = ExpressionHelpers.Parse("a = 4", Context).Evaluate(Context);
+            Value = ExpressionHelpers.Parse("a = 4", Context).Evaluate();
 
             Assert.AreEqual(Value, 4);
 
-            Value = ExpressionHelpers.Parse("var b = 2", Context).Evaluate(Context);
+            Value = ExpressionHelpers.Parse("var b = 2", Context).Evaluate();
 
             Assert.AreEqual(Value, 2);
 
-            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(Context), 4);
+            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(), 4);
 
-            Assert.AreEqual(ExpressionHelpers.Parse("b", Context).Evaluate(Context), 2);
+            Assert.AreEqual(ExpressionHelpers.Parse("b", Context).Evaluate(), 2);
 
-            Value = ExpressionHelpers.Parse("var c = a * b", Context).Evaluate(Context);
+            Value = ExpressionHelpers.Parse("var c = a * b", Context).Evaluate();
 
             Assert.AreEqual(Value, 8);
 
-            Assert.AreEqual(ExpressionHelpers.Parse("c", Context).Evaluate(Context), 8);
+            Assert.AreEqual(ExpressionHelpers.Parse("c", Context).Evaluate(), 8);
 
             CleanUp();
 
-            Value = ExpressionHelpers.Parse("var a = null", Context).Evaluate(Context);
+            Value = ExpressionHelpers.Parse("var a = null", Context).Evaluate();
 
             Assert.AreEqual(Value, null);
 
-            Value = ExpressionHelpers.Parse("a = 4", Context).Evaluate(Context);
+            Value = ExpressionHelpers.Parse("a = 4", Context).Evaluate();
 
             Assert.AreEqual(Value, 4);
 
-            Value = ExpressionHelpers.Parse("var b = null", Context).Evaluate(Context);
+            Value = ExpressionHelpers.Parse("var b = null", Context).Evaluate();
 
             Assert.AreEqual(Value, null);
 
-            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(Context), 4);
+            Assert.AreEqual(ExpressionHelpers.Parse("a", Context).Evaluate(), 4);
 
-            Assert.AreEqual(ExpressionHelpers.Parse("b", Context).Evaluate(Context), null);
+            Assert.AreEqual(ExpressionHelpers.Parse("b", Context).Evaluate(), null);
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
         {
             CleanUp();
 
-            ExpressionHelpers.Parse("d", Context).Evaluate(Context);
+            ExpressionHelpers.Parse("d", Context).Evaluate();
         }
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
         {
             CleanUp();
 
-            ExpressionHelpers.Parse("c = 3", Context).Evaluate(Context);
+            ExpressionHelpers.Parse("c = 3", Context).Evaluate();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace NExpression.Core.Expressions
         {
             this.Tokenizer = Tokenizer;
 
-            IParser ParseLeaf = new LeafParser(Tokenizer, this);
+            IParser ParseLeaf = new LeafParser(Context, Tokenizer, this);
             IParser ParsePostfix = new PostfixParser(Context, Tokenizer, ParseLeaf, new List<Token> { Token.DoubleCross, Token.DoubleDash, Token.SingleExclamation, Token.OpenBlacket });
             IParser ParseUnary = new UnaryParser(Context, Tokenizer, ParsePostfix, new List<Token> { Token.SingleCross, Token.SingleDash, Token.SingleExclamation, Token.SingleTilde, Token.DoubleCross, Token.DoubleDash });
             IParser ParseMultiplyDivideModulus = new ExpressionParser(Tokenizer, ParseUnary, new List<Token> { Token.SingleAsterisk, Token.SingleSlash, Token.SinglePercent });

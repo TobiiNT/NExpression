@@ -10,6 +10,8 @@ namespace NExpression.Test.ExpressionTest
         private class MyFunctionContext : IFunctionContext
         {
             public string Name { get; } = "Test";
+            public IContext? InnerContext { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
             public object? CallFunction(string name, object?[] Arguments)
             {
                 if (name == "rectArea")
@@ -30,8 +32,8 @@ namespace NExpression.Test.ExpressionTest
         public void FunctionsTest()
         {
             var ctx = new MyFunctionContext();
-            Assert.AreEqual(ExpressionHelpers.Parse("rectArea(10,20)").Evaluate(ctx), 200);
-            Assert.AreEqual(ExpressionHelpers.Parse("rectPerimeter(10,20)").Evaluate(ctx), 60);
+            Assert.AreEqual(ExpressionHelpers.Parse("rectArea(10,20)", ctx).Evaluate(), 200);
+            Assert.AreEqual(ExpressionHelpers.Parse("rectPerimeter(10,20)", ctx).Evaluate(), 60);
         }
     }
 }

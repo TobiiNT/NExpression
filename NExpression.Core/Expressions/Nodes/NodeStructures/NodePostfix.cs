@@ -6,6 +6,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodePostfix : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { get => null; set { } }
+
         public INode LeftNode { set; get; }
         public IOperation? Operation { set; get; }
 
@@ -15,9 +18,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.Operation = Operation;
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
-            var LeftValue = LeftNode.Evaluate(ReadContext);
+            var LeftValue = LeftNode.Evaluate();
             var Result = Operation?.Evaluate(LeftValue);
 
             return Result;

@@ -21,11 +21,11 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("-2 << 0").Evaluate(), -2 << 0);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("2 << -2").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("2 << -2").Evaluate());
 
-            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue << RightValue").Evaluate(null));
+            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue << RightValue").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" << \"RightValue\"").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" << \"RightValue\"").Evaluate());
         }
 
         [TestMethod]
@@ -43,11 +43,11 @@ namespace NExpression.Test.ExpressionTest
                                                                                    
             Assert.AreEqual(ExpressionHelpers.Parse("-2 >> 0").Evaluate(), -2 >> 0);
             
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("-2 >> -2").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("-2 >> -2").Evaluate());
             
-            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue >> RightValue").Evaluate(null));
+            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue >> RightValue").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" >> \"RightValue\"").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" >> \"RightValue\"").Evaluate());
         }
 
         [TestMethod]
@@ -59,13 +59,13 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("0 & 0").Evaluate(), 0 & 0);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("0.2 & 5").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("0.2 & 5").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("5 & 0.2").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("5 & 0.2").Evaluate());
 
-            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue & RightValue").Evaluate(null));
+            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue & RightValue").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" & \"RightValue\"").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" & \"RightValue\"").Evaluate());
         }
 
         [TestMethod]
@@ -77,13 +77,13 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("0 | 0").Evaluate(), 0 | 0);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("0.2 | 5").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("0.2 | 5").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("5 | 0.2").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("5 | 0.2").Evaluate());
 
-            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue | RightValue").Evaluate(null));
+            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue | RightValue").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" | \"RightValue\"").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" | \"RightValue\"").Evaluate());
         }
 
         [TestMethod]
@@ -95,13 +95,13 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("0 ^ 0").Evaluate(), 0 ^ 0);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("0.2 ^ 5").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("0.2 ^ 5").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("5 ^ 0.2").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("5 ^ 0.2").Evaluate());
 
-            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue ^ RightValue").Evaluate(null));
+            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("LeftValue ^ RightValue").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" ^ \"RightValue\"").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("\"LeftValue\" ^ \"RightValue\"").Evaluate());
         }
 
         [TestMethod]
@@ -113,11 +113,11 @@ namespace NExpression.Test.ExpressionTest
 
             Assert.AreEqual(ExpressionHelpers.Parse("~~~-5").Evaluate(), ~~~-5);
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("~true").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("~true").Evaluate());
 
-            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("~LeftValue").Evaluate(null));
+            Assert.ThrowsException<NullContextException>(() => ExpressionHelpers.Parse("~LeftValue").Evaluate());
 
-            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("~\"LeftValue\"").Evaluate(null));
+            Assert.ThrowsException<InvalidMathOperatorException>(() => ExpressionHelpers.Parse("~\"LeftValue\"").Evaluate());
         }
     }
 }

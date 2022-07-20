@@ -5,13 +5,16 @@ namespace NExpression.Core.Expressions.Nodes.NodeDatas.Booleans
 {
     public class NodeBoolean : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { get => null; set { } }
+
         private bool Boolean { get; set; }
         public NodeBoolean(bool Boolean)
         {
             this.Boolean = Boolean;
         }
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
             return Boolean;
         }

@@ -8,6 +8,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeTernaryTree : INode
     {
+        public INode? InnerNode => null;
+        public IContext? Context { get => null; set { } }
+
         public INode? ConditionNode { set; get; }
         public INode LeftNode { set; get; }
         public INode RightNode { set; get; }
@@ -29,11 +32,11 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         }
         public void SetCondition(INode ConditionNode) => this.ConditionNode = ConditionNode;
 
-        public object? Evaluate(IContext? ReadContext = null)
+        public object? Evaluate()
         {
-            var ConditionValue = ConditionNode?.Evaluate(ReadContext);
-            var LeftValue = LeftNode.Evaluate(ReadContext);
-            var RightValue = RightNode.Evaluate(ReadContext);
+            var ConditionValue = ConditionNode?.Evaluate();
+            var LeftValue = LeftNode.Evaluate();
+            var RightValue = RightNode.Evaluate();
             var Result = TernaryOperation?.Evaluate(ConditionValue, LeftValue, RightValue);
 
             return Result;
