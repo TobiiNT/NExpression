@@ -86,11 +86,11 @@ namespace NExpression.Core.Contexts
         {
             if (PropertyName != null)
             {
-                if (Variables.TryGetValue(PropertyName, out var ExistVariable))
+                if (!Variables.ContainsKey(PropertyName))
                 {
-                    Variables[PropertyName] = Value;
+                    Variables.Add(PropertyName, Value);
                 }
-                else throw new NullVariableException(this, PropertyName);
+                else Variables[PropertyName] = Value;
             }
         }
 

@@ -67,7 +67,6 @@
         FloatingDecimal,
 
         // Keyword
-        KeywordVar,
         KeywordNew,
 
         KeywordNull,

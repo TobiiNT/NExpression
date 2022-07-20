@@ -1,5 +1,6 @@
 ﻿using NExpression.Core.Contexts;
 using NExpression.Core.Helpers;
+using NExpression.Dependencies;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ using System.Threading.Tasks;
 namespace NExpression.Test.ExpressionTest.Context
 {
     [TestClass]
-    internal class NestedContextTest
+    public class NestedContextTest
     {
         [TestMethod]
-        public void TwoLevelContext()
+        public void ReadTwoLevelContext()
         {
             var Family = new DynamicContext("Family");
             Family["Members"] = 2;
@@ -21,7 +22,7 @@ namespace NExpression.Test.ExpressionTest.Context
             Father["Age"] = 40;
 
             var Mother = new DynamicContext("Mother");
-            Father["Age"] = 35;
+            Mother["Age"] = 35;
 
             Family["Father"] = Father;
             Family["Mother"] = Mother;
@@ -34,7 +35,7 @@ namespace NExpression.Test.ExpressionTest.Context
         }
 
         [TestMethod]
-        public void ThreeLevelContext()
+        public void ReadThreeLevelContext()
         {
             var Number = new DynamicContext("Number");
             Number["Name"] = "Number";
@@ -68,25 +69,26 @@ namespace NExpression.Test.ExpressionTest.Context
 
             Assert.AreEqual(ExpressionHelpers.Parse("Name", Number).Evaluate(), "Number");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("Floating", Number).Evaluate(), "Floating");
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Name", Number).Evaluate(), "Floating");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating", Number).Evaluate(), "NonFloating");
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Name", Number).Evaluate(), "NonFloating");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Double", Number).Evaluate(), "Double");
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Double.Name", Number).Evaluate(), "Double");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Decimal", Number).Evaluate(), "Decimal");
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Decimal.Name", Number).Evaluate(), "Decimal");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Integer", Number).Evaluate(), "Integer");
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Integer.Name", Number).Evaluate(), "Integer");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Long", Number).Evaluate(), "Long");
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Long.Name", Number).Evaluate(), "Long");
         }
 
         [TestMethod]
         public void CommandTwoLevelContext()
         {
             var MainContext = new DynamicContext("Main");
+            MainContext.RegisterOperation<CreateContext>("Context");
 
-            ExpressionHelpers.Parse("var A = new Context()", MainContext).Evaluate();
+            ExpressionHelpers.Parse("A = new Context()", MainContext).Evaluate();
 
         }
     }

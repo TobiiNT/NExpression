@@ -109,19 +109,6 @@ namespace NExpression.Core.Expressions.Parsers
 
                 return new NodeTernaryTree(LeftNode, RightNode);
             }
-            else if (CurrentToken == Token.KeywordVar)
-            {
-                Tokenizer.NextToken();
-
-                var LeftSide = Expression.Parser.Parse<T>();
-
-                if (LeftSide is NodeAssignment Assignment)
-                {
-                    Assignment.SetDeclare<object>(true);
-                    return Assignment;
-                }
-                throw new ExpressionSyntaxException("Implicitly typed variables must be initialized");
-            }
             else if (CurrentToken == Token.KeywordNew)
             {
                 Tokenizer.NextToken();

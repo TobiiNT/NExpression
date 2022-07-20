@@ -15,7 +15,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
         {
             CleanUp();
 
-            object? Value = ExpressionHelpers.Parse("var a = 3", Context).Evaluate();
+            object? Value = ExpressionHelpers.Parse("a = 3", Context).Evaluate();
 
             Assert.AreEqual(Value, 3);
 
@@ -23,7 +23,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
 
             Assert.AreEqual(Value, 4);
 
-            Value = ExpressionHelpers.Parse("var b = 2", Context).Evaluate();
+            Value = ExpressionHelpers.Parse("b = 2", Context).Evaluate();
 
             Assert.AreEqual(Value, 2);
 
@@ -31,7 +31,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
 
             Assert.AreEqual(ExpressionHelpers.Parse("b", Context).Evaluate(), 2);
 
-            Value = ExpressionHelpers.Parse("var c = a * b", Context).Evaluate();
+            Value = ExpressionHelpers.Parse("c = a * b", Context).Evaluate();
 
             Assert.AreEqual(Value, 8);
 
@@ -39,7 +39,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
 
             CleanUp();
 
-            Value = ExpressionHelpers.Parse("var a = null", Context).Evaluate();
+            Value = ExpressionHelpers.Parse("a = null", Context).Evaluate();
 
             Assert.AreEqual(Value, null);
 
@@ -47,7 +47,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
 
             Assert.AreEqual(Value, 4);
 
-            Value = ExpressionHelpers.Parse("var b = null", Context).Evaluate();
+            Value = ExpressionHelpers.Parse("b = null", Context).Evaluate();
 
             Assert.AreEqual(Value, null);
 
@@ -57,21 +57,21 @@ namespace NExpression.Test.ExpressionTest.Assignment
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void GetValueFromNoDeclaredVariable()
         {
             CleanUp();
 
-            ExpressionHelpers.Parse("d", Context).Evaluate();
+            Assert.AreEqual(ExpressionHelpers.Parse("d", Context).Evaluate(), null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
         public void SetValueToNoDeclaredVariable()
         {
             CleanUp();
 
             ExpressionHelpers.Parse("c = 3", Context).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("c", Context).Evaluate(), 3);
         }
     }
 }

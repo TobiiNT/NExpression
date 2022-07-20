@@ -1,5 +1,6 @@
 ﻿using NExpression.Core.Contexts;
 using NExpression.Core.Contexts.Interfaces;
+using NExpression.Core.Exceptions;
 using NExpression.Core.Helpers;
 
 namespace NExpression.Test.ExpressionTest.Postfix
@@ -15,7 +16,7 @@ namespace NExpression.Test.ExpressionTest.Postfix
         {
             CleanUp();
 
-            object? Value = ExpressionHelpers.Parse("var a = 0", Context).Evaluate();
+            object? Value = ExpressionHelpers.Parse("a = 0", Context).Evaluate();
 
             Assert.AreEqual(Value, 0);
 
@@ -38,7 +39,7 @@ namespace NExpression.Test.ExpressionTest.Postfix
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(NullVariableException))]
         public void AddAddToNullReference()
         {
             CleanUp();

@@ -474,7 +474,6 @@ namespace NExpression.Core.Tokens
             {
                 case "true": return Token.KeywordTrue;
                 case "false": return Token.KeywordFalse;
-                case "var": return Token.KeywordVar;
                 case "new": return Token.KeywordNew;
                 case "char": return Token.KeywordChar;
                 case "string": return Token.KeywordString;

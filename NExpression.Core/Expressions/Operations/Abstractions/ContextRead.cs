@@ -19,29 +19,26 @@ namespace NExpression.Core.Expressions.Operations.Abstractions
         public object? Evaluate(params object?[] Params)
         {
             object? Variable = Params[0];
-            object? FirstArg = Params[1];
 
             if (Context == null)
             {
-                throw new NullContextException(new ExpressionEvaluationException(MathOperation, Variable, FirstArg));
+                throw new NullContextException(new ExpressionEvaluationException(MathOperation, Variable));
             }
             string? VariableName = Variable?.ToString();
             if (VariableName == null)
             {
-                throw new NullVariableException(Context, VariableName, new ExpressionEvaluationException(MathOperation, Variable, FirstArg));
+                throw new NullVariableException(Context, VariableName, new ExpressionEvaluationException(MathOperation, Variable));
             }
 
             if (Context is not IGetVariableContext ReadContext)
             {
-                throw new InvalidOperationContextException(Context, "READ", new ExpressionEvaluationException(MathOperation, Variable, FirstArg));
+                throw new InvalidOperationContextException(Context, "READ", new ExpressionEvaluationException(MathOperation, Variable));
             }
             if (ReadContext.ResolveVariable(VariableName, out object? ContextValue))
             {
-                object? NewValue = Operation?.Evaluate(ContextValue, FirstArg);
-
-                return NewValue;
+                return Operation?.Evaluate(ContextValue);
             }
-            throw new NullVariableException(Context, VariableName, new ExpressionEvaluationException(MathOperation, Variable, FirstArg));
+            throw new NullVariableException(Context, VariableName, new ExpressionEvaluationException(MathOperation, Variable));
         }
     }
 }

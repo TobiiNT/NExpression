@@ -61,7 +61,6 @@ namespace NExpression.Core.Extensions
                 case Token.SingleExclamationAndDoubleEqual: return "!==";
                 case Token.Identifier: return "identifier";
                 case Token.Character: return "character";
-                case Token.KeywordVar: return "var";
                 case Token.KeywordTrue: return "true";
                 case Token.KeywordFalse: return "false";
                 case Token.KeywordNull: return "null";

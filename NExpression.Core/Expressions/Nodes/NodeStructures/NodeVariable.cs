@@ -26,7 +26,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
                     {
                         return ContextValue;
                     }
-                    else throw new NullReferenceException($"Variable '{VariableName}' is not assigned");
+                    return null;
                 }
                 throw new InvalidOperationContextException(Context, "READ");
             }

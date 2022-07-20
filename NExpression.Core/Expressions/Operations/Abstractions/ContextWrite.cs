@@ -18,8 +18,6 @@ namespace NExpression.Core.Expressions.Operations.Abstractions
         {
             object? Variable = Params[0];
             object? AssignValue = Params[1];
-            bool? IsDeclare = (bool?)Params[2];
-            Type? DeclareType = (Type?)Params[3];
 
             if (Context == null)
             {
@@ -35,10 +33,6 @@ namespace NExpression.Core.Expressions.Operations.Abstractions
                 throw new InvalidOperationContextException(Context, "WRITE", new ExpressionEvaluationException(MathOperation, Variable, AssignValue));
             }
 
-            if (IsDeclare ?? false)
-            {
-                WriteContext.DeclareVariable(VariableName, DeclareType);
-            }
             WriteContext.AssignVariable(VariableName, AssignValue);
 
             return AssignValue;

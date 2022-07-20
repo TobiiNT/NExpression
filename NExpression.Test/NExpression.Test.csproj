@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NExpression.Core\NExpression.Core.csproj" />
+    <ProjectReference Include="..\NExpression.Dependencies\NExpression.Dependencies.csproj" />
   </ItemGroup>
 
 </Project>
