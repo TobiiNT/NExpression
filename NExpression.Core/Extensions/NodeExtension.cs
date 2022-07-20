@@ -37,8 +37,11 @@ namespace NExpression.Core.Extensions
                 {
                     ArgsString.Append(Arguement.Identity() + ", ");
                 }
-                ArgsString.Remove(ArgsString.Length - 2, 2);
-
+                if (Function.Arguments.Length > 2)
+                {
+                    ArgsString.Remove(ArgsString.Length - 2, 2);
+                }
+              
                 return $"({Function.FunctionName}({ArgsString}))";
             }
             else if (Node is NodePostfix Postfix)

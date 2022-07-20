@@ -4,7 +4,8 @@ using NExpression.Core.Contexts;
 using NExpression.Core.Extensions;
 using NExpression.Core.Helpers;
 using NExpression.Core.Tokens;
-using NExpression.Dependencies;
+using NExpression.Dependencies.Lists;
+using NExpression.Dependencies.Maths;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -19,7 +20,8 @@ ResetContext();
 void ResetContext()
 {
     MathContext = new DynamicContext("MathContext");
-    MathContext.RegisterOperation<MathAbs>("abs");
+    MathContext.RegisterOperation<MathAbs>("Abs");
+    MathContext.RegisterOperation<CreateList>("List");
     MathContext["PI"] = Math.PI;
     MathContext["E"] = Math.E;
 }

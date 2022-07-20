@@ -2,7 +2,7 @@
 using NExpression.Core.Expressions.Operations;
 using NExpression.Core.Expressions.Operations.Interfaces;
 
-namespace NExpression.Dependencies
+namespace NExpression.Dependencies.Maths
 {
     public class MathAbs : IOperation
     {
