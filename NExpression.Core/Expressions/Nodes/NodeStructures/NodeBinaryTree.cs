@@ -18,8 +18,8 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 
         public object? Evaluate()
         {
-            var FirstArg = LeftNode.Evaluate();
             var SecondArg = RightNode.Evaluate();
+            var FirstArg = LeftNode.Evaluate();
             var Result = Operation?.Evaluate(FirstArg, SecondArg, null);
 
             return Result;
@@ -27,8 +27,8 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         public void Traverse(ref Stack<INode> Nodes)
         {
             Nodes.Push(this);
-            LeftNode.Traverse(ref Nodes);
             RightNode.Traverse(ref Nodes);
+            LeftNode.Traverse(ref Nodes);
         }
     }
 }
