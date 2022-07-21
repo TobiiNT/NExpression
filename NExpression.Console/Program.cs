@@ -51,6 +51,8 @@ while (true)
             List<SingleCommand> Commands = CommandHelpers.ParseMultiple(InputExpression, MathContext);
             foreach (var SingleCommand in Commands)
             {
+                CurrentCommand = SingleCommand;
+
                 SingleCommand.Parse();
 
                 if (IsPrintTraverse) { PrintTraverse(SingleCommand); }
@@ -91,11 +93,21 @@ static void PrintTraverse(SingleCommand Command)
         string? Identity = Node.Identity();
 
         Consoler.Write($"[Step {LineNumber}] => ", ConsoleColor.White);
-        Consoler.Write($"{Identity} = ", ConsoleColor.White);
-        Consoler.Write($"{Node.Evaluate()}", ConsoleColor.Green);
-        Consoler.WriteLine();
-      
-        LineNumber++;
+        Consoler.Write($"{Identity}", ConsoleColor.White);
+        try
+        {
+            Consoler.Write($" = {Node.Evaluate()}", ConsoleColor.Green);
+        }
+        catch (Exception Exception)
+        {
+            Consoler.Write($" => {Exception.Message}", ConsoleColor.Red);
+            break;
+        }
+        finally
+        {
+            Consoler.WriteLine();
+            LineNumber++;
+        }
     }
 }
 
