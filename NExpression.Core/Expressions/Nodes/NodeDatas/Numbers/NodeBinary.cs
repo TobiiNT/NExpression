@@ -1,13 +1,9 @@
-﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Expressions.Nodes.Interfaces;
+﻿using NExpression.Core.Expressions.Nodes.Interfaces;
 
 namespace NExpression.Core.Expressions.Nodes.NodeDatas.Numbers
 {
     public class NodeBinary : INode
     {
-        public INode? InnerNode => null;
-        public IContext? Context { get => null; set { } }
-
         private string BinaryString { get; set; }
         private int? Value { get; set; }
         public NodeBinary(string BinaryString)

@@ -1,18 +1,12 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
 using NExpression.Core.Expressions.Nodes.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
-    public class NodeNested : INode
+    public class NodeNested : INode, INestedNode
     {
         public INode? CurrentNode { private set; get; }
-        public INode? InnerNode { private set; get; }
-        public IContext? Context { set; get; }
+        public INode? ChildrenNode { set; get; }
 
         public NodeNested(INode? CurrentNode)
         {
@@ -20,42 +14,60 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         }
         public void AssignChildren(INode? ChildrenNode)
         {
-            this.InnerNode = ChildrenNode;
+            this.ChildrenNode = ChildrenNode;
         }
 
         public object? Evaluate()
         {
-            if (InnerNode != null)
+            INode? FinalNode = EvaluateNestedToVariable(this);
+
+            return FinalNode?.Evaluate();
+        }
+
+        public INode? GetFinalNode()
+        {
+            INode? FinalNode = EvaluateNestedToVariable(this);
+
+            return FinalNode;
+        }
+
+        private INode? EvaluateNestedToVariable(NodeNested _NodeNested)
+        {
+            var _ChildrenContext = _NodeNested.CurrentNode?.Evaluate();
+
+            if (_ChildrenContext != null && _ChildrenContext is IContext ChildrenContext)
             {
-                if (CurrentNode is not NodeNested)
+                if (_NodeNested.ChildrenNode != null)
                 {
-                   return CurrentNode?.Evaluate();
-                }
-                else
-                {
-                    INode? CurrentNode = this;
-
-                    while (CurrentNode is NodeNested NodeNested)
+                    if (_NodeNested.ChildrenNode is NodeVariable Variable)
                     {
-                        var CurrentContext = CurrentNode?.Evaluate();
+                        Variable.SetContext(ChildrenContext);
 
-                        if (CurrentContext is IContext Context && InnerNode is NodeNested NestedInner)
+                        return Variable;
+                    }
+                    else if (_NodeNested.ChildrenNode is NodeFunctionCall Function)
+                    {
+                        Function.SetContext(ChildrenContext);
+
+                        return Function;
+                    }
+                    else if (_NodeNested.ChildrenNode is NodeNested Nested)
+                    {
+                        if (Nested.CurrentNode is IContextNode ContextNode)
                         {
-                            NestedInner.CurrentNode.Context = Context;
-
-                            CurrentNode = NestedInner.CurrentNode;
+                            ContextNode.SetContext(ChildrenContext);
                         }
-                        else throw new InvalidOperationException("This variable is not a context");
+                        return EvaluateNestedToVariable(Nested);
                     }
                 }
-               
             }
             return null;
         }
+
         public void Traverse(ref Stack<INode> Nodes)
         {
             Nodes.Push(this);
-            InnerNode?.Traverse(ref Nodes);
+            ChildrenNode?.Traverse(ref Nodes);
         }
     }
 }

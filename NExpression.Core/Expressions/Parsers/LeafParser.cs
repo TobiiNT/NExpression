@@ -131,27 +131,12 @@ namespace NExpression.Core.Expressions.Parsers
                 {
                     if (Tokenizer.Token == Token.Dot)
                     {
-                        Tokenizer.NextToken();
+                        var Nested = new NodeNested(new NodeVariable(Name, Context));
+                        Nested.AssignChildren(this.Parse<T>());
 
-                        NodeNested NestedNode = new NodeNested(new NodeVariable(Name, Context));
-
-                        while (Tokenizer.Token != Token.EOF)
-                        {
-                            INode NextNode = this.Parse<T>();
-
-                            NestedNode.AssignChildren(NextNode);
-
-                            Tokenizer.NextToken();
-                        }
-
-                        //Console.WriteLine($"Top: {NestedNode} {NestedNode.Context}");
-
-                        return NestedNode;
+                        return Nested;
                     }
-                    else
-                    {
-                        return new NodeVariable(Name, Context);
-                    }
+                    else return new NodeVariable(Name, Context);
                 }
                 else
                 {
@@ -181,6 +166,12 @@ namespace NExpression.Core.Expressions.Parsers
 
                     return new NodeFunctionCall(Context, Name, Arguments.ToArray());
                 }
+            }
+            else if (CurrentToken == Token.Dot)
+            {
+                Tokenizer.NextToken();
+
+                return this.Parse<T>();
             }
             else
             {

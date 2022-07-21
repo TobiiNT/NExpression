@@ -26,6 +26,11 @@ namespace NExpression.Test.ExpressionTest
 
                 throw new InvalidDataException($"Unknown function: '{name}'");
             }
+
+            public void SetName(string Name)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         [TestMethod]

@@ -1,12 +1,11 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Nodes.Interfaces;
+using NExpression.Core.Expressions.Operations.Abstractions;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
-    public class NodeVariable : INode
+    public class NodeVariable : INode, IContextNode
     {
-        public INode? InnerNode => null;
         public IContext? Context { set; get; }
 
         public string VariableName { set; get; }
@@ -14,28 +13,16 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             this.VariableName = VariableName;
         }
-        public NodeVariable(string VariableName, IContext? Context)
+        public NodeVariable(string VariableName, IContext? DefaultContext)
         {
             this.VariableName = VariableName;
-            this.Context = Context;
+            this.Context = DefaultContext;
         }
         public void SetContext(IContext? Context) => this.Context = Context;
 
         public object? Evaluate()
         {
-            if (Context != null)
-            {
-                if (Context is IGetVariableContext VariableContext)
-                {
-                    if (VariableContext.ResolveVariable(VariableName, out object? ContextValue))
-                    {
-                        return ContextValue;
-                    }
-                    return null;
-                }
-                throw new InvalidOperationContextException(Context, "READ");
-            }
-                throw new NullContextException();
+            return new ContextRead(Context).Evaluate(VariableName);
         }
         public void Traverse(ref Stack<INode> Nodes)
         {

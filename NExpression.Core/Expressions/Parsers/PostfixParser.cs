@@ -42,11 +42,11 @@ namespace NExpression.Core.Expressions.Parsers
                         {
                             if (CurrentToken == Token.DoubleCross)
                             {
-                                LeftNode = new NodeAddAfterReturn(Variable, Context);
+                                LeftNode = new NodeAddAfterReturn(Variable);
                             }
                             else if (CurrentToken == Token.DoubleDash) // i--
                             {
-                                LeftNode = new NodeSubtractAfterReturn(Variable, Context);
+                                LeftNode = new NodeSubtractAfterReturn(Variable);
                             }
                             else return new NodeNull();
                         }
@@ -54,7 +54,7 @@ namespace NExpression.Core.Expressions.Parsers
                     }
                     else if (CurrentToken == Token.SingleExclamation) // 9!
                     {
-                        LeftNode = new NodeFactorial(LeftNode, Context);
+                        LeftNode = new NodeFactorial(LeftNode);
                     }
                     else if (CurrentToken == Token.OpenBlacket)
                     {
@@ -67,7 +67,7 @@ namespace NExpression.Core.Expressions.Parsers
                     
                         Tokenizer.NextToken();
                     
-                        return new NodeGetArrayItemByIndex(LeftNode, IndexNode, Context);
+                        return new NodeGetArrayItemByIndex(LeftNode, IndexNode);
                     }
                 }
                 else return LeftNode;

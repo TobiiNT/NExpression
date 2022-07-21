@@ -9,18 +9,20 @@ namespace NExpression.Core.Expressions.Operations.Abstractions
         private IContext? Context { get; }
         private IOperation? Operation { get; }
         private MathOperation MathOperation { get; }
-        public ContextReadWrite(IContext? Context, IOperation? Operation, MathOperation MathOperation)
+        private bool ReturnValueAfterCalculation { get; }
+        public ContextReadWrite(IContext? Context, IOperation? Operation, MathOperation MathOperation, bool ReturnValueAfterCalculation = true)
         {
             this.Context = Context;
             this.Operation = Operation;
             this.MathOperation = MathOperation;
+            this.ReturnValueAfterCalculation = ReturnValueAfterCalculation;
         }
 
         public object? Evaluate(params object?[] Params)
         {
             object? Variable = Params[0];
             object? AssignValue = Params[1];
-
+            
             if (Context == null)
             {
                 throw new NullContextException(new ExpressionEvaluationException(MathOperation, Variable, AssignValue));
@@ -45,7 +47,9 @@ namespace NExpression.Core.Expressions.Operations.Abstractions
 
                 WriteContext.AssignVariable(VariableName, NewValue);
 
-                return NewValue;
+                if (ReturnValueAfterCalculation)
+                    return NewValue;
+                return ContextValue;
             }
             throw new NullVariableException(Context, VariableName, new ExpressionEvaluationException(MathOperation, Variable, AssignValue));
         }

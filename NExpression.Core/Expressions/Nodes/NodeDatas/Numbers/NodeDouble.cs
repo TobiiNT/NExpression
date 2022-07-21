@@ -1,19 +1,10 @@
-﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Expressions.Nodes.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using NExpression.Core.Expressions.Nodes.Interfaces;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NExpression.Core.Expressions.Nodes.NodeDatas.Numbers
 {
     public class NodeDouble : INode
     {
-        public INode? InnerNode => null;
-        public IContext? Context { get => null; set { } }
-
         private string? NumberString { get; }
         private object? Value { get; set; }
         public NodeDouble(string NumberString)

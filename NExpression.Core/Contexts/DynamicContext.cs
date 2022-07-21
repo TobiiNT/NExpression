@@ -7,7 +7,7 @@ namespace NExpression.Core.Contexts
 {
     public class DynamicContext : IOperationContext, IFunctionContext, IGetVariableContext, ISetVariableContext
     {
-        public string Name { get; }
+        public string Name { private set; get; }
         private Dictionary<string, object?> Variables { set; get; }
         private Dictionary<string, IOperation?> Operations { set; get; }
 
@@ -31,6 +31,8 @@ namespace NExpression.Core.Contexts
 
             RegisterBuildInOperation();
         }
+        public void SetName(string Name) => this.Name = Name;
+
         public void RegisterBuildInOperation()
         {
             RegisterOperation<CreateContext>("Context");
@@ -60,11 +62,7 @@ namespace NExpression.Core.Contexts
 
         public object? CallOperation(IOperation? Operation, object?[] Arguments)
         {
-            object? FirstArg = Arguments.Length >= 1 ? Arguments[0] : null;
-            object? SecondArg = Arguments.Length >= 2 ? Arguments[1] : null;
-            object? ThirdArg = Arguments.Length >= 3 ? Arguments[2] : null;
-
-            return Operation?.Evaluate(FirstArg, SecondArg, ThirdArg);
+            return Operation?.Evaluate(Arguments);
         }
 
         public bool ContainVariable(string? PropertyName) => Variables.ContainsKey(PropertyName ?? "");

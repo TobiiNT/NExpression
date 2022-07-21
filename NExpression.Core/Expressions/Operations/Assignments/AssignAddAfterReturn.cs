@@ -9,7 +9,8 @@ namespace NExpression.Core.Expressions.Operations.Assignments
         public AssignAddAfterReturn(IContext? Context) : 
             base(Context, 
                 new CalculationAdd(),
-                MathOperation.AssignAddAfterReturn)
+                MathOperation.AssignAddAfterReturn,
+                false)
         {
 
         }

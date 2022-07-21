@@ -1,10 +1,4 @@
-﻿using NExpression.Core.Contexts;
-using NExpression.Core.Expressions.Operations.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NExpression.Core.Expressions.Operations.Interfaces;
 
 namespace NExpression.Core.Contexts
 {
@@ -12,7 +6,7 @@ namespace NExpression.Core.Contexts
     {
         public object? Evaluate(params object?[] Params)
         {
-            string? Name = (string?)Params[0];
+            string? Name = Params.Length >= 1 ? (string?)Params[0] : "";
 
             if (Name != null)
             {

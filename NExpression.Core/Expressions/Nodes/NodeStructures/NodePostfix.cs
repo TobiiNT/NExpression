@@ -1,14 +1,10 @@
-﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Expressions.Nodes.Interfaces;
+﻿using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Operations.Interfaces;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodePostfix : INode
     {
-        public INode? InnerNode => null;
-        public IContext? Context { get => null; set { } }
-
         public INode LeftNode { set; get; }
         public IOperation? Operation { set; get; }
 

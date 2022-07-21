@@ -1,5 +1,4 @@
-﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Expressions.Nodes.Interfaces;
+﻿using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Operations;
 using NExpression.Core.Expressions.Operations.Interfaces;
 using NExpression.Core.Helpers;
@@ -8,9 +7,6 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeTernaryTree : INode
     {
-        public INode? InnerNode => null;
-        public IContext? Context { get => null; set { } }
-
         public INode? ConditionNode { set; get; }
         public INode LeftNode { set; get; }
         public INode RightNode { set; get; }

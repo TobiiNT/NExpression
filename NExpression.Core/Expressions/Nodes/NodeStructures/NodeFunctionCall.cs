@@ -4,9 +4,8 @@ using NExpression.Core.Expressions.Nodes.Interfaces;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
-    public class NodeFunctionCall : INode
+    public class NodeFunctionCall : INode, IContextNode
     {
-        public INode? InnerNode => null;
         public IContext? Context { set; get; }
 
         public string FunctionName { private set; get; }
@@ -18,6 +17,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.FunctionName = FunctionName;
             this.Arguments = Arguments;
         }
+        public void SetContext(IContext? Context) => this.Context = Context;
 
         public object? Evaluate()
         {

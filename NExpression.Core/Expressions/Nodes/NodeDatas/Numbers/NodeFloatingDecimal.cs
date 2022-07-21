@@ -1,14 +1,10 @@
-﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Expressions.Nodes.Interfaces;
+﻿using NExpression.Core.Expressions.Nodes.Interfaces;
 using System.Globalization;
 
 namespace NExpression.Core.Expressions.Nodes.NodeDatas.Numbers
 {
     public class NodeFloatingDecimal : INode
     {
-        public INode? InnerNode => null;
-        public IContext? Context { get => null; set { } }
-
         private string? NumberString { get; }
         private object? Value { get; set; }
         public NodeFloatingDecimal(string NumberString)

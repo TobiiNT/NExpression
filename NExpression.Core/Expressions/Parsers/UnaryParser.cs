@@ -46,16 +46,13 @@ namespace NExpression.Core.Expressions.Parsers
                         // Create unary node
                         if (RightNode is NodeVariable Variable)
                         {
-                            // Skip
-                            Tokenizer.NextToken();
-
                             if (CurrentToken == Token.DoubleCross)
                             {
-                                return new NodeUnaryAddBeforeReturn(Variable, Context);
+                                return new NodeUnaryAddBeforeReturn(Variable);
                             }
                             else if (CurrentToken == Token.DoubleDash)
                             {
-                                return new NodeUnarySubtractBeforeReturn(Variable, Context);
+                                return new NodeUnarySubtractBeforeReturn(Variable);
                             }
                             else return new NodeNull();
                         }

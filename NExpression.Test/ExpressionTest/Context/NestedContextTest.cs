@@ -1,11 +1,5 @@
 ﻿using NExpression.Core.Contexts;
 using NExpression.Core.Helpers;
-using NExpression.Dependencies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NExpression.Test.ExpressionTest.Context
 {
@@ -58,11 +52,11 @@ namespace NExpression.Test.ExpressionTest.Context
             var Long = new DynamicContext("Long");
             Long["Name"] = "Long";
 
-            Floating["Double"] = Double;
-            Floating["Decimal"] = Decimal;
+            Floating["doubleNum"] = Double;
+            Floating["decimalNum"] = Decimal;
 
-            NonFloating["Integer"] = Integer;
-            NonFloating["Long"] = Long;
+            NonFloating["integerNum"] = Integer;
+            NonFloating["longNum"] = Long;
 
             Number["Floating"] = Floating;
             Number["NonFloating"] = NonFloating;
@@ -73,13 +67,13 @@ namespace NExpression.Test.ExpressionTest.Context
 
             Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Name", Number).Evaluate(), "NonFloating");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Double.Name", Number).Evaluate(), "Double");
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.doubleNum.Name", Number).Evaluate(), "Double");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Decimal.Name", Number).Evaluate(), "Decimal");
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.decimalNum.Name", Number).Evaluate(), "Decimal");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Integer.Name", Number).Evaluate(), "Integer");
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.integerNum.Name", Number).Evaluate(), "Integer");
 
-            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Long.Name", Number).Evaluate(), "Long");
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.longNum.Name", Number).Evaluate(), "Long");
         }
 
         [TestMethod]

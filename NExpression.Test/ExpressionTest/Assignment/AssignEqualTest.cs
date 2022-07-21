@@ -1,5 +1,6 @@
 ﻿using NExpression.Core.Contexts;
 using NExpression.Core.Contexts.Interfaces;
+using NExpression.Core.Exceptions;
 using NExpression.Core.Helpers;
 
 namespace NExpression.Test.ExpressionTest.Assignment
@@ -61,7 +62,7 @@ namespace NExpression.Test.ExpressionTest.Assignment
         {
             CleanUp();
 
-            Assert.AreEqual(ExpressionHelpers.Parse("d", Context).Evaluate(), null);
+            Assert.ThrowsException<NullVariableException>(ExpressionHelpers.Parse("d", Context).Evaluate);
         }
 
         [TestMethod]

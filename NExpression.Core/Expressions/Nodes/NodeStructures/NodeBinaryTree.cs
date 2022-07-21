@@ -1,14 +1,10 @@
-﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Expressions.Nodes.Interfaces;
+﻿using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Operations.Interfaces;
 
 namespace NExpression.Core.Expressions.Nodes.NodeStructures
 {
     public class NodeBinaryTree : INode
     {
-        public INode? InnerNode => null;
-        public IContext? Context { get => null; set { } }
-
         public INode LeftNode { private set; get; }
         public INode RightNode { private set; get; }
         public IOperation? Operation { private set; get; }

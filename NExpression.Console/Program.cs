@@ -4,9 +4,6 @@ using NExpression.Core.Contexts;
 using NExpression.Core.Extensions;
 using NExpression.Core.Helpers;
 using NExpression.Core.Tokens;
-using NExpression.Dependencies;
-using NExpression.Dependencies.Lists;
-using NExpression.Dependencies.Maths;
 using System.Runtime.InteropServices;
 using System.Text;
 

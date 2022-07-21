@@ -2,6 +2,7 @@
 {
     public interface IContext
     {
-        public string Name { get; }
+        string Name { get; }
+        void SetName (string Name);
     }
 }

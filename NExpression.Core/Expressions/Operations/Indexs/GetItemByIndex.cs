@@ -1,12 +1,5 @@
-﻿using NExpression.Core.Contexts.Interfaces;
-using NExpression.Core.Exceptions;
-using NExpression.Core.Expressions.Operations.Abstractions;
+﻿using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Operations.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NExpression.Core.Expressions.Operations.Indexs
 {
