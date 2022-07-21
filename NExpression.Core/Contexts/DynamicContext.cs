@@ -57,7 +57,7 @@ namespace NExpression.Core.Contexts
             {
                 return CallOperation(Operation, Arguments);
             }
-            throw new NullOperationException(this.Name, Name);
+            throw new NullOperationException(this, Name);
         }
 
         public object? CallOperation(IOperation? Operation, object?[] Arguments)

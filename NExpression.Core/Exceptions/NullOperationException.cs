@@ -1,9 +1,11 @@
-﻿namespace NExpression.Core.Exceptions
+﻿using NExpression.Core.Contexts.Interfaces;
+
+namespace NExpression.Core.Exceptions
 {
     public class NullOperationException : Exception
     {
-        public NullOperationException(string ContextName, string FunctionName)
-            : base($"Context '{ContextName}' does not contains a function called '{FunctionName}'")
+        public NullOperationException(IContext Context, string FunctionName)
+            : base($"Context '{Context.Name}' does not contains a function called '{FunctionName}'")
         {
         }
     }

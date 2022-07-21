@@ -21,7 +21,7 @@ void ResetContext()
 }
 
 bool IsPrintTokens = false;
-bool IsPrintTraverse = false;
+bool IsPrintTraverse = true;
 
 while (true)
 {
@@ -56,10 +56,9 @@ while (true)
                 if (IsPrintTraverse) { PrintTraverse(SingleCommand); }
 
                 var NodeValue = SingleCommand.Evaluate();
-                var StringResult = NodeValue is DynamicContext Dynamic ? "Context " + Dynamic.Name : NodeValue;
                 
                 Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {SingleCommand.RawExpression ?? "null"}", ConsoleColor.Blue);
-                Consoler.WriteLine($"[Command {CommandIndex}] Result      = {StringResult ?? "null"}", ConsoleColor.Green);
+                Consoler.WriteLine($"[Command {CommandIndex}] Result      = {NodeValue.Identity()}", ConsoleColor.Green);
                 CommandIndex++;
             }
 
@@ -91,8 +90,11 @@ static void PrintTraverse(SingleCommand Command)
     {
         string? Identity = Node.Identity();
 
-        Consoler.WriteLine($"[Step {LineNumber}] => {Identity}", ConsoleColor.Cyan);
-
+        Consoler.Write($"[Step {LineNumber}] => ", ConsoleColor.White);
+        Consoler.Write($"{Identity} = ", ConsoleColor.White);
+        Consoler.Write($"{Node.Evaluate()}", ConsoleColor.Green);
+        Consoler.WriteLine();
+      
         LineNumber++;
     }
 }
