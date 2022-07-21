@@ -81,7 +81,69 @@ namespace NExpression.Test.ExpressionTest.Context
         {
             var MainContext = new DynamicContext("Main");
 
-            ExpressionHelpers.Parse("A = new Context()", MainContext).Evaluate();
+            ExpressionHelpers.Parse("Family = new Context()", MainContext).Evaluate();
+
+            ExpressionHelpers.Parse("Family.Members = 2", MainContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("Family.Members", MainContext).Evaluate(), 2);
+            
+            ExpressionHelpers.Parse("Family.Father = new Context()", MainContext).Evaluate();
+
+            ExpressionHelpers.Parse("Family.Father.Age = 40", MainContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("Family.Father.Age", MainContext).Evaluate(), 40);
+
+            ExpressionHelpers.Parse("Family.Mother = new Context()", MainContext).Evaluate();
+
+            ExpressionHelpers.Parse("Family.Mother.Age = 35", MainContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("Family.Mother.Age", MainContext).Evaluate(), 35);
+        }
+
+        [TestMethod]
+        public void CommandThreeLevelContext()
+        {
+            var NumberContext = new DynamicContext("Number");
+
+            ExpressionHelpers.Parse("Name = \"Number\"", NumberContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("Name", NumberContext).Evaluate(), "Number");
+
+            ExpressionHelpers.Parse("Floating = new Context()", NumberContext).Evaluate();
+
+            ExpressionHelpers.Parse("Floating.Name = \"Floating\"", NumberContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.Name", NumberContext).Evaluate(), "Floating");
+
+            ExpressionHelpers.Parse("NonFloating = new Context()", NumberContext).Evaluate();
+
+            ExpressionHelpers.Parse("NonFloating.Name = \"NonFloating\"", NumberContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.Name", NumberContext).Evaluate(), "NonFloating");
+
+            ExpressionHelpers.Parse("Floating.DoubleNum = new Context()", NumberContext).Evaluate();
+
+            ExpressionHelpers.Parse("Floating.DoubleNum.Name = \"Double\"", NumberContext).Evaluate();
+            
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.DoubleNum.Name", NumberContext).Evaluate(), "Double");
+
+            ExpressionHelpers.Parse("Floating.DecimalNum = new Context()", NumberContext).Evaluate();
+
+            ExpressionHelpers.Parse("Floating.DecimalNum.Name = \"Decimal\"", NumberContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("Floating.DecimalNum.Name", NumberContext).Evaluate(), "Decimal");
+
+            ExpressionHelpers.Parse("NonFloating.IntegerNum = new Context()", NumberContext).Evaluate();
+
+            ExpressionHelpers.Parse("NonFloating.IntegerNum.Name = \"Integer\"", NumberContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.IntegerNum.Name", NumberContext).Evaluate(), "Integer");
+
+            ExpressionHelpers.Parse("NonFloating.LongNum = new Context()", NumberContext).Evaluate();
+
+            ExpressionHelpers.Parse("NonFloating.LongNum.Name = \"Long\"", NumberContext).Evaluate();
+
+            Assert.AreEqual(ExpressionHelpers.Parse("NonFloating.LongNum.Name", NumberContext).Evaluate(), "Long");
 
         }
     }
