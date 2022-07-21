@@ -20,7 +20,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             var SecondArg = RightNode.Evaluate();
             var FirstArg = LeftNode.Evaluate();
-            var Result = Operation?.Evaluate(FirstArg, SecondArg, null);
+            var Result = Operation?.Evaluate(FirstArg, SecondArg);
 
             return Result;
         }

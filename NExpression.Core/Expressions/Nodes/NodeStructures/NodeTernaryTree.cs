@@ -40,9 +40,9 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         public void Traverse(ref Stack<INode> Nodes)
         {
             Nodes.Push(this);
-            ConditionNode?.Traverse(ref Nodes);
-            LeftNode.Traverse(ref Nodes);
             RightNode.Traverse(ref Nodes);
+            LeftNode.Traverse(ref Nodes);
+            ConditionNode?.Traverse(ref Nodes);
         }
     }
 }

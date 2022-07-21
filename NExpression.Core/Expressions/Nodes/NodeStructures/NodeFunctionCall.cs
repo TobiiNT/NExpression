@@ -41,7 +41,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         public void Traverse(ref Stack<INode> Nodes)
         {
             Nodes.Push(this);
-            foreach (var Arguement in Arguments)
+            foreach (var Arguement in Arguments.Reverse())
             {
                 Arguement.Traverse(ref Nodes);
             }
