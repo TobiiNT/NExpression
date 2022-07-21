@@ -51,6 +51,7 @@
             // 
             // TextBoxText
             // 
+            this.TextBoxText.AcceptsTab = true;
             this.TextBoxText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TextBoxText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TextBoxText.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -64,13 +65,13 @@
             this.TextBoxText.FontChanged += new System.EventHandler(this.TextBoxText_FontChanged);
             this.TextBoxText.TextChanged += new System.EventHandler(this.TextBoxText_TextChanged);
             // 
-            // LineNumberRichTextBox
+            // CustomRichTextBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.TextBoxText);
             this.Controls.Add(this.TextBoxLineNumber);
-            this.Name = "LineNumberRichTextBox";
+            this.Name = "CustomRichTextBox";
             this.Size = new System.Drawing.Size(606, 446);
             this.Load += new System.EventHandler(this.LineNumberRichTextBox_Load);
             this.Resize += new System.EventHandler(this.LineNumberRichTextBox_Resize);

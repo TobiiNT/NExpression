@@ -34,13 +34,19 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CustomTabControl = new NExpression.Winforms.Components.CustomTabControl();
+            this.TabControlMain = new NExpression.Winforms.Components.CustomTabControl();
+            this.SplitContainerMain = new System.Windows.Forms.SplitContainer();
+            this.TabControlEvaluation = new System.Windows.Forms.TabControl();
+            this.TabPageConsole = new System.Windows.Forms.TabPage();
+            this.TabPageDebug = new System.Windows.Forms.TabPage();
             this.MenuStripMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).BeginInit();
+            this.SplitContainerMain.Panel1.SuspendLayout();
+            this.SplitContainerMain.Panel2.SuspendLayout();
+            this.SplitContainerMain.SuspendLayout();
+            this.TabControlEvaluation.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuStripMain
@@ -51,7 +57,7 @@
             this.runToolStripMenuItem});
             this.MenuStripMain.Location = new System.Drawing.Point(0, 0);
             this.MenuStripMain.Name = "MenuStripMain";
-            this.MenuStripMain.Size = new System.Drawing.Size(960, 33);
+            this.MenuStripMain.Size = new System.Drawing.Size(778, 33);
             this.MenuStripMain.TabIndex = 1;
             this.MenuStripMain.Text = "menuStrip1";
             // 
@@ -62,9 +68,6 @@
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
-            this.saveAllToolStripMenuItem,
-            this.closeToolStripMenuItem,
-            this.closeAllToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
@@ -81,37 +84,22 @@
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.Size = new System.Drawing.Size(188, 34);
-            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Text = "Open...";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(188, 34);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
             this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(188, 34);
             this.saveAsToolStripMenuItem.Text = "Save As...";
-            // 
-            // saveAllToolStripMenuItem
-            // 
-            this.saveAllToolStripMenuItem.Name = "saveAllToolStripMenuItem";
-            this.saveAllToolStripMenuItem.Size = new System.Drawing.Size(188, 34);
-            this.saveAllToolStripMenuItem.Text = "Save All";
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(188, 34);
-            this.closeToolStripMenuItem.Text = "Close";
-            // 
-            // closeAllToolStripMenuItem
-            // 
-            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(188, 34);
-            this.closeAllToolStripMenuItem.Text = "Close All";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -126,22 +114,72 @@
             this.runToolStripMenuItem.Text = "&Run";
             this.runToolStripMenuItem.Click += new System.EventHandler(this.runToolStripMenuItem_Click);
             // 
-            // CustomTabControl1
+            // TabControlMain
             // 
-            this.CustomTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.CustomTabControl.Location = new System.Drawing.Point(0, 33);
-            this.CustomTabControl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.CustomTabControl.Name = "CustomTabControl1";
-            this.CustomTabControl.Size = new System.Drawing.Size(960, 435);
-            this.CustomTabControl.TabIndex = 2;
+            this.TabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TabControlMain.Location = new System.Drawing.Point(0, 0);
+            this.TabControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.TabControlMain.Name = "TabControlMain";
+            this.TabControlMain.Size = new System.Drawing.Size(776, 387);
+            this.TabControlMain.TabIndex = 2;
+            // 
+            // SplitContainerMain
+            // 
+            this.SplitContainerMain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SplitContainerMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SplitContainerMain.Location = new System.Drawing.Point(0, 33);
+            this.SplitContainerMain.Name = "SplitContainerMain";
+            this.SplitContainerMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // SplitContainerMain.Panel1
+            // 
+            this.SplitContainerMain.Panel1.Controls.Add(this.TabControlMain);
+            // 
+            // SplitContainerMain.Panel2
+            // 
+            this.SplitContainerMain.Panel2.Controls.Add(this.TabControlEvaluation);
+            this.SplitContainerMain.Size = new System.Drawing.Size(778, 511);
+            this.SplitContainerMain.SplitterDistance = 389;
+            this.SplitContainerMain.TabIndex = 3;
+            // 
+            // TabControlEvaluation
+            // 
+            this.TabControlEvaluation.Controls.Add(this.TabPageConsole);
+            this.TabControlEvaluation.Controls.Add(this.TabPageDebug);
+            this.TabControlEvaluation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TabControlEvaluation.Location = new System.Drawing.Point(0, 0);
+            this.TabControlEvaluation.Name = "TabControlEvaluation";
+            this.TabControlEvaluation.SelectedIndex = 0;
+            this.TabControlEvaluation.Size = new System.Drawing.Size(776, 116);
+            this.TabControlEvaluation.TabIndex = 0;
+            // 
+            // TabPageConsole
+            // 
+            this.TabPageConsole.Location = new System.Drawing.Point(4, 35);
+            this.TabPageConsole.Name = "TabPageConsole";
+            this.TabPageConsole.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPageConsole.Size = new System.Drawing.Size(768, 77);
+            this.TabPageConsole.TabIndex = 0;
+            this.TabPageConsole.Text = "Console";
+            this.TabPageConsole.UseVisualStyleBackColor = true;
+            // 
+            // TabPageDebug
+            // 
+            this.TabPageDebug.Location = new System.Drawing.Point(4, 34);
+            this.TabPageDebug.Name = "TabPageDebug";
+            this.TabPageDebug.Padding = new System.Windows.Forms.Padding(3);
+            this.TabPageDebug.Size = new System.Drawing.Size(770, 80);
+            this.TabPageDebug.TabIndex = 1;
+            this.TabPageDebug.Text = "Debug";
+            this.TabPageDebug.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(960, 468);
-            this.Controls.Add(this.CustomTabControl);
+            this.ClientSize = new System.Drawing.Size(778, 544);
+            this.Controls.Add(this.SplitContainerMain);
             this.Controls.Add(this.MenuStripMain);
             this.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ForeColor = System.Drawing.Color.Black;
@@ -152,6 +190,11 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.MenuStripMain.ResumeLayout(false);
             this.MenuStripMain.PerformLayout();
+            this.SplitContainerMain.Panel1.ResumeLayout(false);
+            this.SplitContainerMain.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.SplitContainerMain)).EndInit();
+            this.SplitContainerMain.ResumeLayout(false);
+            this.TabControlEvaluation.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -164,11 +207,12 @@
         private ToolStripMenuItem openToolStripMenuItem;
         private ToolStripMenuItem saveToolStripMenuItem;
         private ToolStripMenuItem saveAsToolStripMenuItem;
-        private ToolStripMenuItem saveAllToolStripMenuItem;
-        private ToolStripMenuItem closeToolStripMenuItem;
-        private ToolStripMenuItem closeAllToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem runToolStripMenuItem;
-        private Components.CustomTabControl CustomTabControl;
+        private Components.CustomTabControl TabControlMain;
+        private SplitContainer SplitContainerMain;
+        private TabControl TabControlEvaluation;
+        private TabPage TabPageConsole;
+        private TabPage TabPageDebug;
     }
 }

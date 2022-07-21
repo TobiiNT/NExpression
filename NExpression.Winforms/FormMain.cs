@@ -7,13 +7,13 @@ namespace NExpression.Winforms
 {
     public partial class FormMain : Form
     {
-        public Dictionary<object, DynamicContext> Contexts { get; set; }
+        public Dictionary<string, DynamicContext> Contexts { get; set; }
 
         public FormMain()
         {
             InitializeComponent();
 
-            this.Contexts = new Dictionary<object, DynamicContext>();
+            this.Contexts = new Dictionary<string, DynamicContext>();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -21,9 +21,9 @@ namespace NExpression.Winforms
             AddTab("New Tab");
         }
 
-        private void AddTab(string TabName)
+        private CustomTabPage AddTab(string TabName = "", string TabContent = "")
         {
-            object Timestamp = DateTime.Now.Ticks;
+            string Timestamp = DateTime.Now.Ticks.ToString();
 
             if (!this.Contexts.ContainsKey(Timestamp))
             {
@@ -31,8 +31,9 @@ namespace NExpression.Winforms
 
                 this.Contexts.Add(Timestamp, Context);
 
-                this.CustomTabControl.AddTab(Timestamp, TabName);
+                return this.TabControlMain.AddTab(Timestamp, TabName, TabContent);
             }
+            return null;
         }
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
@@ -42,19 +43,13 @@ namespace NExpression.Winforms
 
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.Contexts.TryGetValue(CustomTabControl.GetCurrentTabTag(), out DynamicContext Context))
+            var CurrentTab = TabControlMain.GetCurrentTab();
+
+            if (CurrentTab != null && this.Contexts.TryGetValue(CurrentTab.Identity, out DynamicContext Context))
             {
-                string? InputExpressions = CustomTabControl.GetCurrentTabTextBoxValue();
+                string? InputExpressions = CurrentTab.CurrentContent;
 
                 Execute(InputExpressions, Context);
-                //var Tokens = TokenHelpers.Parse(Expression);
-                //Consoler.Write($"Tokens      = ", ConsoleColor.Cyan);
-                //do
-                //{
-                //    Consoler.Write($"{Tokens.Token.Symbol()} ", ConsoleColor.Cyan);
-                //    Tokens.NextToken();
-                //}
-                //while (Tokens.Token != Token.EOF);
             }
         }
 
@@ -80,11 +75,78 @@ namespace NExpression.Winforms
             }
             catch (Exception Exception)
             {
-                MessageBox.Show($"{CurrentCommand.RawExpression}\r\n" +
+                MessageBox.Show($"{CurrentCommand?.RawExpression}\r\n" +
                                 $"Error = {Exception.Message}", $"[{CommandIndex}]", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 if (Exception.InnerException != null)
                 {
                     MessageBox.Show(Exception.InnerException?.Message, "Inner Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile(false);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFile(true);
+        }
+        private void SaveFile(bool SaveAs)
+        {
+            var CurrentTab = TabControlMain.GetCurrentTab();
+
+            if (CurrentTab != null)
+            {
+                if (CurrentTab.FilePath == null || SaveAs)
+                {
+                    string? SaveFilePath = FileDialogHelpers.SaveFileDialogAndGetResult();
+
+                    if (SaveFilePath != null)
+                    {
+                        if (SaveAs)
+                        {
+                            string OldContent = CurrentTab.CurrentContent;
+                            CurrentTab = this.AddTab();
+                            CurrentTab.CurrentContent = OldContent;
+                        }
+
+                        CurrentTab.SaveContent(SaveFilePath);
+                    }
+                }
+                else
+                {
+                    CurrentTab.SaveContent();
+                }
+            }
+        }
+
+        private void OpenFile()
+        {
+            string[]? OpenFilePaths = FileDialogHelpers.OpenFileDialogAndGetResults();
+
+            if (OpenFilePaths != null)
+            {
+                foreach (var FilePath in OpenFilePaths)
+                {
+                    var CurrentTab = TabControlMain.GetTabByFileName(FilePath);
+
+                    if (CurrentTab != null)
+                    {
+                        TabControlMain.FocusTab(CurrentTab);
+                    }
+                    else
+                    {
+                        CurrentTab = this.AddTab();
+
+                        CurrentTab.OpenContent(FilePath);
+                    }
                 }
             }
         }

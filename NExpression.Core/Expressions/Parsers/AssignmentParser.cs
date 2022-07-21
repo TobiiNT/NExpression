@@ -1,4 +1,5 @@
 ﻿using NExpression.Core.Contexts.Interfaces;
+using NExpression.Core.Exceptions;
 using NExpression.Core.Expressions.Nodes.Interfaces;
 using NExpression.Core.Expressions.Nodes.NodeStructures;
 using NExpression.Core.Expressions.Operations;
@@ -43,55 +44,22 @@ namespace NExpression.Core.Expressions.Parsers
 
                     Tokenizer.NextToken();
 
-                    var RightSide = NextParser.Parse<T>();
-
-                    #region A
-                    /*
-                    if (LeftNode is NodeNested Nested)
-                    {
-                        //var InnerNode = Nested.Evaluate();
-                        //LeftNode = Nested.InnerNode;
-                        if (LeftNode is NodeVariable InnerVariable)
-                        {
-                            LeftNode = new NodeAssignment(InnerVariable, RightSide, MathOperation);
-                        }
-                        else
-                        {
-                            while (LeftNode is NodeNested)
-                            {
-                                if (LeftNode is NodeVariable DeepInnerVariable)
-                                {
-                                    LeftNode = new NodeAssignment(DeepInnerVariable, RightSide, MathOperation);
-
-                                    break;
-                                }
-                                //LeftNode = LeftNode.InnerNode;
-                            }
-
-                            if (LeftNode is NodeVariable Variable)
-                            {
-                                LeftNode = new NodeAssignment(Variable, RightSide, MathOperation);
-                            }
-                            else throw new InvalidOperationException("The left-hand side of an assignment must be a variable");
-                        }
-                    }
-                    */
-                    #endregion
+                    var RightNode = NextParser.Parse<T>();
 
                     if (LeftNode is NodeVariable Variable)
                     {
-                        LeftNode = new NodeAssignment(Variable, RightSide, MathOperation);
+                        LeftNode = new NodeAssignment(Variable, RightNode, MathOperation);
                     }
                     else if (LeftNode is NodeNested Nested)
                     {
                         var NestedResult = Nested.GetFinalNode();
                         if (NestedResult is NodeVariable VariableInside)
                         {
-                            LeftNode = new NodeAssignment(VariableInside, RightSide, MathOperation);
+                            LeftNode = new NodeAssignment(VariableInside, RightNode, MathOperation);
                         }
-                        else throw new InvalidOperationException("The left-hand side of an assignment must be a variable");
+                        else throw new InvalidOperationException("The left-hand side of an assignment must be a variable", new InvalidMathOperatorException(MathOperation, LeftNode, RightNode));
                     }
-                    else throw new InvalidOperationException("The left-hand side of an assignment must be a variable");
+                    else throw new InvalidOperationException("The left-hand side of an assignment must be a variable", new InvalidMathOperatorException(MathOperation, LeftNode, RightNode));
                 }
                 else return LeftNode;
 

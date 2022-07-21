@@ -394,7 +394,7 @@ namespace NExpression.Core.Tokens
             }
 
             // Capture digits/decimal point
-            StringBuilder StringBuilder = new StringBuilder();
+            var StringBuilder = new StringBuilder(10);
 
             bool HaveDecimalPoint = false;
             while (true)
@@ -456,7 +456,7 @@ namespace NExpression.Core.Tokens
 
         private string ReadIdentifier()
         {
-            StringBuilder StringBuilder = new StringBuilder();
+            var StringBuilder = new StringBuilder(5);
 
             // Accept letter, digit or underscore
             while (char.IsLetterOrDigit(CurrentChar) || CurrentChar == '_')

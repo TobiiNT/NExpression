@@ -12,6 +12,8 @@ static extern bool SetConsoleOutputCP(uint wCodePageID);
 SetConsoleOutputCP(65001);
 Console.OutputEncoding = Encoding.UTF8;
 
+//NExpressionCreateAndEvaluateTest();
+
 var MathContext = CreateThreeLevelContext();
 ResetContext();
 
@@ -38,7 +40,7 @@ while (true)
     }
     else if (InputExpression == "!list")
     {
-        WriteAllVariale(MathContext, "", 0);
+        PrintAllVariables.Print(MathContext, 0);
     }
     else
     {
@@ -46,7 +48,7 @@ while (true)
         SingleCommand? CurrentCommand = null;
         try
         {
-            if (IsPrintTokens) { PrintTokens(InputExpression); }
+            if (IsPrintTokens) { PrintTokens.Print(InputExpression); }
 
             List<SingleCommand> Commands = CommandHelpers.ParseMultiple(InputExpression, MathContext);
             foreach (var SingleCommand in Commands)
@@ -55,16 +57,27 @@ while (true)
 
                 SingleCommand.Parse();
 
-                if (IsPrintTraverse) { PrintTraverse(SingleCommand); }
+                if (IsPrintTraverse) { PrintTraverse.Print(SingleCommand); }
 
                 var NodeValue = SingleCommand.Evaluate();
-                
-                Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {SingleCommand.RawExpression ?? "null"}", ConsoleColor.Blue);
-                Consoler.WriteLine($"[Command {CommandIndex}] Result      = {NodeValue.Identity()}", ConsoleColor.Green);
+
+                try
+                {
+                    Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {SingleCommand.RawExpression ?? "null"}", ConsoleColor.Blue);
+                    Consoler.WriteLine($"[Command {CommandIndex}] Result      = {NodeValue.Identity()}", ConsoleColor.Green);
+                }
+                catch (Exception Exception)
+                {
+                    Consoler.WriteLine($"[Command {CommandIndex}] Expression  = {CurrentCommand?.RawExpression}", ConsoleColor.Red);
+                    Consoler.WriteLine($"[Command {CommandIndex}] Error       = {Exception.Message}", ConsoleColor.Red);
+                    if (Exception.InnerException != null)
+                    {
+                        Consoler.WriteLine($"[Command {CommandIndex}] Inner Error = [{Exception.InnerException?.Message}]", ConsoleColor.Red);
+                    }
+                }
+
                 CommandIndex++;
             }
-
-            //WriteAllVariale(MathContext, "", 0);
         }
         catch (Exception Exception)
         {
@@ -76,88 +89,6 @@ while (true)
             }
         }
         Consoler.WriteLine();
-    }
-}
-
-static void PrintTraverse(SingleCommand Command)
-{
-    Consoler.WriteLine();
-    Consoler.Write($"Traverse : ", ConsoleColor.Blue);
-    Consoler.WriteLine(Command.RawExpression);
-
-    var Stacks = Command.Traverse();
-
-    int LineNumber = 1;
-    foreach (var Node in Stacks)
-    {
-        string? Identity = Node.Identity();
-
-        Consoler.Write($"[Step {LineNumber}] => ", ConsoleColor.White);
-        Consoler.Write($"{Identity}", ConsoleColor.White);
-        try
-        {
-            Consoler.Write($" = {Node.Evaluate()}", ConsoleColor.Green);
-        }
-        catch (Exception Exception)
-        {
-            Consoler.Write($" => {Exception.Message}", ConsoleColor.Red);
-            break;
-        }
-        finally
-        {
-            Consoler.WriteLine();
-            LineNumber++;
-        }
-    }
-}
-
-static void PrintTokens(string? Expression)
-{
-    Consoler.WriteLine();
-    Consoler.Write($"Print tokens : ", ConsoleColor.Blue);
-    Consoler.WriteLine(Expression);
-
-    var Tokens = TokenHelpers.Parse(Expression);
-
-    int LineNumber = 1;
-    do
-    {
-        Consoler.WriteLine($"[Token {LineNumber++}] {Tokens.Token.Symbol()} ", ConsoleColor.Cyan);
-        Tokens.NextToken();
-    }
-    while (Tokens.Token != Token.EOF);
-}
-
-static void WriteAllVariale(DynamicContext Context, string Parent, int Level)
-{
-    var AllVariables = Context.GetAllVariables();
-
-    for (int i = 0; i < Level; i++)
-    {
-        Console.Write("   ");
-    }
-    Consoler.WriteLine($"+ [{Context.Name}] Total variables = {AllVariables.Count}", ConsoleColor.Cyan);
-
-    int CurrentLevel = Level;
-    foreach (var Variable in AllVariables)
-    {
-        if (Variable.Value is DynamicContext InnerContext)
-        {
-            for (int i = 0; i < CurrentLevel; i++)
-            {
-                Console.Write("   ");
-            }
-            Consoler.WriteLine($"+ [{Variable.Key}] => Context", ConsoleColor.Green);
-            WriteAllVariale(InnerContext, Context.Name, CurrentLevel + 1);
-        }
-        else
-        {
-            for (int i = 0; i < CurrentLevel; i++)
-            {
-                Console.Write("   ");
-            }
-            Consoler.WriteLine($"+ [{Variable.Key}] => {Variable.Value}", ConsoleColor.Blue);
-        }
     }
 }
 
@@ -198,4 +129,24 @@ static DynamicContext CreateThreeLevelContext()
     Number["NonFloating"] = NonFloating;
 
     return Number;
+}
+
+static Dictionary<string, object?> NExpressionCreateAndEvaluateTest()
+{
+    var Context = new DynamicContext();
+    ExpressionHelpers.Parse($"a = 0", Context).Evaluate();
+    ExpressionHelpers.Parse($"b = 1", Context).Evaluate();
+    ExpressionHelpers.Parse($"c = 1", Context).Evaluate();
+
+    Dictionary<string, object?> Values = new Dictionary<string, object?>(1000000);
+    for (int i = 0; i < 1000000; i++)
+    {
+        ExpressionHelpers.Parse($"a = b", Context).Evaluate();
+        ExpressionHelpers.Parse($"b = c", Context).Evaluate();
+        ExpressionHelpers.Parse($"c = a + b", Context).Evaluate();
+        ExpressionHelpers.Parse($"c{i} = c", Context).Evaluate();
+        object? Value = ExpressionHelpers.Parse($"c{i}", Context).Evaluate();
+        Values.Add($"c{i}", Value);
+    }
+    return Values;
 }

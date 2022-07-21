@@ -15,14 +15,6 @@ namespace NExpression.Core.Contexts
         {
 
         }
-        public DynamicContext(string ContextName, DynamicContext ReadWriteContext)
-        {
-            Name = ContextName;
-            Variables = new Dictionary<string, object?>();
-            Operations = ReadWriteContext.Operations;
-
-            RegisterBuildInOperation();
-        }
         public DynamicContext(string ContextName)
         {
             Name = ContextName;

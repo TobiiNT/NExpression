@@ -32,7 +32,7 @@ namespace NExpression.Core.Extensions
             }
             else if (Node is NodeFunctionCall Function)
             {
-                StringBuilder ArgsString = new StringBuilder();
+                var ArgsString = new StringBuilder();
                 foreach (var Arguement in Function.Arguments)
                 {
                     ArgsString.Append(Arguement.Identity() + ", ");

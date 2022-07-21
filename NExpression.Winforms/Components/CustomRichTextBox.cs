@@ -1,14 +1,24 @@
-﻿using System.Text;
+﻿using NExpression.Winforms.Components.Delegates;
+using NExpression.Winforms.Extensions;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NExpression.Winforms.Components
 {
     public partial class CustomRichTextBox : UserControl
     {
-        public CustomRichTextBox()
+        public List<Tuple<int, int>> FormattingPhase = new List<Tuple<int, int>>();
+        public RichTextBox CurrentTextBox => this.TextBoxText;
+
+        private CustomTabPage Parent { get; }
+        public CustomRichTextBox(CustomTabPage Parent)
         {
             InitializeComponent();
+
+            this.Parent = Parent;
         }
 
+        #region Custom
         public int GetWidth()
         {
             int Width;
@@ -49,7 +59,7 @@ namespace NExpression.Winforms.Components
             TextBoxLineNumber.Text = "";
             TextBoxLineNumber.Width = GetWidth();
             // now add each line number to LineNumberTextBox upto last line    
-            StringBuilder StringBuilder = new StringBuilder();
+            var StringBuilder = new StringBuilder(LastLine * 3);
             for (int i = FirstLine; i <= LastLine + 1; i++)
             {
                 StringBuilder.Append(i + 1 + "\n");
@@ -76,6 +86,8 @@ namespace NExpression.Winforms.Components
             {
                 AddLineNumbers();
             }
+            this.TextBoxText.ForeColor = Color.Black;
+            this.CheckCaret();
         }
 
         private void TextBoxText_VScroll(object sender, EventArgs e)
@@ -91,6 +103,10 @@ namespace NExpression.Winforms.Components
             {
                 AddLineNumbers();
             }
+            this.Parent.TextboxContentChanged();
+            
+            this.TextBoxText.ForeColor = Color.Black;
+            this.FormatColor();
         }
 
         private void TextBoxText_FontChanged(object sender, EventArgs e)
@@ -105,7 +121,12 @@ namespace NExpression.Winforms.Components
             TextBoxText.Select();
             TextBoxLineNumber.DeselectAll();
         }
+        #endregion
 
-        public string GetText() => TextBoxText.Text;
+        public string CurrentContent
+        {
+            get => TextBoxText.Text;
+            set => TextBoxText.Text = value;
+        }
     }
 }

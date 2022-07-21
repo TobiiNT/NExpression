@@ -5,3 +5,4 @@ using NExpression.BenchMark;
 
 var summary = BenchmarkRunner.Run<TestBenchmark>();
 Console.WriteLine(summary);
+Console.ReadLine();

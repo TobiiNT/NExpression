@@ -32,7 +32,7 @@ namespace NExpression.Core.Expressions.Parsers
                 {
                     if (CurrentToken == Token.DoubleQuote)
                     {
-                        StringBuilder StringValue = new StringBuilder();
+                        var StringValue = new StringBuilder();
                         while (true)
                         {
                             Tokenizer.NextToken();

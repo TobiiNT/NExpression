@@ -1,4 +1,6 @@
-﻿namespace NExpression.Winforms.Components
+﻿using System.Linq;
+
+namespace NExpression.Winforms.Components
 {
     public partial class CustomTabControl : UserControl
     {
@@ -7,57 +9,49 @@
             InitializeComponent();
         }
 
-        public void AddTab(object TabKey, string TabName)
+        public CustomTabPage? GetTabByFileName(string FileName)
         {
-            TabPage TabPage = new TabPage()
+            foreach (CustomTabPage Tab in this.TabControl.TabPages)
             {
-                Name = "TabPage " + TabKey,
-                Text = TabName,
+                if (Tab.FilePath == FileName)
+                    return Tab;
+            }
+            return null;
+        }
+
+        public void FocusTab(CustomTabPage Tab)
+        {
+            this.TabControl.SelectedTab = this.TabControl.TabPages[Tab.Name];
+        }
+
+        public CustomTabPage AddTab(string Identity, string TabName, string TabContent = "")
+        {
+            CustomTabPage TabPage = new CustomTabPage(Identity)
+            {
+                Name = "TabPage " + Identity,
+                Title = TabName,
                 BackColor = SystemColors.Control,
-                Tag = TabKey,
             };
-
-            CustomRichTextBox Textbox = new CustomRichTextBox()
-            {
-                Name = "Textbox " + TabKey,
-                Dock = DockStyle.Fill,
-                Tag = TabKey,
-            };
-
-            TabPage.Controls.Add(Textbox);
+            TabPage.CurrentContent = TabContent;
 
             this.TabControl.TabPages.Add(TabPage);
             this.TabControl.SelectedIndex = TabControl.TabPages.Count - 1;
+
+            return TabPage;
         }
 
-        public object GetCurrentTabTag()
+        public CustomTabPage? GetCurrentTab()
         {
             if (this.TabControl.TabPages.Count > 0)
             {
-                var SelectedTab = this.TabControl.SelectedTab;
-
-                return SelectedTab.Tag;
+                return (CustomTabPage)this.TabControl.SelectedTab;
             }
-            return "";
+            return null;
         }
-        public string GetCurrentTabTextBoxValue()
-        {
-            if (this.TabControl.TabPages.Count > 0)
-            {
-                var SelectedTab = this.TabControl.SelectedTab;
 
-                return GetTextboxValue(SelectedTab.Tag);
-            }
-            return "";
-        }
-        public string GetTextboxValue(object Key)
+        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var TabPage = this.TabControl.TabPages["TabPage " + Key];
-            var Textbox = TabPage.Controls["TextBox " + Key];
 
-            if (Textbox is CustomRichTextBox CustomTextBox)
-                return CustomTextBox.GetText();
-            return "";
         }
     }
 }
