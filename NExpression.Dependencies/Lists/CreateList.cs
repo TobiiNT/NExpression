@@ -6,7 +6,7 @@ namespace NExpression.Dependencies.Lists
     {
         public object? Evaluate(params object?[] Params)
         {
-            int? Capacity = (int?)Params[0];
+            int? Capacity = Params.Length >= 1 ? (int?)Params[0] : null;
 
             if (Capacity != null)
             {

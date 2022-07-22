@@ -35,29 +35,43 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
         {
             var _ChildrenContext = _NodeNested.CurrentNode?.Evaluate();
 
-            if (_ChildrenContext != null && _ChildrenContext is IContext ChildrenContext)
+            if (_ChildrenContext != null)
             {
                 if (_NodeNested.ChildrenNode != null)
                 {
-                    if (_NodeNested.ChildrenNode is NodeVariable Variable)
+                    if (_ChildrenContext is IContext ChildrenContext)
                     {
-                        Variable.SetContext(ChildrenContext);
-
-                        return Variable;
-                    }
-                    else if (_NodeNested.ChildrenNode is NodeFunctionCall Function)
-                    {
-                        Function.SetContext(ChildrenContext);
-
-                        return Function;
-                    }
-                    else if (_NodeNested.ChildrenNode is NodeNested Nested)
-                    {
-                        if (Nested.CurrentNode is IContextNode ContextNode)
+                        if (_NodeNested.ChildrenNode is NodeVariable Variable)
                         {
-                            ContextNode.SetContext(ChildrenContext);
+                            Variable.SetContext(ChildrenContext);
+
+                            return Variable;
                         }
-                        return EvaluateNestedToVariable(Nested);
+                        else if (_NodeNested.ChildrenNode is NodeFunctionCall Function)
+                        {
+                            Function.SetContext(ChildrenContext);
+
+                            return Function;
+                        }
+                        else if (_NodeNested.ChildrenNode is NodeNested Nested)
+                        {
+                            if (Nested.CurrentNode is IContextNode ContextNode)
+                            {
+                                ContextNode.SetContext(ChildrenContext);
+                            }
+                            return EvaluateNestedToVariable(Nested);
+                        }
+
+                    }
+                    else
+                    {
+                        if (_NodeNested.ChildrenNode is NodeFunctionCall Function)
+                        {
+                            //Function.SetContext(_NodeNested.CurrentNode.con);
+                            Function.SetCaller(_NodeNested.CurrentNode);
+
+                            return Function;
+                        }
                     }
                 }
             }

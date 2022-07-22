@@ -7,7 +7,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
     public class NodeFunctionCall : INode, IContextNode
     {
         public IContext? Context { set; get; }
-
+        public object? Caller { set; get; }
         public string FunctionName { private set; get; }
         public INode[] Arguments { private set; get; }
 
@@ -18,6 +18,7 @@ namespace NExpression.Core.Expressions.Nodes.NodeStructures
             this.Arguments = Arguments;
         }
         public void SetContext(IContext? Context) => this.Context = Context;
+        public void SetCaller(object? Caller) => this.Caller = Caller;
 
         public object? Evaluate()
         {

@@ -4,6 +4,7 @@ using NExpression.Core.Contexts;
 using NExpression.Core.Extensions;
 using NExpression.Core.Helpers;
 using NExpression.Core.Tokens;
+using NExpression.Dependencies.Lists;
 using NExpression.Dependencies.Maths;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -97,6 +98,7 @@ static DynamicContext CreateThreeLevelContext()
 {
     var Number = new DynamicContext("Number");
     Number.RegisterOperation<MathAbs>("numAbs");
+    Number.RegisterOperation<CreateList>("list");
     Number["Name"] = "Number";
 
     var Floating = new DynamicContext("Floating");
