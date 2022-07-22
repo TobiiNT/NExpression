@@ -28,7 +28,7 @@ namespace NExpression.Console
                 Consoler.Write($"{Identity}", ConsoleColor.White);
                 try
                 {
-                    Consoler.Write($" = {Node.Evaluate()}", ConsoleColor.Green);
+                    //Consoler.Write($" = {Node.Evaluate()}", ConsoleColor.Green);
                 }
                 catch (Exception Exception)
                 {

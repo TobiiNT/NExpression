@@ -70,7 +70,10 @@ namespace NExpression.Core.Extensions
             else if (Node is NodeIndex Index)
             {
                 return $"({Index.ArrayNode.Identity()} {Index.Operation} {Index.IndexNode.Identity()})";
-
+            }
+            else if (Node is NodeNested Nested)
+            {
+                return $"({Nested.CurrentNode?.Identity()} {Nested.ChildrenNode?.Identity()})";
             }
             else return Node.ToString();
         }

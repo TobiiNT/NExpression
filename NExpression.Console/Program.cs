@@ -4,6 +4,7 @@ using NExpression.Core.Contexts;
 using NExpression.Core.Extensions;
 using NExpression.Core.Helpers;
 using NExpression.Core.Tokens;
+using NExpression.Dependencies.Maths;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -95,27 +96,34 @@ while (true)
 static DynamicContext CreateThreeLevelContext()
 {
     var Number = new DynamicContext("Number");
+    Number.RegisterOperation<MathAbs>("numAbs");
     Number["Name"] = "Number";
 
     var Floating = new DynamicContext("Floating");
+    Floating.RegisterOperation<MathAbs>("floatAbs");
     Floating["Name"] = "Floating";
 
     var NonFloating = new DynamicContext("NonFloating");
+    NonFloating.RegisterOperation<MathAbs>("nonFloatAbs");
     NonFloating["Name"] = "NonFloating";
 
     var Double = new DynamicContext("Double");
+    Double.RegisterOperation<MathAbs>("doubleAbs");
     Double["Name"] = typeof(double);
     Double["Value"] = double.MaxValue;
 
     var Decimal = new DynamicContext("Decimal");
+    Decimal.RegisterOperation<MathAbs>("decimalAbs");
     Decimal["Name"] = typeof(decimal);
     Decimal["Value"] = decimal.MaxValue;
 
     var Integer = new DynamicContext("Integer");
+    Integer.RegisterOperation<MathAbs>("integerAbs");
     Integer["Name"] = typeof(int);
     Integer["Value"] = int.MaxValue;
 
     var Long = new DynamicContext("Long");
+    Long.RegisterOperation<MathAbs>("longAbs");
     Long["Name"] = typeof(long);
     Long["Value"] = long.MaxValue;
 
