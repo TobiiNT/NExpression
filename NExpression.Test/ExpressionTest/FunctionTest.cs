@@ -27,6 +27,11 @@ namespace NExpression.Test.ExpressionTest
                 throw new InvalidDataException($"Unknown function: '{name}'");
             }
 
+            public object? CallFunctionWithReferences(string[] References, object?[] Arguments)
+            {
+                throw new NotImplementedException();
+            }
+
             public void SetName(string Name)
             {
                 throw new NotImplementedException();

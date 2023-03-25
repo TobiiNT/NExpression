@@ -57,6 +57,22 @@ namespace NExpression.Core.Contexts
             return Operation?.Evaluate(Arguments);
         }
 
+        public object? CallFunctionWithReferences(string[] References, object?[] Arguments)
+        {
+            //var a = ta
+            //if (References.)
+            //MethodInfo FinalMethod = null;
+            //var mi = _targetObject.GetType().GetMethod(name);
+            //if (mi == null)
+            //    throw new InvalidDataException($"Unknown function: '{name}'");
+            //
+            //if (Operations.TryGetValue(Name[0], out IOperation? Operation) && Operation != null)
+            //{
+            //    return CallOperation(Operation, Arguments);
+            //}
+            throw new NullOperationException(this, "");
+        }
+
         public bool ContainVariable(string? PropertyName) => Variables.ContainsKey(PropertyName ?? "");
         public bool ResolveVariable(string? PropertyName, out object? Value)
         {
